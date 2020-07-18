@@ -1,3 +1,5 @@
 {
-    "/channels/:id/messages": "/messages/:id"
+    "/friends": "/users?isFriend=true",
+    "/friends/:id": "/users/:id",
+    "/channels/:id/messages": "/messages/?channelId=:id"
 }

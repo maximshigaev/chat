@@ -6,19 +6,17 @@ class Api {
         headers: {"Content-type": "application/json; charset=UTF-8"}
     });
 
-    getUser = (id) => this.request.get(`/users/${id}`);
+    getUsers = () => this.request.get(`/users`);
 
-    getFriends = () => this.request.get(`/users?isFriend=true`);
     createFriend = (friend) => this.request.post(`/users`, friend);
-    deleteFriend = (friend, id) => this.request.put(`/users/${id}`, friend);
+    deleteFriend = (id) => this.request.put(`/users/${id}`);
 
     getChannels = () => this.request.get(`/channels`);
-    getChannel = (id) => this.request.get(`/channels/${id}`);
     createChannel = (channel) => this.request.post(`/channels`, channel);
-    updateChannel = (channel, id) => this.request.put(`/channels/${id}`, channel);
+    updateChannel = (channel) => this.request.put(`/channels/${channel.id}`, channel);
     deleteChannel = (id) => this.request.delete(`/channels/${id}`);
 
-    getChannelMessages = (channelId) => this.request.get(`/messages?channelId=${channelId}`);
+    getMessages = () => this.request.get(`/message`);
     createMessage = (message) => this.request.post(`/messages`, message);
 }
 
