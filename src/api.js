@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class Api {
     request = axios.create({
-        baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:3001',
         headers: {"Content-type": "application/json; charset=UTF-8"}
     });
 
@@ -16,7 +16,7 @@ class Api {
     updateChannel = (channel) => this.request.put(`/channels/${channel.id}`, channel);
     deleteChannel = (id) => this.request.delete(`/channels/${id}`);
 
-    getMessages = () => this.request.get(`/message`);
+    getMessages = () => this.request.get(`/messages`);
     createMessage = (message) => this.request.post(`/messages`, message);
 }
 
