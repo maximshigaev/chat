@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './components';
+import {App} from './components';
+import {StoreContext} from './context';
+import {store} from './store';
 
 import './scss/reset.scss';
 import './scss/scaffolding.scss';
 
 ReactDOM.render(
-    <App />,
+    <StoreContext.Provider value={store}>
+        <App />
+    </StoreContext.Provider>,
     document.getElementById('root')
 );
