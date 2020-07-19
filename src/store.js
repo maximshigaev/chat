@@ -1,55 +1,56 @@
-import {observable, computed, action} from 'mobx';
+import {extendObservable, action} from 'mobx';
 
-import {Api} from './api';
+import {api} from './api';
 
 class Store {
     constructor() {
         this.getAllUsers();
         this.getAllChannels();
         this.getAllMessages();
+
+        extendObservable(this, {
+            users: [],
+            channels: [],
+            messages: [],
+            currentUser: null,
+            currentChannel: null,
+            friends: () => this.users.filter((user) => user.isFriend),
+            currentMessages: () => this.messages.filter((message) => message.channelId = this.currentChannel.id),
+        });
     }
 
-    @action getAllUsers = () => Api.getUsers().then((users) => this.users = users);
-    @action getAllChannels = () => Api.getChannels().then((channels) => this.channels = channels);
-    @action getAllMessages = () => Api.getMessages().then((messages) => this.messages = messages);
+    getAllUsers = action(() => api.getUsers().then((users) => this.users = users));
+    getAllChannels = action(() => api.getChannels().then((channels) => this.channels = channels));
+    getAllMessages = action(() => api.getMessages().then((messages) => this.messages = messages));
 
-    @action setCurrentUser = (id) => this.currentUser = this.users.find((user) => user.id === id);
-    @action createFriend = (friend) => {
-        Api.createFriend(friend);
+    setCurrentUser = action((id) => this.currentUser = this.users.find((user) => user.id === id));
+    createFriend = action((friend) => {
+        api.createFriend(friend);
         this.getAllUsers();
-    };
-    @action deleteFriend = (id) => {
-        Api.deleteFriend(id);
+    });
+    deleteFriend = action((id) => {
+        api.deleteFriend(id);
         this.getAllUsers();
-    };
+    });
 
-    @action setCurrentChannel = (id) => this.currentChannel = this.channels.find((channel) => channel.id === id);
-    @action createChannel = (channel) => {
-        Api.createChannel(channel);
+    setCurrentChannel = action((id) => this.currentChannel = this.channels.find((channel) => channel.id === id));
+    createChannel = action((channel) => {
+        api.createChannel(channel);
         this.getAllChannels();
-    }
-    @action updateChannel = (channel) => {
-        Api.updateChannel(channel);
+    });
+    updateChannel = action((channel) => {
+        api.updateChannel(channel);
         this.getAllChannels();
-    }
-    @action deleteChannel = (id) => {
-        Api.deleteChannel(id);
+    });
+    deleteChannel = action((id) => {
+        api.deleteChannel(id);
         this.getAllChannels();
-    }
+    });
 
-    @action createMessage = (message) => {
-        Api.createMessage(message);
+    createMessage = action((message) => {
+        api.createMessage(message);
         this.getAllMessages();
-    }
-
-    @observable users = [];
-    @observable channels = [];
-    @observable messages = [];
-    @observable currentUser = null;
-    @observable currentChannel = null;
-
-    @computed friends = this.users.filter((user) => user.isFriend);
-    @computed currentMessages = this.messages.filter((message) => message.channelId = this.currentChannel.id);
+    });
 }
 
 const store = new Store();
