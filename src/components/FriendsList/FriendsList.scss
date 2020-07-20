@@ -1,0 +1,7 @@
+.friends {
+    &__list {
+        margin-right: 5px;
+        overflow-y: auto;
+        height: calc((100vh - 232px) / 2);
+    }
+}
