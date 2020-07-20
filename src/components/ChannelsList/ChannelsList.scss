@@ -1,0 +1,9 @@
+.channels {
+    margin-bottom: 10px;
+
+    &__list {
+        height: calc((100vh - 232px) / 2);
+        overflow-y: auto;
+        margin-right: 5px;
+    }
+}
