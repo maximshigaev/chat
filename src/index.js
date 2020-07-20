@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'mobx-react-lite/batchingForReactDom';
 
 import {App} from './components';
 import {StoreContext} from './context';
 import {store} from './store';
 
-import './scss/reset.scss';
-import './scss/scaffolding.scss';
+import './scss/style.scss';
 
 ReactDOM.render(
     <StoreContext.Provider value={store}>

@@ -1,11 +1,14 @@
 import React from 'react';
 
+import {Menu} from '../';
+
 const App = () => {
     return (
-        <div>
-            Hello world
-        </div>
+        <main>
+            <h1 className="visually-hidden">Chat</h1>
+            <Menu />
+        </main>
     );
 }
 
-export { App };
+export {App};
