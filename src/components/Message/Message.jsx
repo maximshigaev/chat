@@ -1,22 +1,30 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+
+import {StoreContext} from '../../context';
 
 import './Message.scss';
 
 const Message = ({message}) => {
-    const {author, date, text} = message;
-    const authorName = `${author.firstName} ${author.lastName}`;
+    const {setCurrentUser, users} = useContext(StoreContext);
+    const {date, text} = message;
+    const user = users.find((user) => user.id === message.userId);
+    const authorName = `${user.firstName} ${user.lastName}`;
     const messageDate = new Date(Date.parse(date));
+    
+    const handleClick = () => setCurrentUser(user);
 
     return (
         <li className="message">
-            <img className="message-avatar" src={author.avatar} alt={authorName}width="25" height="32" />
+            <img className="message-avatar" src={user.avatar} alt={authorName} width="25" height="32" />
             <div className="message-wrapper">
-                <a className="message-link" href="#" title={`Open ${authorName}'s profile`}>
+                <a className="message-link" title={`Open ${authorName}'s profile`} onClick={handleClick}>
                     {authorName}
                 </a>
                 <time className="message-date">
-                    {`${messageDate.getHours()}:${messageDate.getMinutes()} ${messageDate.getHours() > 11 ? 'PM' : 'AM'}`}
+                    {`${messageDate.getHours()}:${(messageDate.getMinutes() + '').padStart(2, 0)}
+                        ${messageDate.getHours() > 11 ? 'PM' : 'AM'}`
+                    }
                 </time>
                 <p className="message-text">
                     {text}
