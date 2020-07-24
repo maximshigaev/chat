@@ -1,0 +1,26 @@
+.chat-input {
+    font: inherit;
+    font-size: 14px;
+    width: 255px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    padding-left: 17px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 40px;
+    border-radius: 5px;
+    position: relative;
+    margin-right: 24px;
+
+    &:hover,
+    &:focus {
+        border: 1px solid black;
+    }
+
+    &:active {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &::placeholder {
+        color: #8d8d8d;
+    }
+}
