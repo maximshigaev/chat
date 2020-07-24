@@ -20,10 +20,11 @@ const TextArea = observer(() => {
     const handleKeyDown = (evt) => {
         if (evt.keyCode === 13) {
             evt.preventDefault();
+            setTextAreaValue('');
 
             createMessage({
                 channelId: currentChannel.id,
-                date: new Date(),
+                date: new Date().toISOString(),
                 text: textAreaValue,
                 author: {
                     firstName: `Maxim`,

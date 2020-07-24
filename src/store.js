@@ -1,4 +1,5 @@
 import {extendObservable, action} from 'mobx';
+import faker from 'faker';
 
 import {api} from './api';
 
@@ -6,6 +7,8 @@ class Store {
     constructor() {
         this.getAllUsers();
         this.getAllChannels();
+
+        this.startChat();
 
         extendObservable(this, {
             users: [],
@@ -18,6 +21,25 @@ class Store {
                 return this.users.filter((user) => user.isFriend);
             },
         });
+    }
+
+    startChat = () => {
+        const emitMessage = () => {
+            if (this.currentChannel) {
+                this.createMessage({
+                    channelId: this.currentChannel.id,
+                    date: new Date().toISOString(),
+                    text: faker.lorem.text(),
+                    author: {
+                        firstName: faker.name.firstName(),
+                        lastName: faker.name.lastName(),
+                        avatar: faker.internet.avatar(),
+                    }
+                }, this.currentChannel.id);
+            }
+        }
+
+        setInterval(emitMessage, 5000);
     }
 
     setFilterTerm = action((term) => this.filterTerm= term);

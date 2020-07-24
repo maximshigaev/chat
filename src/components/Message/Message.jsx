@@ -8,10 +8,13 @@ import './Message.scss';
 const Message = ({message}) => {
     const {setCurrentUser, users} = useContext(StoreContext);
     const {date, text} = message;
-    const user = users.find((user) => user.id === message.userId);
-    const authorName = `${user.firstName} ${user.lastName}`;
     const messageDate = new Date(Date.parse(date));
-    
+
+    const user = (message.userId)
+        ? users.find((user) => user.id === message.userId)
+        : message.author;
+    const authorName = `${user.firstName} ${user.lastName}`; 
+
     const handleClick = () => setCurrentUser(user);
 
     return (
