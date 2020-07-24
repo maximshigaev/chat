@@ -1,6 +1,13 @@
 import axios from 'axios';
 
 class Api {
+    constructor() {
+        this.request.interceptors.response.use(
+            (response) => response.data,
+            (error) => Promise.reject(error)
+        );
+    }
+
     request = axios.create({
         baseURL: 'http://localhost:3001',
         headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -16,8 +23,8 @@ class Api {
     updateChannel = (channel) => this.request.put(`/channels/${channel.id}`, channel);
     deleteChannel = (id) => this.request.delete(`/channels/${id}`);
 
-    getMessages = () => this.request.get(`/messages`);
-    createMessage = (message) => this.request.post(`/messages`, message);
+    getCurrentMessages = (id) => this.request.get(`/channels/${id}/messages`);
+    createMessage = (message, id) => this.request.post(`/channels/${id}/messages`, message);
 }
 
 const api = new Api();
