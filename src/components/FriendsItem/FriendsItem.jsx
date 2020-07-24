@@ -1,22 +1,29 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+
+import {StoreContext} from '../../context';
 
 import './FriendsItem.scss';
 
 const FriendsItem = ({friend}) => {
     const {firstName, lastName, isOnline, avatar} = friend;
     const itemClass = cn(`friends-item`, {'friends-item--online': isOnline});
-    const userName = `${firstName} ${lastName}`;
+    const friendName = `${firstName} ${lastName}`;
+    const {setCurrentUser} = useContext(StoreContext);
+
+    const handleClick = () => setCurrentUser(friend);
 
     return (
-        <li className={itemClass}
-            title={`${userName}(${isOnline ? `Online`: `Offline`})`}
-        >
-            <img className="friends-image" src={avatar} width="35px" height= "32px"
-                alt={`${userName}`}
-            />
-            {`${userName}`}
+        <li className={itemClass}>
+            <a className="friends-link" onClick={handleClick}
+                title={`Open ${friendName}'s profile(${isOnline ? `Online`: `Offline`})`}
+            >
+                <img className="friends-image" src={avatar} width="35px" height= "32px"
+                    alt={`${friendName}`}
+                />
+                {`${friendName}`}
+            </a>
         </li>
     );
 }
