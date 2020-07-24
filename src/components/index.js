@@ -12,3 +12,5 @@ export {Message} from './Message/Message';
 export {MessageList} from './MessageList/MessageList';
 export {TextArea} from './TextArea/TextArea';
 export {ChatFooter} from './ChatFooter/ChatFooter';
+export {Profile} from './Profile/Profile';
+export {ProfileInfoItem} from './ProfileInfoItem/ProfileInfoItem';

@@ -8,13 +8,13 @@ import {FriendsItem} from '../';
 import './FriendsList.scss';
 
 const FriendsList = observer(() => {
-    const store = useContext(StoreContext);
+    const {friends} = useContext(StoreContext);
 
     return (
         <div className="friends">
-            <MenuTitle title="Friends" quantity={store.friends.length} />
-            <ul className="friends__list">
-                {store.friends.map((friend) => <FriendsItem key={friend.id} friend={friend} />)}
+            <MenuTitle title="Friends" quantity={friends.length} />
+            <ul className="friends-list custom-scrollbar custom-scrollbar--light">
+                {friends.map((friend) => <FriendsItem key={friend.id} friend={friend} />)}
             </ul>
         </div>
     );

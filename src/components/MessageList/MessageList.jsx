@@ -18,7 +18,7 @@ const MessageList = observer(() => {
     useEffect(() => listRef.current.scrollBy(0, listRef.current.scrollHeight), [currentMessages.length]);
 
     return (
-        <ul className="message-list" ref={listRef}>
+        <ul className="message-list custom-scrollbar" ref={listRef}>
             {currentMessages
                 .filter((message) => message.text.includes(filterTerm))
                 .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))

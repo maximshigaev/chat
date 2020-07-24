@@ -13,7 +13,7 @@ const ChannelsList = observer(() => {
     return (
         <nav className="channels">
             <MenuTitle title="Channels" quantity={store.channels.length} />
-            <ul className="channels__list">
+            <ul className="channels-list custom-scrollbar custom-scrollbar--light">
                 {store.channels.map((channel) => <ChannelsItem key={channel.id} channel={channel} />)}
             </ul>
         </nav>

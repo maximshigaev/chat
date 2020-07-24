@@ -43,6 +43,16 @@ a {
 	outline: none;
 }
 
+button {
+	background-color: transparent;
+	border: none;
+    cursor: pointer;
+
+	&:focus {
+		outline: none;
+	}
+}
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -63,4 +73,28 @@ img {
 
 	clip: rect(0 0 0 0);
 	clip-path: inset(100%);
+}
+
+.custom-scrollbar {
+	&::-webkit-scrollbar-thumb {
+		-webkit-border-radius: 2px;
+		border-radius: 2px;
+		background-color: rgba(0, 0, 0, 0.2);
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+	}
+
+	&::-webkit-scrollbar {
+		width: 7px;
+	}
+
+	&--light::-webkit-scrollbar-thumb {
+		background-color: grey;
+
+		&:hover {
+			background-color: #b5b5b5;
+		}
+	}
 }

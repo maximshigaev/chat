@@ -42,7 +42,7 @@ const TextArea = observer(() => {
     }
 
     return (
-        <textarea className="textarea" value={textAreaValue} onChange={handleChange}
+        <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange}
             onKeyDown={handleKeyDown} onFocus={handleFocus}
         />
     );
