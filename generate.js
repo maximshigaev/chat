@@ -1,17 +1,12 @@
-var faker = require('faker');
-var times = require('lodash.times');
+const faker = require('faker');
+const times = require('lodash.times');
 
 module.exports = () => {
     const fillMessages = (id) => ({
         id: id + 1,
-        channelId: Math.floor(1 + Math.random() * 10),
+        channelId: Math.floor(1 + Math.random() * 15),
         userId: Math.floor(1 + Math.random() * 100),
-        author: {
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName(),
-            avatar: faker.internet.avatar(),
-        },
-        date: new Date(Date.parse(faker.date.past())).toLocaleDateString(),
+        date: faker.date.past(),
         text: faker.lorem.text(),
     });
 
@@ -31,7 +26,7 @@ module.exports = () => {
         email: faker.internet.email(),
         userName: faker.internet.userName(),
         skype: faker.random.word(),
-        timeZone: new Date(Date.parse(faker.date.past())).toLocaleDateString(),
+        timeZone: faker.date.past(),
         isFriend: faker.random.boolean(),
         isOnline: faker.random.boolean(),
         social: {
@@ -44,7 +39,7 @@ module.exports = () => {
 
     const db = {
         users: times(100, fillUsers),
-        channels: times(10, fillChannels),
+        channels: times(15, fillChannels),
         messages: times(100, fillMessages),
     }
 
