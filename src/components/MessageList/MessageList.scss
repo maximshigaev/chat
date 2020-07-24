@@ -1,0 +1,32 @@
+.message-list {
+    height: calc(100vh - 192px);
+    overflow: auto;
+    border-bottom: 1px solid #c2c2c2;
+    border-top: 1px solid #c2c2c2;
+}
+
+.message-break {
+    position: relative;
+    color: #8d8d8d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &::before,
+    &::after {
+        height: 1px;
+        background-color: #c2c2c2;
+        content: '';
+        position: absolute;
+        top: 10px;
+        width: 36%;
+    }
+
+    &::before {
+        left: 25px;
+    }
+
+    &::after {
+        right: 25px;
+    }
+}
