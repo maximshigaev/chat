@@ -6,24 +6,26 @@ class Store {
     constructor() {
         this.getAllUsers();
         this.getAllChannels();
-        this.getAllMessages();
 
         extendObservable(this, {
             users: [],
             channels: [],
-            messages: [],
-            currentUser: null,
+            currentMessages: [],
             currentChannel: null,
-            friends: () => this.users.filter((user) => user.isFriend),
-            currentMessages: () => this.messages.filter((message) => message.channelId = this.currentChannel.id),
+            currentUser: null,
+            filterTerm: ``,
+            get friends() {
+                return this.users.filter((user) => user.isFriend);
+            },
         });
     }
 
+    setFilterTerm = action((term) => this.filterTerm= term);
+
     getAllUsers = action(() => api.getUsers().then((users) => this.users = users));
     getAllChannels = action(() => api.getChannels().then((channels) => this.channels = channels));
-    getAllMessages = action(() => api.getMessages().then((messages) => this.messages = messages));
 
-    setCurrentUser = action((id) => this.currentUser = this.users.find((user) => user.id === id));
+    setCurrentUser = action((user) => this.currentUser = user);
     createFriend = action((friend) => {
         api.createFriend(friend);
         this.getAllUsers();
@@ -33,7 +35,6 @@ class Store {
         this.getAllUsers();
     });
 
-    setCurrentChannel = action((id) => this.currentChannel = this.channels.find((channel) => channel.id === id));
     createChannel = action((channel) => {
         api.createChannel(channel);
         this.getAllChannels();
@@ -47,9 +48,13 @@ class Store {
         this.getAllChannels();
     });
 
-    createMessage = action((message) => {
-        api.createMessage(message);
-        this.getAllMessages();
+    getCurrentMessages = action((id) => api.getCurrentMessages(id).then((messages) => {
+        this.currentMessages = messages;
+        this.currentChannel = this.channels.find((channel) => channel.id === +id);
+    }));
+    createMessage = action((message, id) => {
+        api.createMessage(message, id);
+        this.getCurrentMessages(this.currentChannel.id);
     });
 }
 
