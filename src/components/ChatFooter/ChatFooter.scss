@@ -1,0 +1,53 @@
+.chat-footer {
+    display: flex;
+    padding: 25px;
+    align-items: center;
+}
+
+.chat-upload-btn {
+    width: 14px;
+    height: 20px;
+    background-image: url('../../img/icons/chat-upload.svg');
+    margin-right: 20px;
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-upload-hover.svg');
+    }
+
+    &:active {
+        background-image: url('../../img/icons/chat-upload-active.svg');
+    }
+}
+
+.chat-voice-btn {
+    width: 15px;
+    height: 20px;
+    margin-right: 20px;
+    background-image: url('../../img/icons/chat-voice.svg');
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-voice-hover.svg');
+    }
+
+    &:active {
+        background-image: url('../../img/icons/chat-voice-active.svg');
+    }
+}
+
+.chat-smiles-btn {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    background-image: url('../../img/icons/chat-smiles.svg');
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-smiles-hover.svg');
+    }
+
+    &:active {
+        background-image: url('../../img/icons/chat-smiles-active.svg');
+    }
+}
