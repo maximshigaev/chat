@@ -1,0 +1,43 @@
+.message {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 13px;
+    padding-top: 9px;
+    display: flex;
+}
+
+.message-link {
+    color: #000000;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 7px;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}
+
+.message-avatar {
+    width: 35px;
+    height: 32px;
+    margin-right: 12px;
+}
+
+.message-date {
+    color: #8d8d8d;
+    font-size: 12px;
+}
+
+.message-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.message-text {
+    width: 100%;
+}
