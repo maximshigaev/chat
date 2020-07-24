@@ -1,0 +1,100 @@
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    padding-top: 32px;
+    padding-right: 54px;
+    padding-bottom: 16px;
+}
+
+.chat-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+.chat-favourite-btn {
+    width: 15px;
+    height: 14px;
+    border: none;
+    background-image: url('../../img/icons/chat-notfavourite.svg');
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-favourite.svg');
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+
+    &--in-list {
+        background-image: url('../../img/icons/chat-favourite.svg');
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/chat-notfavourite.svg');
+        }
+    }
+}
+
+.chat-participants {
+    color: #a4a4a4;
+    font-size: 14px;
+    position: relative;
+    margin-right: 25px;
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 11px;
+        height: 14px;
+        background-image: url('../../img/icons/chat-people.svg');
+        left: -17px;
+        top: 0;
+    }
+}
+
+.chat-notification-btn {
+    width: 15px;
+    height: 14px;
+    border: none;
+    background-image: url('../../img/icons/chat-notification.svg');
+    position: relative;
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-notification-hover.svg');
+    }
+
+    &:active {
+        background-image: url('../../img/icons/chat-notification-active.svg');
+    }
+
+    &::after {
+        position: absolute;
+        content: '';
+        background-color: #fd4948;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        right: -3px;
+        top: -3px;
+    }
+}
+
+.chat-header-wrapper {
+    position: relative;
+    margin-left: auto;
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 16px;
+        height: 14px;
+        top: 12px;
+        right: 53px;
+        z-index: 1;
+        background-image: url('../../img/icons/chat-search.svg');
+    }
+}
