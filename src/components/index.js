@@ -1,6 +1,7 @@
 export {App} from './App/App';
 export {ChannelsList} from './ChannelsList/ChannelsList';
 export {Menu} from './Menu/Menu';
+export {MenuHeader} from './MenuHeader/MenuHeader';
 export {ChannelsItem} from './ChannelsItem/ChannelsItem';
 export {FriendsList} from './FriendsList/FriendsList';
 export {MenuTitle} from './MenuTitle/MenuTitle';

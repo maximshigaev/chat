@@ -44,10 +44,8 @@ class Store {
         setInterval(emitMessage, 5000);
     }
 
-    createProfile = action((profile) => {
-        api.createProfile(profile);
-        this.getProfile();
-    });
+    createProfile = action((profile) => api.createProfile(profile).then((profile) => this.profile = profile));
+    updateProfile = action((profile) => api.updateProfile(profile).then((profile) => this.profile = profile));
     getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
 
     setFilterTerm = action((term) => this.filterTerm= term);

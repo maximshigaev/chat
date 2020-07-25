@@ -14,11 +14,13 @@ class Api {
     });
 
     getUsers = () => this.request.get(`/users`);
+
+    updateProfile = (profile) => this.request.put(`/profile`, profile);
     getProfile = () => this.request.get(`/profile`);
     createProfile = (profile) => this.request.post(`/profile`, profile);
 
     createFriend = (friend) => this.request.post(`/users`, friend);
-    deleteFriend = (id) => this.request.put(`/users/${id}`);
+    deleteFriend = (id) => this.request.delete(`/users/${id}`);
 
     getChannels = () => this.request.get(`/channels`);
     createChannel = (channel) => this.request.post(`/channels`, channel);

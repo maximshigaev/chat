@@ -29,7 +29,7 @@ const Chat = observer(() => {
 
     return (
         <main className="chat">
-            <ChatHeader channel={currentChannel} />
+            <ChatHeader />
             <MessageList />
             <ChatFooter />
         </main>
