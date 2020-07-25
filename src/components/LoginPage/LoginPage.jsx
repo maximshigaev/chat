@@ -14,7 +14,7 @@ const LoginPage = observer(() => {
     const [isNewUser, setIsNewUser] = useState(false);
     const {profile} = useContext(StoreContext);
 
-    if (profile && profile.isLoggedIn) {
+    if (profile && !!Object.keys(profile).length) {
         return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
     }
 

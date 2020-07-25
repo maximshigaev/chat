@@ -47,6 +47,7 @@ class Store {
     createProfile = action((profile) => api.createProfile(profile).then((profile) => this.profile = profile));
     updateProfile = action((profile) => api.updateProfile(profile).then((profile) => this.profile = profile));
     getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
+    deleteProfile = action(() => api.deleteProfile());
 
     setFilterTerm = action((term) => this.filterTerm= term);
 

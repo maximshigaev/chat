@@ -12,7 +12,7 @@ import './MainPage.scss';
 const MainPage = observer(() => {
     const {profile} = useContext(StoreContext);
 
-    if (!profile || !profile.isLoggedIn) {
+    if (!profile || !Object.keys(profile).length) {
         return <Redirect to="/login" />;
     }
 

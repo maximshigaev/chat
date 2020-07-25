@@ -24,7 +24,6 @@ const LoginForm = ({onSignUpClick: handleSignUpClick}) => {
                 inst: null,
                 lkdn: null,
             },
-            isLoggedIn: true,
         }); 
     };
 
