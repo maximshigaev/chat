@@ -1,0 +1,87 @@
+.menu-header {
+    position: relative;
+    margin-bottom: 30px;
+    margin-right: 25px;
+}
+
+.menu-btn {
+    background-repeat: no-repeat;
+    position: absolute;
+
+    &--settings {
+        width: 16px;
+        height: 15px;
+        background-image: url('../../img/icons/menu-settings.svg');
+        top: 6px;
+        right: 0;
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/menu-settings-hover.svg');
+        }
+
+        &:active {
+            background-image: url('../../img/icons/menu-settings-active.svg');
+        }
+    }
+
+    &--dropdown {
+        width: 11px;
+        height: 6px;
+        background-image: url('../../img/icons/menu-dropdown.svg');
+        top: 11px;
+        left: 115px;
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/menu-dropdown-hover.svg');
+        }
+
+        &:active {
+            background-image: url('../../img/icons/menu-dropdown-active.svg');
+        }
+    }
+}
+
+.menu-intro {
+    font-size: 14px;
+    padding-left: 29px;
+    position: relative;
+    margin-bottom: 32px;
+    margin-right: 25px;
+
+    &::before {
+        width: 18px;
+        height: 17px;
+        background-image: url('../../img/icons/menu-thoughts.svg');
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+    }
+}
+
+.menu-settings {
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    right: 0;
+}
+
+.menu-settings-btn {
+    display: inline-block;
+    width: 200px;
+    background-color: #b5b5b5;
+    border-radius: 5px;
+    padding: 5px 20px;
+
+    &:hover,
+    &:focus {
+        color: #b5b5b5;
+        background-color: black;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}
