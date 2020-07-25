@@ -1,18 +1,14 @@
 import React from 'react';
+import {Redirect, Switch, Route} from 'react-router-dom';
 
-import {Menu} from '../';
-import {Chat} from '../';
-import {Profile} from '../';
-
-import './App.scss';
+import {LoginPage} from '../';
+import {MainPage} from '../';
 
 const App = () => (
-    <div className="app">
-        <h1 className="visually-hidden">Chat</h1>
-        <Menu />
-        <Chat />
-        <Profile />
-    </div>
+    <Switch>
+        <Route path={`${process.env.PUBLIC_URL}/login`} component={LoginPage} exact />
+        <Route path={`${process.env.PUBLIC_URL}/`} component={MainPage} />
+    </Switch>
 );
 
 export {App};

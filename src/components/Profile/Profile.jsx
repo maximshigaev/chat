@@ -27,7 +27,7 @@ const Profile = observer(() => {
     const headingStyle = cn(`profile-name`, {'profile-name--online': isOnline});
 
     return (
-        <section className="profile">
+        <section className="profile custom-scrollbar custom-scrollbar--light">
             <h2 className="visually-hidden">User Profile</h2>
             <img className="profile-avatar" src={avatar} alt={profileUserName} width="100" height="100" />
             <div className="profile-info">

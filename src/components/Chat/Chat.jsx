@@ -14,7 +14,9 @@ const Chat = observer(() => {
     const {getCurrentMessages, currentChannel} = useContext(StoreContext);
     
     useEffect(() => {
-        getCurrentMessages(currentChannelId);
+        if (currentChannelId) {
+            getCurrentMessages(currentChannelId);
+        }
     }, [currentChannelId, getCurrentMessages]);
 
     if(!currentChannel) {

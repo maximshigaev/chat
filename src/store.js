@@ -7,8 +7,9 @@ class Store {
     constructor() {
         this.getAllUsers();
         this.getAllChannels();
+        this.getProfile();
 
-        this.startChat();
+        // this.startChat();
 
         extendObservable(this, {
             users: [],
@@ -20,6 +21,7 @@ class Store {
             get friends() {
                 return this.users.filter((user) => user.isFriend);
             },
+            profile: null,
         });
     }
 
@@ -34,13 +36,19 @@ class Store {
                         firstName: faker.name.firstName(),
                         lastName: faker.name.lastName(),
                         avatar: faker.internet.avatar(),
-                    }
+                    },
                 }, this.currentChannel.id);
             }
         }
 
         setInterval(emitMessage, 5000);
     }
+
+    createProfile = action((profile) => {
+        api.createProfile(profile);
+        this.getProfile();
+    });
+    getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
 
     setFilterTerm = action((term) => this.filterTerm= term);
 
