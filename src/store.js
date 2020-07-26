@@ -29,6 +29,7 @@ class Store {
             isProfileCreating: false,
             profiles: [],
             isProfilesLoading: true,
+            isMyProfileOpen: false,
         });
     }
 

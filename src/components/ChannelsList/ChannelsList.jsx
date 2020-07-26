@@ -1,20 +1,17 @@
-import React, {useContext, useState, useCallback} from 'react';
+import React, {useContext} from 'react';
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
 import {ChannelsItem} from '../';
 import {MenuTitle} from '../';
 import {Spinner} from '../';
+import {useControlledInput} from '../../hooks';
 
 import './ChannelsList.scss';
 
 const ChannelsList = observer(() => {
     const {channels, isChannelsLoading, setChannelsFilterTerm, channelsFilterTerm} = useContext(StoreContext);
-    const [inputValue, setInputValue] = useState(``);
-    const handleChange = useCallback((evt) => {
-        setInputValue(evt.target.value);
-        setChannelsFilterTerm(evt.target.value);
-    }, [setChannelsFilterTerm]);
+    const {inputValue, handleChange} = useControlledInput(setChannelsFilterTerm);
 
     return (
         <nav className="channels">

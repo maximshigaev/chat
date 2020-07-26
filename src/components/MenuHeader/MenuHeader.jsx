@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useCallback} from 'react';
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
@@ -9,13 +9,13 @@ const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const {updateProfile, currentProfile} = useContext(StoreContext);
 
-    const handleSettingsBtnClick = () => setIsSettingsOpen((prevState) => !prevState);
-    const handleLogoutBtnClick = () =>{
+    const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), []);
+    const handleLogoutBtnClick = useCallback(() =>{
         updateProfile({
             ...currentProfile,
             isOnline: false,
         }, currentProfile.id);
-    }
+    }, [updateProfile, currentProfile]);
 
     return (
         <div className="menu-header">

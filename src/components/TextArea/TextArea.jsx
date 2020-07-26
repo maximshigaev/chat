@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useCallback} from 'react';
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
@@ -16,8 +16,8 @@ const TextArea = observer(() => {
         setTextAreaValue(`Message in #${currentChannel.title}`)
     }, [currentChannel.title]);
 
-    const handleChange = (evt) => setTextAreaValue(evt.target.value);
-    const handleKeyDown = (evt) => {
+    const handleChange = useCallback((evt) => setTextAreaValue(evt.target.value), []);
+    const handleKeyDown = useCallback((evt) => {
         if (evt.keyCode === 13) {
             evt.preventDefault();
             setTextAreaValue('');
@@ -33,14 +33,15 @@ const TextArea = observer(() => {
                 }
             }, currentChannel.id);
         }
-    }
-    const handleFocus = () => {
+    }, [createMessage, currentChannel.id, textAreaValue]);
+    
+    const handleFocus = useCallback(() => {
         if (!isTouched) {
             setTextAreaValue('');
         }
         
         isTouched = true;
-    }
+    }, []);
 
     return (
         <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange}

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import {StoreContext} from '../../context';
@@ -15,7 +15,7 @@ const Message = ({message}) => {
         : message.author;
     const authorName = `${user.firstName} ${user.lastName}`; 
 
-    const handleClick = () => setCurrentUser(user);
+    const handleClick = useCallback(() => setCurrentUser(user), [setCurrentUser, user]);
 
     return (
         <li className="message">

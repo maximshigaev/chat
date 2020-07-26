@@ -1,21 +1,18 @@
-import React, {useContext, useState, useCallback} from 'react';
+import React, {useContext} from 'react';
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
 import {MenuTitle} from '../';
 import {Spinner} from '../';
 import {FriendsItem} from '../';
+import {useControlledInput} from '../../hooks';
 
 import './FriendsList.scss';
 
 const FriendsList = observer(() => {
     const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm} = useContext(StoreContext);
-    const [inputValue, setInputValue] = useState(``);
-    const handleChange = useCallback((evt) => {
-        setInputValue(evt.target.value);
-        setFriendsFilterTerm(evt.target.value);
-    }, [setFriendsFilterTerm]);
-    
+    const {inputValue, handleChange} = useControlledInput(setFriendsFilterTerm);
+
     return (
         <div className="friends">
             {isUsersLoading && <Spinner size="middle" />}
