@@ -12,7 +12,9 @@ class Store {
 
         extendObservable(this, {
             users: [],
+            isUsersLoading: true,
             channels: [],
+            isChannelsLoading: true,
             currentMessages: [],
             currentChannel: null,
             currentUser: null,
@@ -21,7 +23,10 @@ class Store {
                 return this.users.filter((user) => user.isFriend);
             },
             currentProfile: null,
+            isProfileUpdating: false,
+            isProfileCreating: false,
             profiles: [],
+            isProfilesLoading: true,
         });
     }
 
@@ -48,24 +53,40 @@ class Store {
     getProfiles = action(() => api.getProfiles().then((profiles) => {
         this.profiles = profiles;
         const onlineProfile = this.profiles.find((profile) => profile.isOnline);
-
+       
         if (onlineProfile) {
             this.setCurrentProfile(onlineProfile);
         } else {
             this.setCurrentProfile(null);
         }
+
+        this.isProfilesLoading = false;
+        this.isProfileUpdating = false;
+        this.isProfileCreating = false;
     }));
-    createProfile = action((profile) => api.createProfile(profile).then((profile) => this.currentProfile = profile));
-    updateProfile = action((profile, id) => api.updateProfile(profile, id).then((profile) => {
-        this.getProfiles();
-    }));
+    createProfile = action((profile) => {
+        this.isProfileCreating = true;
+        api.createProfile(profile)
+            .then(() => this.getProfiles())
+    });
+    updateProfile = action((profile, id) => {
+        this.isProfileUpdating = true;
+        api.updateProfile(profile, id)
+            .then(() => this.getProfiles())
+    });
     getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
     deleteProfile = action(() => api.deleteProfile());
 
     setFilterTerm = action((term) => this.filterTerm= term);
 
-    getAllUsers = action(() => api.getUsers().then((users) => this.users = users));
-    getAllChannels = action(() => api.getChannels().then((channels) => this.channels = channels));
+    getAllUsers = action(() => api.getUsers().then((users) => {
+        this.isUsersLoading = false;
+        this.users = users;
+    }));
+    getAllChannels = action(() => api.getChannels().then((channels) => {
+        this.channels = channels;
+        this.isChannelsLoading = false;
+    }));
 
     setCurrentUser = action((user) => this.currentUser = user);
     createFriend = action((friend) => {

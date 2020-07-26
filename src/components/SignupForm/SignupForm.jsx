@@ -14,7 +14,8 @@ const SignupForm = observer(() => {
     const {createProfile} = useContext(StoreContext);
 
     const handleSignupFormSubmit = (formData) => {
-        createProfile({...formData,
+        createProfile({
+            ...formData,
             avatar: null,
             jobTitle: null,
             timeZone: null,

@@ -8,6 +8,7 @@ import './MenuHeader.scss';
 const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const {updateProfile, currentProfile} = useContext(StoreContext);
+
     const handleSettingsBtnClick = () => setIsSettingsOpen((prevState) => !prevState);
     const handleLogoutBtnClick = () =>{
         updateProfile({
@@ -18,7 +19,9 @@ const MenuHeader = observer(() => {
 
     return (
         <div className="menu-header">
-            <h2 className="menu-title">Nomad List</h2>
+            <p className="menu-title menu-title--name">
+                {currentProfile.userName}
+            </p>
             <button className="menu-btn menu-btn--settings" title={isSettingsOpen ? `Close settings` : `Open settings`}
                 onClick={handleSettingsBtnClick}
             />
@@ -29,8 +32,6 @@ const MenuHeader = observer(() => {
                     </button>
                 </div>
             }
-            <button className="menu-btn menu-btn--dropdown" title="Expand" />
-            <p className="menu-intro">All threads</p>
         </div>
     );
 });

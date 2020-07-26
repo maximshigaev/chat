@@ -24,41 +24,6 @@
             background-image: url('../../img/icons/menu-settings-active.svg');
         }
     }
-
-    &--dropdown {
-        width: 11px;
-        height: 6px;
-        background-image: url('../../img/icons/menu-dropdown.svg');
-        top: 11px;
-        left: 115px;
-
-        &:hover,
-        &:focus {
-            background-image: url('../../img/icons/menu-dropdown-hover.svg');
-        }
-
-        &:active {
-            background-image: url('../../img/icons/menu-dropdown-active.svg');
-        }
-    }
-}
-
-.menu-intro {
-    font-size: 14px;
-    padding-left: 29px;
-    position: relative;
-    margin-bottom: 32px;
-    margin-right: 25px;
-
-    &::before {
-        width: 18px;
-        height: 17px;
-        background-image: url('../../img/icons/menu-thoughts.svg');
-        position: absolute;
-        top: 0;
-        left: 0;
-        content: '';
-    }
 }
 
 .menu-settings {

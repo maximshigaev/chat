@@ -1,15 +1,23 @@
 import React, {useContext, useEffect} from 'react';
 import {Switch, Route} from 'react-router-dom';
+import {observer} from 'mobx-react';
 
 import {LoginPage} from '../';
 import {MainPage} from '../';
 import {SignupPage} from '../';
 import {StoreContext} from '../../context';
+import {Spinner} from '../';
 
-const App = () => {
-    const {getProfiles} = useContext(StoreContext);
+const App = observer(() => {
+    const {getProfiles, isProfilesLoading} = useContext(StoreContext);
 
-    useEffect(() => getProfiles(), [getProfiles]);
+    useEffect(() => {
+        getProfiles();
+    }, [getProfiles]);
+
+    if (isProfilesLoading) {
+        return < Spinner />;
+    }
 
     return (
         <Switch>
@@ -18,6 +26,6 @@ const App = () => {
             <Route path={`${process.env.PUBLIC_URL}/`} component={MainPage} />
         </Switch>
     );
-}
+});
 
 export {App};

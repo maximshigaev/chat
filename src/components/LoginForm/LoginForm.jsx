@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useCallback} from 'react';
 import {Formik, Form} from 'formik';
 import {Link} from 'react-router-dom';
 import {observer} from 'mobx-react';
@@ -11,7 +11,7 @@ import {FormField} from '../';
 import './LoginForm.scss';
 
 const LoginForm = observer(() => {
-    const {profiles, setCurrentProfile} = useContext(StoreContext);
+    const {profiles, updateProfile} = useContext(StoreContext);
     const [isNotFoundError, setIsNotFoundError] = useState(false);
 
     const handleLoginFormSubmit = (formData) => {
@@ -19,13 +19,16 @@ const LoginForm = observer(() => {
             profiles.find((profile) => profile.email === formData.email && profile.password === formData.password);
 
         if (registeredProfile) {
-            setCurrentProfile(registeredProfile);
+            updateProfile({
+                ...registeredProfile,
+                isOnline: true,
+            }, registeredProfile.id);
         } else {
             setIsNotFoundError(true);
         }
     };
 
-    const handleFocus = () => setIsNotFoundError(false);
+    const handleFocus = useCallback(() => setIsNotFoundError(false), []);
 
     return (
         <Formik initialValues={loginFormShape.initialValues} onSubmit={handleLoginFormSubmit}

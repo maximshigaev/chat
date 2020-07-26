@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import {observer} from 'mobx-react';
 
@@ -9,9 +9,11 @@ import {SignupForm} from '../';
 import './SignupPage.scss';
 
 const SignupPage = observer(() => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const {currentProfile} = useContext(StoreContext);
+    const {currentProfile, isProfileCreating} = useContext(StoreContext);
+
+    if (isProfileCreating) {
+        return <Spinner />;
+    }
 
     if (currentProfile) {
         return <Redirect to={`${process.env.PUBLIC_URL}/`} />;

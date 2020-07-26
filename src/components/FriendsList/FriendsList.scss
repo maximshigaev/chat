@@ -1,5 +1,10 @@
+.friends {
+    position: relative;
+    min-height: calc((100vh - 180px) / 2);
+}
+
 .friends-list {
     margin-right: 5px;
     overflow-y: auto;
-    height: calc((100vh - 232px) / 2);
+    height: calc((100vh - 180px) / 2);
 }
