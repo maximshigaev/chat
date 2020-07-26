@@ -1,0 +1,39 @@
+.signup-page {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.signup-page-heading {
+    font-size: 24px;
+}
+
+.signup-link {
+    background-color: #3577ef;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 40px;
+    cursor: pointer;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    &:disabled {
+        background-color: grey;
+    }
+
+    &:hover:not(:disabled),
+    &:focus {
+        background-color: blue;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}
