@@ -8,3 +8,20 @@
     overflow-y: auto;
     height: calc((100vh - 180px) / 2);
 }
+
+.friends-search {
+    background-color: #25272a;
+    border: 1px solid #919191;
+    margin-bottom: 10px;
+    color:#919191;
+    padding: 2px 20px;
+    margin-right: 20px;
+    width: 90%;
+    border-radius: 2px;
+    outline: none;
+
+    &:hover,
+    &:focus {
+        border: 1px solid white;
+    }
+}

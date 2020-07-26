@@ -20,7 +20,7 @@ const MessageList = observer(() => {
     return (
         <ul className="message-list custom-scrollbar" ref={listRef}>
             {currentMessages
-                .filter((message) => message.text.includes(filterTerm))
+                .filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
                 .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))
                 .map((message) => {
                     const date = new Date(Date.parse(message.date))

@@ -23,6 +23,7 @@ class Store {
             get friends() {
                 return this.users.filter((user) => user.isFriend);
             },
+            friendsFilterTerm: ``,
             currentProfile: null,
             isProfileUpdating: false,
             isProfileCreating: false,
@@ -100,6 +101,7 @@ class Store {
         api.deleteFriend(id);
         this.getAllUsers();
     });
+    setFriendsFilterTerm = action((term) => this.friendsFilterTerm = term);
 
     createChannel = action((channel) => {
         api.createChannel(channel);

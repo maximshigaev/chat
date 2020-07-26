@@ -25,7 +25,9 @@ const ChannelsList = observer(() => {
                     <input className="channels-search" value={inputValue} placeholder="Search.." onChange={handleChange} />
                     <ul className="channels-list custom-scrollbar custom-scrollbar--light">
                         {channels
-                            .filter((channel) => channel.title.includes(channelsFilterTerm))
+                            .filter((channel) => {
+                                return channel.title.toLowerCase().includes(channelsFilterTerm.toLowerCase().trim());
+                            })
                             .map((channel) => <ChannelsItem key={channel.id} channel={channel} />)
                         }
                     </ul>
