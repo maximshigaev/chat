@@ -14,6 +14,7 @@ class Store {
             users: [],
             isUsersLoading: true,
             channels: [],
+            channelsFilterTerm: ``,
             isChannelsLoading: true,
             currentMessages: [],
             currentChannel: null,
@@ -77,16 +78,18 @@ class Store {
     getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
     deleteProfile = action(() => api.deleteProfile());
 
-    setFilterTerm = action((term) => this.filterTerm= term);
+    setFilterTerm = action((term) => this.filterTerm = term);
 
     getAllUsers = action(() => api.getUsers().then((users) => {
         this.isUsersLoading = false;
         this.users = users;
     }));
+
     getAllChannels = action(() => api.getChannels().then((channels) => {
         this.channels = channels;
         this.isChannelsLoading = false;
     }));
+    setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
 
     setCurrentUser = action((user) => this.currentUser = user);
     createFriend = action((friend) => {
