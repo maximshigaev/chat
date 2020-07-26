@@ -1,0 +1,36 @@
+.signup-form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 750px;
+    padding-top: 160px;
+    flex-grow: 1;
+    position: relative;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.signup-btn {
+    width: 30%;
+    margin: 0 auto;
+
+    background-color: #3577ef;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 40px;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: grey;
+    }
+
+    &:hover:not(:disabled),
+    &:focus {
+        background-color: blue;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}
