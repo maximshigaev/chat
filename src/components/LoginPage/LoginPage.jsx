@@ -11,21 +11,16 @@ import './LoginPage.scss';
 const LoginPage = observer(() => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [isNewUser, setIsNewUser] = useState(false);
-    const {profile} = useContext(StoreContext);
+    const {currentProfile} = useContext(StoreContext);
 
-    if (profile && !!Object.keys(profile).length) {
+    if (currentProfile) {
         return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
     }
 
-    const handleSignUpBtnClick = () => setIsNewUser(true);
-
     return (
         <div className="login-page">
-            <h1 className="login-page-heading">
-                {isNewUser ? `Sign Up` : `Sign in`}
-            </h1>
-            <LoginForm onSignUpClick={handleSignUpBtnClick} />
+            <h1 className="login-page-heading">Sign in</h1>
+            <LoginForm />
         </div>
     );
 });

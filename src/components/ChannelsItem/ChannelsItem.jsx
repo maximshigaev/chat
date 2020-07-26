@@ -7,7 +7,7 @@ import './ChannelsItem.scss';
 const ChannelsItem = ({channel}) =>  (
     <li className="channels-item">
         <NavLink className="channels-link" activeClassName="channels-link--active"
-            title={channel.title} to={`/${channel.id}`}
+            title={channel.title} to={`${process.env.PUBLIC_URL}/${channel.id}`}
         >
             {`# ${channel.title.toLowerCase()}`}
         </NavLink>

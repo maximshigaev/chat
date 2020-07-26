@@ -7,9 +7,14 @@ import './MenuHeader.scss';
 
 const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const {updateProfile} = useContext(StoreContext);
+    const {updateProfile, currentProfile} = useContext(StoreContext);
     const handleSettingsBtnClick = () => setIsSettingsOpen((prevState) => !prevState);
-    const handleLogoutBtnClick = () => updateProfile({});
+    const handleLogoutBtnClick = () =>{
+        updateProfile({
+            ...currentProfile,
+            isOnline: false,
+        }, currentProfile.id);
+    }
 
     return (
         <div className="menu-header">

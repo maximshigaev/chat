@@ -15,9 +15,9 @@ class Api {
 
     getUsers = () => this.request.get(`/users`);
 
-    updateProfile = (profile) => this.request.put(`/profile`, profile);
-    getProfile = () => this.request.get(`/profile`);
-    createProfile = (profile) => this.request.post(`/profile`, profile);
+    getProfiles = () => this.request.get(`/profiles`);
+    updateProfile = (profile, id) => this.request.put(`/profiles/${id}`, profile);
+    createProfile = (profile) => this.request.post(`/profiles`, profile);
 
     createFriend = (friend) => this.request.post(`/users`, friend);
     deleteFriend = (id) => this.request.delete(`/users/${id}`);

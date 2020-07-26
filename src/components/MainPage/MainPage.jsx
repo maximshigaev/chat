@@ -10,9 +10,9 @@ import {StoreContext} from '../../context';
 import './MainPage.scss';
 
 const MainPage = observer(() => {
-    const {profile} = useContext(StoreContext);
+    const {currentProfile} = useContext(StoreContext);
 
-    if (!profile || !Object.keys(profile).length) {
+    if (!currentProfile) {
         return <Redirect to="/login" />;
     }
 

@@ -41,7 +41,7 @@ module.exports = () => {
         users: times(100, fillUsers),
         channels: times(15, fillChannels),
         messages: times(100, fillMessages),
-        profile: {},
+        profiles: [],
     }
 
     return db;

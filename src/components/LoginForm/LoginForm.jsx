@@ -1,82 +1,57 @@
-import React, {useContext} from 'react';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import {PropTypes} from 'prop-types';
+import React, {useContext, useState} from 'react';
+import {Formik, Form} from 'formik';
+import {Link} from 'react-router-dom';
+import {observer} from 'mobx-react';
 
 import {loginFormShape} from '../../formShapes';
 import {StoreContext} from '../../context';
+import {FormErrorMessage} from '../';
+import {FormField} from '../';
 
 import './LoginForm.scss';
 
-const LoginForm = ({onSignUpClick: handleSignUpClick}) => {
-    const {createProfile} = useContext(StoreContext);
+const LoginForm = observer(() => {
+    const {profiles, setCurrentProfile} = useContext(StoreContext);
+    const [isNotFoundError, setIsNotFoundError] = useState(false);
+
     const handleLoginFormSubmit = (formData) => {
-        createProfile({...formData,
-            firstName: null,
-            lastName: null,
-            avatar: null,
-            jobTitle: null,
-            userName: null,
-            skype: null,
-            timeZone: null,
-            social: {
-                fb: null,
-                tw: null,
-                inst: null,
-                lkdn: null,
-            },
-        }); 
+        const registeredProfile =
+            profiles.find((profile) => profile.email === formData.email && profile.password === formData.password);
+
+        if (registeredProfile) {
+            setCurrentProfile(registeredProfile);
+        } else {
+            setIsNotFoundError(true);
+        }
     };
+
+    const handleFocus = () => setIsNotFoundError(false);
 
     return (
         <Formik initialValues={loginFormShape.initialValues} onSubmit={handleLoginFormSubmit}
             validationSchema={loginFormShape.schema}
         >
-            {({ isValid }) => (
+            {({isValid}) => (
                 <Form className="login-form">
-                    <ErrorMessage name="email">
-                        {(message) => (
-                            <div className="login-message login-message--email">
-                                {message}
-                            </div>
-                        )}                   
-                    </ErrorMessage>
-                    <ErrorMessage name="password">
-                        {(message) => (
-                            <div className="login-message login-message--password">
-                                {message}
-                            </div>
-                        )}
-                    </ErrorMessage>
-                    <div className="login-field">
-                        <Field className="login-input" type="email" placeholder="Email address" name="email"
-                            id="user-email"
-                        />
-                        <label className="login-label visually-hidden" htmlFor="user-email">
-                            Email address
-                        </label>
-                    </div>
-                    <div className="login-field">
-                        <Field className="login-input" type="password" placeholder="Password" name="password"
-                            id="user-password"
-                        />
-                        <label className="login-label visually-hidden" htmlFor="user-password">
-                            Password
-                        </label>
-                    </div>
-                    <button className="form-btn form-btn--login" type="submit" title="Log in" disabled={!isValid}>
+                    {isNotFoundError &&
+                        <div className="login-message">
+                            User not found. Please sign up
+                        </div>
+                    }
+                    <FormErrorMessage name="email" modifier="email" isLoginPage={true} />
+                    <FormErrorMessage name="password" modifier="password" isLoginPage={true} />
+                    <FormField name="email" type="email" label="Email" onFocus={handleFocus} />
+                    <FormField name="password" type="password" label="Password" onFocus={handleFocus} />
+                    <button className="form-btn form-btn--login" title="Log in" disabled={!isValid}  type="submit">
                         Log in
                     </button>
-                    <a className="form-btn form-btn--signup" onClick={handleSignUpClick} title="Sign up">
+                    <Link className="form-btn form-btn--signup" title="Sign up" to={`${process.env.PUBLIC_URL}/signup`} >
                         Sign up
-                    </a>
+                    </Link>
                 </Form>
             )}
         </Formik>
     );
-}
-
-LoginForm.propTypes = {
-    onSignUpClick: PropTypes.func.isRequired,
-}
+});
 
 export {LoginForm};

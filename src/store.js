@@ -7,7 +7,6 @@ class Store {
     constructor() {
         this.getAllUsers();
         this.getAllChannels();
-        this.getProfile();
 
         // this.startChat();
 
@@ -21,7 +20,8 @@ class Store {
             get friends() {
                 return this.users.filter((user) => user.isFriend);
             },
-            profile: null,
+            currentProfile: null,
+            profiles: [],
         });
     }
 
@@ -44,8 +44,21 @@ class Store {
         setInterval(emitMessage, 5000);
     }
 
-    createProfile = action((profile) => api.createProfile(profile).then((profile) => this.profile = profile));
-    updateProfile = action((profile) => api.updateProfile(profile).then((profile) => this.profile = profile));
+    setCurrentProfile = (profile) => this.currentProfile = profile;
+    getProfiles = action(() => api.getProfiles().then((profiles) => {
+        this.profiles = profiles;
+        const onlineProfile = this.profiles.find((profile) => profile.isOnline);
+
+        if (onlineProfile) {
+            this.setCurrentProfile(onlineProfile);
+        } else {
+            this.setCurrentProfile(null);
+        }
+    }));
+    createProfile = action((profile) => api.createProfile(profile).then((profile) => this.currentProfile = profile));
+    updateProfile = action((profile, id) => api.updateProfile(profile, id).then((profile) => {
+        this.getProfiles();
+    }));
     getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
     deleteProfile = action(() => api.deleteProfile());
 

@@ -19,3 +19,7 @@ export {LoginPage} from './LoginPage/LoginPage';
 export {Spinner} from './Spinner/Spinner';
 export {MainPage} from './MainPage/MainPage';
 export {LoginForm} from './LoginForm/LoginForm';
+export {SignupForm} from './SignupForm/SignupForm';
+export {SignupPage} from './SignupPage/SignupPage';
+export {FormErrorMessage} from './FormErrorMessage/FormErrorMessage';
+export {FormField} from './FormField/FormField';
