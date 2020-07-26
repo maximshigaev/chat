@@ -1,0 +1,39 @@
+.form-error-message {
+    color: red;
+    text-align: center;
+    width: 45%;
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: absolute;
+
+    &--login {
+        width: 100%;
+    }
+
+    &--firstname,
+    &--email {
+        top: 30px;
+    }
+
+    &--surname,
+    &--password {
+        top: 70px;
+    }
+
+    &--username,
+    &--skype {
+        top: 110px;
+    }
+
+    &--firstname,
+    &--username,
+    &--password {
+        left: 0;
+    }
+
+    &--surname,
+    &--email,
+    &--skype {
+        right: 0;
+    }
+}
