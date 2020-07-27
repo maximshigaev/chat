@@ -29,7 +29,8 @@ class Store {
             isProfileCreating: false,
             profiles: [],
             isProfilesLoading: true,
-            isMyProfileOpen: false,
+            isMyProfileOpen: true,
+            isLoggingOut: false,
         });
     }
 
@@ -52,6 +53,7 @@ class Store {
         setInterval(emitMessage, 5000);
     }
 
+    setIsMyProfileOpen = (isOpen) => this.isMyProfileOpen = isOpen;
     setCurrentProfile = (profile) => this.currentProfile = profile;
     getProfiles = action(() => api.getProfiles().then((profiles) => {
         this.profiles = profiles;
@@ -66,10 +68,17 @@ class Store {
         this.isProfilesLoading = false;
         this.isProfileUpdating = false;
         this.isProfileCreating = false;
+        this.isLoggingOut = false;
     }));
     createProfile = action((profile) => {
         this.isProfileCreating = true;
         api.createProfile(profile)
+            .then(() => this.getProfiles())
+    });
+
+    logOut = action((profile, id) => {
+        this.isLoggingOut = true;
+        api.updateProfile(profile, id)
             .then(() => this.getProfiles())
     });
     updateProfile = action((profile, id) => {

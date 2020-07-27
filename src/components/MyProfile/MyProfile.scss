@@ -1,0 +1,83 @@
+.my-profile {
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 25px;
+    justify-content: center;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    margin-right: 5px;
+    position: relative;
+}
+
+.my-profile-avatar {
+    width: 100%;
+    min-height: 100px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.my-profile-upload {
+    width: 20px;
+}
+
+.my-profile-picture {
+    position: absolute;
+	top: 0;
+    left: 50%;
+    transform: translate(calc(-50% - 12px), 0);
+	display: block;
+	margin: 0;
+}
+
+.my-profile-upload {
+    position: absolute;
+	top: 0;
+    left: 50%;
+    transform: translate(calc(-50% - 12px), 0);
+	z-index: 2;
+	opacity: 0;
+	width: 100px;
+    height: 100%;
+    cursor: pointer;
+
+    &:hover+.my-profile-picture,
+    &:focus+.my-profile-picture {
+        opacity: 0.8;
+    }
+
+    &:active+.my-profile-picture {
+        opacity: 0.5;
+    }
+}
+
+.my-profile-save-btn {
+    background-color: #3577ef;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 40px;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: grey;
+    }
+
+    &:hover:not(:disabled),
+    &:focus {
+        background-color: blue;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}
+
+.my-profile-email {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}

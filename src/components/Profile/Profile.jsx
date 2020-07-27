@@ -19,17 +19,20 @@ const Profile = observer(() => {
         );
     }
 
-    const {firstName, lastName, avatar, jobTitle, userName, skype, email, timeZone, isOnline, social} = currentUser;
+    const {firstName, lastName, avatar, jobTitle, userName, skype, email, timeZone, isOnline, fb, tw, inst,
+        lkdn} = currentUser;
     const timeZoneDate =  new Date(Date.parse(timeZone));
     const formattedTimeZone = `${timeZoneDate.getHours()}:${(timeZoneDate.getMinutes() + '').padStart(2, 0)}
         ${timeZoneDate.getHours() > 11 ? 'PM' : 'AM'} Local time`;
+
     const profileUserName = `${firstName} ${lastName}`;
     const headingStyle = cn(`profile-name`, {'profile-name--online': isOnline});
+    const socialLinks  = {fb, tw, inst, lkdn};
 
     return (
         <section className="profile custom-scrollbar custom-scrollbar--light">
             <h2 className="visually-hidden">User Profile</h2>
-            <img className="profile-avatar" src={avatar} alt={profileUserName} width="100" height="100" />
+            <img className="profile-avatar" src={avatar} alt={profileUserName} width="228" height="228" />
             <div className="profile-info">
                 <h3 className={headingStyle}>
                     {profileUserName}
@@ -38,7 +41,7 @@ const Profile = observer(() => {
                     {jobTitle}
                 </span>
                 <div className="profile-social-links">
-                    {Object.entries(social)
+                    {Object.entries(socialLinks)
                         .map(([key, value]) => (
                             <a className={`profile-social-link profile-social-link--${key}`} href={value}
                                 title={value} key={key}

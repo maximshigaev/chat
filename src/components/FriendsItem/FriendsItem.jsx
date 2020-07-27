@@ -41,12 +41,10 @@ FriendsItem.propTypes = {
         timeZone: PropTypes.string.isRequired,
         isFriend: PropTypes.bool.isRequired,
         isOnline: PropTypes.bool.isRequired,
-        social: {
-            fb: PropTypes.string.isRequired,
-            tw: PropTypes.string.isRequired,
-            inst: PropTypes.string.isRequired,
-            lkdn: PropTypes.string.isRequired,
-        },
+        fb: PropTypes.string.isRequired,
+        tw: PropTypes.string.isRequired,
+        inst: PropTypes.string.isRequired,
+        lkdn: PropTypes.string.isRequired,
     }).isRequired,
 }
 

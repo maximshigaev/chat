@@ -42,3 +42,16 @@
 .message-text {
     width: 100%;
 }
+
+.message-avatar-link {
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        opacity: 0.8;
+    }
+
+    &:active {
+        opacity: 0.5;
+    }
+}

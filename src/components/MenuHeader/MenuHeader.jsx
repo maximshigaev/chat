@@ -7,15 +7,20 @@ import './MenuHeader.scss';
 
 const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const {updateProfile, currentProfile} = useContext(StoreContext);
+    const {logOut, currentProfile, setIsMyProfileOpen, isMyProfileOpen} = useContext(StoreContext);
 
-    const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), []);
+    const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), [setIsSettingsOpen]);
+    const handleProfileTogglerClick = useCallback(() => {
+        setIsSettingsOpen(false);
+        setIsMyProfileOpen(!isMyProfileOpen);
+    }, [setIsMyProfileOpen, isMyProfileOpen]);
+
     const handleLogoutBtnClick = useCallback(() =>{
-        updateProfile({
+        logOut({
             ...currentProfile,
             isOnline: false,
         }, currentProfile.id);
-    }, [updateProfile, currentProfile]);
+    }, [logOut, currentProfile]);
 
     return (
         <div className="menu-header">
@@ -27,6 +32,11 @@ const MenuHeader = observer(() => {
             />
             {isSettingsOpen &&
                 <div className="menu-settings">
+                    <button className="menu-settings-btn" onClick={handleProfileTogglerClick}
+                        title={isMyProfileOpen ? `Channels & friends` : `My profile`}
+                    >
+                        {isMyProfileOpen ? `Channels & friends` : `My profile`}
+                    </button>
                     <button className="menu-settings-btn" title="Log out" onClick={handleLogoutBtnClick}>
                         Log out  
                     </button>

@@ -1,9 +1,25 @@
 .form-field {
     margin-bottom: 20px;
     width: 100%;
+    position: relative;
 
     &--signup {
         width: 45%;
+    }
+
+    &--my-profile {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 18px;
+
+        & .form-input {
+            color: white;
+            background-color: #25272a;
+            border: 1px solid gray;
+            padding: 0;
+            width: 70%;
+            padding: 2px 10px;
+        }
     }
 }
 
@@ -20,4 +36,8 @@
     &:active {
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
+}
+
+.form-label {
+    cursor: pointer;
 }

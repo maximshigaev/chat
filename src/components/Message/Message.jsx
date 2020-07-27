@@ -19,7 +19,9 @@ const Message = ({message}) => {
 
     return (
         <li className="message">
-            <img className="message-avatar" src={user.avatar} alt={authorName} width="25" height="32" />
+            <a className="message-avatar-link" onClick={handleClick} title={`Open ${authorName}'s profile`}>
+                <img className="message-avatar" src={user.avatar} alt={authorName} width="25" height="32" />
+            </a>
             <div className="message-wrapper">
                 <a className="message-link" title={`Open ${authorName}'s profile`} onClick={handleClick}>
                     {authorName}

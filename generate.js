@@ -29,12 +29,10 @@ module.exports = () => {
         timeZone: faker.date.past(),
         isFriend: faker.random.boolean(),
         isOnline: faker.random.boolean(),
-        social: {
-            fb: faker.internet.url(),
-            tw: faker.internet.url(),
-            inst: faker.internet.url(),
-            lkdn: faker.internet.url(),
-        },
+        fb: faker.internet.url(),
+        tw: faker.internet.url(),
+        inst: faker.internet.url(),
+        lkdn: faker.internet.url(),
     });
 
     const db = {

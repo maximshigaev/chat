@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Formik, Form} from 'formik';
 import {observer} from 'mobx-react';
 
-import {signFormShape} from '../../formShapes';
+import {signupFormShape} from '../../formShapes';
 import {StoreContext} from '../../context';
 
 import {FormErrorMessage} from '../';
@@ -19,19 +19,17 @@ const SignupForm = observer(() => {
             avatar: null,
             jobTitle: null,
             timeZone: null,
-            social: {
-                fb: null,
-                tw: null,
-                inst: null,
-                lkdn: null,
-            },
+            fb: null,
+            tw: null,
+            inst: null,
+            lkdn: null,
             isOnline: true,
         });
     };
 
     return (
-        <Formik initialValues={signFormShape.initialValues} onSubmit={handleSignupFormSubmit}
-            validationSchema={signFormShape.schema}
+        <Formik initialValues={signupFormShape.initialValues} onSubmit={handleSignupFormSubmit}
+            validationSchema={signupFormShape.schema}
         >
             {({isValid}) => (
                 <Form className="signup-form">

@@ -11,9 +11,9 @@ import {StoreContext} from '../../context';
 import './MainPage.scss';
 
 const MainPage = observer(() => {
-    const {currentProfile, isProfileUpdating} = useContext(StoreContext);
+    const {currentProfile, isLoggingOut} = useContext(StoreContext);
 
-    if (isProfileUpdating) {
+    if (isLoggingOut) {
         return <Spinner />;
     }
 
