@@ -36,9 +36,7 @@ const ChatFooter = observer(() => {
                     onChange={handleFileInputChange}
                 />
             </div>
-            <button className="chat-voice-btn" title="Record voice" />
             <TextArea />
-            <button className="chat-smiles-btn" title="Add smile" />
         </div>
     );
 });

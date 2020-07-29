@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import {Message} from '../';
 import {StoreContext} from '../../context';
+import {Spinner} from '../';
 
 import './MessageList.scss';
 
@@ -12,7 +13,7 @@ const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, 
     `November`, `December`];
 
 const MessageList = observer(() => {
-    const {currentMessages, filterTerm, uploadedFiles} = useContext(StoreContext);
+    const {currentMessages, filterTerm, uploadedFiles, isMessagesLoading} = useContext(StoreContext);
     const listRef = useRef();
     const ulClass = cn(`message-list`, `custom-scrollbar`, {'message-list--uploaded': uploadedFiles.length});
     let prevDay = null;
@@ -21,31 +22,33 @@ const MessageList = observer(() => {
 
     return (
         <ul className={ulClass} ref={listRef}>
-            {currentMessages
-                .filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
-                .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))
-                .map((message) => {
-                    const date = new Date(Date.parse(message.date))
-                    const dayOfMonth = date.getDate();
-                    
-                    if (dayOfMonth !== prevDay) {
-                        prevDay = dayOfMonth;
-                        const formattedDate =
-                            `${WEEK_DAYS[date.getDay()]}, ${MONTHS[date.getMonth()]} ${dayOfMonth}, ${date.getFullYear()}`;
+            {isMessagesLoading && <Spinner />}
+            {!isMessagesLoading && 
+                currentMessages
+                    .filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
+                    .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))
+                    .map((message) => {
+                        const date = new Date(Date.parse(message.date))
+                        const dayOfMonth = date.getDate();
+                        
+                        if (dayOfMonth !== prevDay) {
+                            prevDay = dayOfMonth;
+                            const formattedDate = `${WEEK_DAYS[date.getDay()]}, ${MONTHS[date.getMonth()]}
+                                ${dayOfMonth},${date.getFullYear()}`;
 
-                        return (
-                            <React.Fragment key={message.id}>
-                                <li className="message-break">
-                                    {formattedDate}
-                                </li>
-                                <Message message={message} />
-                            </React.Fragment>
-                            
-                        );
-                    }
+                            return (
+                                <React.Fragment key={message.id}>
+                                    <li className="message-break">
+                                        {formattedDate}
+                                    </li>
+                                    <Message message={message} />
+                                </React.Fragment>
+                                
+                            );
+                        }
 
-                    return <Message key={message.id} message={message} />;
-                })
+                        return <Message key={message.id} message={message} />;
+                    })
             }
         </ul>
     );

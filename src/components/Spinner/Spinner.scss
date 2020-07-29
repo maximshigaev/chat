@@ -8,21 +8,23 @@
 }
 
 .spinner {
-    width: 545px;
-    height: 545px;
+    width: 310px;
+    height: 310px;
     display: block;
     overflow: hidden;
     background: transparent;
     margin: 0 auto;
-    position: relative;
-    transform: translateZ(0) scale(1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     backface-visibility: hidden;
     transform-origin: 0 0;
 }
 
 .spinner div {
-    left: 267px;
-    top: 137px;
+    left: 139px;
+    top: 9px;
     position: absolute;
     animation: spinnerContent linear 1s infinite;
     background: grey;

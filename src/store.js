@@ -17,6 +17,7 @@ class Store {
             channelsFilterTerm: ``,
             isChannelsLoading: true,
             currentMessages: [],
+            isMessagesLoading: false,
             currentChannel: null,
             currentUser: null,
             filterTerm: ``,
@@ -129,10 +130,15 @@ class Store {
         this.getAllChannels();
     });
 
-    getCurrentMessages = action((id) => api.getCurrentMessages(id).then((messages) => {
-        this.currentMessages = messages;
-        this.currentChannel = this.channels.find((channel) => channel.id === +id);
-    }));
+    getCurrentMessages = action((id) => {
+        this.isMessagesLoading = true;
+        api.getCurrentMessages(id)
+            .then((messages) => {
+                this.isMessagesLoading = false;
+                this.currentMessages = messages;
+                this.currentChannel = this.channels.find((channel) => channel.id === +id);
+            })
+    })
     createMessage = action((message, id) => {
         api.createMessage(message, id)
             .then(() => this.getCurrentMessages(this.currentChannel.id))

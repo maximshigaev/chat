@@ -8,18 +8,16 @@ import './TextArea.scss';
 let isEdited = false;
 
 const TextArea = observer(() => {
-    const {currentChannel, createMessage, currentProfile, uploadedFiles, setUploadedFiles} = useContext(StoreContext);
-    const [textAreaValue, setTextAreaValue] = useState();
+    const {currentChannel, createMessage, currentProfile, uploadedFiles, setUploadedFiles,
+        isMessagesLoading
+    } = useContext(StoreContext);
+    const [textAreaValue, setTextAreaValue] = useState(``);
     const textAreaRef = useRef();
 
     useEffect(() => setTextAreaValue(`Message in #${currentChannel.title}`), [currentChannel.title]);
 
-    const handleKeyDown = useCallback((evt) => {
-        if ((evt.keyCode === 13 && textAreaRef.current.value && isEdited)
-            || (evt.keyCode === 13 && uploadedFiles.length && isEdited)
-        ) {
-            evt.preventDefault();
-
+    const handleSubmit = useCallback(() => {
+        if ((textAreaRef.current.value && isEdited) || uploadedFiles.length){
             const message = {
                 channelId: currentChannel.id,
                 date: new Date().toISOString(),
@@ -31,12 +29,20 @@ const TextArea = observer(() => {
                 },
                 images: uploadedFiles,
             }
-            
+                
             createMessage(message, currentChannel.id);
             setTextAreaValue(``);
             setUploadedFiles([]);
         }
     }, [currentChannel.id, createMessage, currentProfile.avatar, setUploadedFiles, uploadedFiles]);
+
+    const handleKeyDown = useCallback((evt) => {
+        if (evt.keyCode === 13) {
+            handleSubmit();
+        }
+    }, [handleSubmit]);
+
+    const handleClick = useCallback(() => handleSubmit(), [handleSubmit]);
 
     useEffect(() => {
         window.addEventListener(`keydown`, handleKeyDown);
@@ -55,17 +61,20 @@ const TextArea = observer(() => {
 
         isEdited = true;
     }, []);
+
     const handleBlur = useCallback(() => {
         if (!textAreaValue) {
             isEdited = false;
-            setTextAreaValue(`Message in #${currentChannel.title}`);
         }
-    }, [textAreaValue, currentChannel.title]);
+    }, [textAreaValue]);
 
     return (
-        <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange} ref={textAreaRef}
-            onBlur={handleBlur} onFocus={handleFocus}
-        />
+        <>
+            <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange}
+                ref={textAreaRef} onBlur={handleBlur} onFocus={handleFocus} disabled={isMessagesLoading}
+            />
+            <button className="textarea-btn" title="Send message" onClick={handleClick} />
+        </>
     );
 });
 

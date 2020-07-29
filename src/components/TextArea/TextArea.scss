@@ -18,3 +18,19 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
+
+.textarea-btn {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    background-image: url('../../img/icons/chat-send.svg');
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-send-hover.svg');
+    }
+
+    &:active {
+        background-image: url('../../img/icons/chat-send-active.svg');
+    }
+}
