@@ -1,4 +1,4 @@
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useRef} from 'react';
 import {observer} from 'mobx-react';
 
 import {TextArea} from '../';
@@ -10,15 +10,27 @@ let currentFileId = 1;
 
 const ChatFooter = observer(() => {
     const {uploadedFiles, setUploadedFiles} = useContext(StoreContext);
+    const inputRef = useRef();
 
     const handleFileInputChange = useCallback((evt) => {
-        const reader = new FileReader();
+        const promises = [];
 
         if (evt.target.files.length) {
-            reader.readAsDataURL(evt.target.files[evt.target.files.length - 1]);
-            reader.addEventListener(`load`, (evt) => {
-                setUploadedFiles([...uploadedFiles, {id: currentFileId++, content: evt.target.result}]);
-            });
+            for (let file of evt.target.files) {
+                const promise = new Promise((resolve) => {
+                    const reader = new FileReader();
+
+                    reader.readAsDataURL(file);
+                    reader.addEventListener(`load`, (evt) => {
+                        resolve({id: currentFileId++, content: evt.target.result});
+                    });
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then((files) => setUploadedFiles([...uploadedFiles, ...files]));
         }
     }, [setUploadedFiles, uploadedFiles]);
 
@@ -26,14 +38,26 @@ const ChatFooter = observer(() => {
         <div className="chat-footer">
             {(uploadedFiles.length !== 0) &&
                 <div className="chat-footer-files custom-scrollbar custom-scrollbar--hz">
-                    {uploadedFiles.map((file) => (
-                        <img className="chat-footer-pic" src={file.content} alt={`File-${file.id}`} key={file.id} />
-                    ))}
+                    {uploadedFiles.map((file) => {
+                        const handleClick = () => {
+                            const indexToDelete = uploadedFiles.findIndex((uploadedFile) => uploadedFile.id === file.id);
+
+                            setUploadedFiles([...uploadedFiles.slice(0, indexToDelete),
+                                ...uploadedFiles.slice(indexToDelete + 1)]);
+                        }
+
+                        return (
+                            <p className="chat-footer-file" key={file.id}>
+                                <button className="chat-footer-reset-btn" title="Remove image" onClick={handleClick} />
+                                <img className="chat-footer-pic" src={file.content} alt={`File-${file.id}`} />
+                            </p>
+                        );
+                    })}
                 </div>
             }
             <div className="chat-footer-upload">
-                <input className="chat-footer-fileinput" type="file" name="file"
-                    onChange={handleFileInputChange}
+                <input className="chat-footer-fileinput" type="file" name="file" ref={inputRef}
+                    onChange={handleFileInputChange} multiple
                 />
             </div>
             <TextArea />

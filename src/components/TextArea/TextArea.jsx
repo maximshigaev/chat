@@ -6,6 +6,7 @@ import {StoreContext} from '../../context';
 import './TextArea.scss';
 
 let isEdited = false;
+let isTouched = false;
 
 const TextArea = observer(() => {
     const {currentChannel, createMessage, currentProfile, uploadedFiles, setUploadedFiles,
@@ -17,11 +18,11 @@ const TextArea = observer(() => {
     useEffect(() => setTextAreaValue(`Message in #${currentChannel.title}`), [currentChannel.title]);
 
     const handleSubmit = useCallback(() => {
-        if ((textAreaRef.current.value && isEdited) || uploadedFiles.length){
+        if ((textAreaRef.current.value && isEdited) || uploadedFiles.length) {
             const message = {
                 channelId: currentChannel.id,
                 date: new Date().toISOString(),
-                text: textAreaRef.current.value,
+                text: isTouched ? textAreaRef.current.value : ``,
                 author: {
                     firstName: `Maxim`,
                     lastName: `Shigaev`,
@@ -60,6 +61,7 @@ const TextArea = observer(() => {
         }
 
         isEdited = true;
+        isTouched = true;
     }, []);
 
     const handleBlur = useCallback(() => {

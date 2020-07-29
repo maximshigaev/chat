@@ -46,10 +46,57 @@
 }
 
 .chat-footer-pic {
+    height: 100%;
+}
+
+.chat-footer-file {
+    position: relative;
     height: 100px;
     flex-shrink: 0;
-
+    
     &:not(:last-child) {
         margin-right: 10px;
+    }
+}
+
+.chat-footer-reset-btn {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: '';
+        top: 5px;
+        left: 10px;
+        width: 2px;
+        height: 14px;
+        background-color: black;
+    }
+
+    &:hover,
+    &:focus {
+        &::before,
+        &::after {
+            background-color: gray;
+        }
+    }
+
+    &:active {
+        &::before,
+        &::after {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    &::before {
+        transform: rotate(45deg);
+    }
+
+    &::after {
+        transform: rotate(-45deg);
     }
 }
