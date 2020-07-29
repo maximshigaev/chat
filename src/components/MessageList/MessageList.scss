@@ -4,6 +4,10 @@
     border-bottom: 1px solid #c2c2c2;
     border-top: 1px solid #c2c2c2;
     margin-right: 7px;
+
+    &--uploaded {
+        height: calc(100vh - 316px);
+    }
 }
 
 .message-break {

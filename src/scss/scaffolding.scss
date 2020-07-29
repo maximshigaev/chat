@@ -97,4 +97,9 @@ img {
 			background-color: #b5b5b5;
 		}
 	}
+
+	&--hz::-webkit-scrollbar {
+		height: 7px;
+		width: auto;
+	}
 }

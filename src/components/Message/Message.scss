@@ -45,7 +45,8 @@
 
 .message-avatar-link {
     cursor: pointer;
-
+    flex-shrink: 0;
+    
     &:hover,
     &:focus {
         opacity: 0.8;
@@ -54,4 +55,17 @@
     &:active {
         opacity: 0.5;
     }
+}
+
+.message-images {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.message-image {
+    height: 100px;
+    margin: 10px;
+    margin-bottom: 0;
 }

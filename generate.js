@@ -8,6 +8,7 @@ module.exports = () => {
         userId: Math.floor(1 + Math.random() * 100),
         date: faker.date.past(),
         text: faker.lorem.text(),
+        images: [],
     });
 
     const fillChannels = (id) => ({

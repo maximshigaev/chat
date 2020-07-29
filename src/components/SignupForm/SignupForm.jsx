@@ -9,6 +9,7 @@ import {FormErrorMessage} from '../';
 import {FormField} from '../';
 
 import './SignupForm.scss';
+import avatarImg from "../../img/no-avatar.png";
 
 const SignupForm = observer(() => {
     const {createProfile} = useContext(StoreContext);
@@ -16,7 +17,7 @@ const SignupForm = observer(() => {
     const handleSignupFormSubmit = (formData) => {
         createProfile({
             ...formData,
-            avatar: null,
+            avatar: avatarImg,
             jobTitle: null,
             timeZone: null,
             fb: null,

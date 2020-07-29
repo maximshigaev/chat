@@ -1,51 +1,70 @@
-import React, {useContext, useState, useEffect, useCallback} from 'react';
+import React, {useContext, useState, useCallback, useRef, useEffect} from 'react';
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
 
 import './TextArea.scss';
 
-let isTouched = false;
+let isEdited = false;
 
 const TextArea = observer(() => {
-    const {currentChannel, createMessage} = useContext(StoreContext);
-    const [textAreaValue, setTextAreaValue] = useState(`Message in #${currentChannel.title}`);
+    const {currentChannel, createMessage, currentProfile, uploadedFiles, setUploadedFiles} = useContext(StoreContext);
+    const [textAreaValue, setTextAreaValue] = useState();
+    const textAreaRef = useRef();
 
-    useEffect(() => {
-        isTouched = false;
-        setTextAreaValue(`Message in #${currentChannel.title}`)
-    }, [currentChannel.title]);
+    useEffect(() => setTextAreaValue(`Message in #${currentChannel.title}`), [currentChannel.title]);
 
-    const handleChange = useCallback((evt) => setTextAreaValue(evt.target.value), []);
     const handleKeyDown = useCallback((evt) => {
-        if (evt.keyCode === 13) {
+        if ((evt.keyCode === 13 && textAreaRef.current.value && isEdited)
+            || (evt.keyCode === 13 && uploadedFiles.length && isEdited)
+        ) {
             evt.preventDefault();
-            setTextAreaValue('');
 
-            createMessage({
+            const message = {
                 channelId: currentChannel.id,
                 date: new Date().toISOString(),
-                text: textAreaValue,
+                text: textAreaRef.current.value,
                 author: {
                     firstName: `Maxim`,
                     lastName: `Shigaev`,
-                    avatar: `https://s3.amazonaws.com/uifaces/faces/twitter/raphaelnikson/128.jpg`,
-                }
-            }, currentChannel.id);
+                    avatar: currentProfile.avatar,
+                },
+                images: uploadedFiles,
+            }
+            
+            createMessage(message, currentChannel.id);
+            setTextAreaValue(``);
+            setUploadedFiles([]);
         }
-    }, [createMessage, currentChannel.id, textAreaValue]);
+    }, [currentChannel.id, createMessage, currentProfile.avatar, setUploadedFiles, uploadedFiles]);
+
+    useEffect(() => {
+        window.addEventListener(`keydown`, handleKeyDown);
+        
+        return () => window.removeEventListener(`keydown`, handleKeyDown);
+    }, [handleKeyDown]);
+
+    const handleChange = useCallback((evt) => {
+        setTextAreaValue(evt.target.value.trim());
+    }, []);
     
     const handleFocus = useCallback(() => {
-        if (!isTouched) {
-            setTextAreaValue('');
+        if (!isEdited) {
+            setTextAreaValue(``);
         }
-        
-        isTouched = true;
+
+        isEdited = true;
     }, []);
+    const handleBlur = useCallback(() => {
+        if (!textAreaValue) {
+            isEdited = false;
+            setTextAreaValue(`Message in #${currentChannel.title}`);
+        }
+    }, [textAreaValue, currentChannel.title]);
 
     return (
-        <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange}
-            onKeyDown={handleKeyDown} onFocus={handleFocus}
+        <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange} ref={textAreaRef}
+            onBlur={handleBlur} onFocus={handleFocus}
         />
     );
 });

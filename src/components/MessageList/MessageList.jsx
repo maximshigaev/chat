@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {Message} from '../';
 import {StoreContext} from '../../context';
@@ -11,14 +12,15 @@ const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, 
     `November`, `December`];
 
 const MessageList = observer(() => {
-    const {currentMessages, filterTerm} = useContext(StoreContext);
+    const {currentMessages, filterTerm, uploadedFiles} = useContext(StoreContext);
     const listRef = useRef();
+    const ulClass = cn(`message-list`, `custom-scrollbar`, {'message-list--uploaded': uploadedFiles.length});
     let prevDay = null;
 
     useEffect(() => listRef.current.scrollBy(0, listRef.current.scrollHeight), [currentMessages.length]);
 
     return (
-        <ul className="message-list custom-scrollbar" ref={listRef}>
+        <ul className={ulClass} ref={listRef}>
             {currentMessages
                 .filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
                 .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))

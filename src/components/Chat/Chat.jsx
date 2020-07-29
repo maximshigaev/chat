@@ -19,7 +19,7 @@ const Chat = observer(() => {
         }
     }, [currentChannelId, getCurrentMessages]);
 
-    if(!currentChannel) {
+    if (!currentChannel) {
         return (
             <section className="chat chat--empty">
                 Please, select a channel

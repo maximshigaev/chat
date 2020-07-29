@@ -8,12 +8,12 @@ import {Spinner} from '../';
 import {myProfileShape} from '../../formShapes';
 
 import './MyProfile.scss';
-import avatarImg from "../../img/no-avatar.png";
 
 const MyProfile = observer(() => {
     const {currentProfile, updateProfile, isProfileUpdating} = useContext(StoreContext);
-    const {firstName, surName, email, password, userName, skype, avatar, jobTitle, timeZone, fb, tw, inst, lkdn} = currentProfile;
-    const [avatarSrc, setAvatarSrc] = useState(avatar || avatarImg);
+    const {firstName, surName, email, password, userName, skype, avatar, jobTitle,
+        timeZone, fb, tw, inst, lkdn} = currentProfile;
+    const [avatarSrc, setAvatarSrc] = useState(avatar);
 
     const handleFileInputChange = useCallback((evt) => {
         const reader = new FileReader();
@@ -25,9 +25,10 @@ const MyProfile = observer(() => {
     const handleMyProfileFormSubmit = useCallback((formData) => {
         updateProfile({
             ...formData,
+            avatar: avatarSrc,
             isOnline: true
         }, currentProfile.id);
-    }, [updateProfile, currentProfile.id]);
+    }, [updateProfile, currentProfile.id, avatarSrc]);
 
     const initialValues = {firstName, surName, email, password, userName, skype, jobTitle: jobTitle || ``,
         timeZone: timeZone || ``,
@@ -51,7 +52,7 @@ const MyProfile = observer(() => {
                                 <input className="my-profile-upload" type="file" name="avatar"
                                     onChange={handleFileInputChange}
                                 />
-                                <img className="my-profile-picture" src={avatarSrc} alt="" width="100" height="100" />
+                                <img className="my-profile-picture" src={avatarSrc} alt="Avatar" width="100" height="100" />
                             </div>
                             <FormField name="firstName" type="text" label="Firstname" isMyProfile={true} />
                             <FormField name="surName" type="text" label="Surname" isMyProfile={true} />
@@ -60,7 +61,6 @@ const MyProfile = observer(() => {
                                 <span>Email</span>
                                 {currentProfile.email}
                             </div>
-                            {/* <FormField name="email" type="email" label="Email" isMyProfile={true} /> */}
                             <FormField name="password" type="password" label="Password" isMyProfile={true} />
                             <FormField name="skype" type="text" label="Skype" isMyProfile={true} />
                             <FormField name="jobTitle" type="text" label="Profession" isMyProfile={true} />

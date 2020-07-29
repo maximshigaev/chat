@@ -1,18 +1,32 @@
-import React from 'react';
+import React, {useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
+import {observer} from 'mobx-react';
+
+import {StoreContext} from '../../context';
 
 import './ChannelsItem.scss';
 
-const ChannelsItem = ({channel}) =>  (
-    <li className="channels-item">
-        <NavLink className="channels-link" activeClassName="channels-link--active"
-            title={channel.title} to={`${process.env.PUBLIC_URL}/${channel.id}`}
-        >
-            {`# ${channel.title.toLowerCase()}`}
-        </NavLink>
-    </li>
-);
+const ChannelsItem = observer(({channel}) => {
+    const {setUploadedFiles} = useContext(StoreContext);
+    const currentChannelId = useLocation().pathname.slice(1);
+
+    const handleClick = useCallback(() => {
+        if (+currentChannelId !== channel.id) {
+            setUploadedFiles([]);
+        }
+    }, [setUploadedFiles, channel.id, currentChannelId]);
+
+    return (
+        <li className="channels-item">
+            <NavLink className="channels-link" activeClassName="channels-link--active"
+                title={channel.title} to={`${process.env.PUBLIC_URL}/${channel.id}`} onClick={handleClick}
+            >
+                {`# ${channel.title.toLowerCase()}`}
+            </NavLink>
+        </li>
+    );
+});
 
 ChannelsItem.propTypes = {
     channel: PropTypes.exact({

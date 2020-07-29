@@ -10,10 +10,10 @@ const Message = ({message}) => {
     const {date, text} = message;
     const messageDate = new Date(Date.parse(date));
 
-    const user = (message.userId)
+    const user = message.userId
         ? users.find((user) => user.id === message.userId)
         : message.author;
-    const authorName = `${user.firstName} ${user.lastName}`; 
+    const authorName = `${user.firstName} ${user.lastName}`;
 
     const handleClick = useCallback(() => setCurrentUser(user), [setCurrentUser, user]);
 
@@ -34,6 +34,17 @@ const Message = ({message}) => {
                 <p className="message-text">
                     {text}
                 </p>
+                {message.images.length !== 0 &&
+                    <p className="message-images">
+                        {
+                            message.images.map((image) => (
+                                <img className="message-image" src={image.content} key={image.id}
+                                    alt={`File-${image.id}`}
+                                />
+                            ))
+                        }
+                    </p>
+                }
             </div>          
         </li>
     );
@@ -51,6 +62,7 @@ Message.propTypes = {
         },
         date: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.string).isRequired,
     }).isRequired,
 }
 

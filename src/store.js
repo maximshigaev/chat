@@ -29,8 +29,9 @@ class Store {
             isProfileCreating: false,
             profiles: [],
             isProfilesLoading: true,
-            isMyProfileOpen: true,
+            isMyProfileOpen: false,
             isLoggingOut: false,
+            uploadedFiles: [],
         });
     }
 
@@ -53,8 +54,10 @@ class Store {
         setInterval(emitMessage, 5000);
     }
 
-    setIsMyProfileOpen = (isOpen) => this.isMyProfileOpen = isOpen;
-    setCurrentProfile = (profile) => this.currentProfile = profile;
+    setUploadedFiles = action((files) => this.uploadedFiles = files); 
+
+    setIsMyProfileOpen = action((isOpen) => this.isMyProfileOpen = isOpen);
+    setCurrentProfile = action((profile) => this.currentProfile = profile);
     getProfiles = action(() => api.getProfiles().then((profiles) => {
         this.profiles = profiles;
         const onlineProfile = this.profiles.find((profile) => profile.isOnline);
@@ -131,8 +134,8 @@ class Store {
         this.currentChannel = this.channels.find((channel) => channel.id === +id);
     }));
     createMessage = action((message, id) => {
-        api.createMessage(message, id);
-        this.getCurrentMessages(this.currentChannel.id);
+        api.createMessage(message, id)
+            .then(() => this.getCurrentMessages(this.currentChannel.id))
     });
 }
 
