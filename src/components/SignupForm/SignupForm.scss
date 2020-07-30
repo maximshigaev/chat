@@ -1,7 +1,7 @@
 .signup-form {
     display: flex;
     flex-wrap: wrap;
-    width: 750px;
+    width: 712px;
     padding-top: 160px;
     flex-grow: 1;
     position: relative;
@@ -32,5 +32,16 @@
 
     &:active {
         opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .signup-form {
+        width: 280px;
+        padding-top: 20px;
+    }
+
+    .signup-btn {
+        width: 70%;
     }
 }

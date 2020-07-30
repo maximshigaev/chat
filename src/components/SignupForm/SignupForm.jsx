@@ -34,12 +34,12 @@ const SignupForm = observer(() => {
         >
             {({isValid}) => (
                 <Form className="signup-form">
-                    <FormErrorMessage name="firstName" modifier="firstname" />
-                    <FormErrorMessage name="surName" modifier="surname" />
-                    <FormErrorMessage name="userName" modifier="username" />
-                    <FormErrorMessage name="email" modifier="email" />
-                    <FormErrorMessage name="password" modifier="password" />
-                    <FormErrorMessage name="skype" modifier="skype" />
+                    <FormErrorMessage name="firstName" modifier="firstname" isSignupPage={true} />
+                    <FormErrorMessage name="surName" modifier="surname" isSignupPage={true} />
+                    <FormErrorMessage name="userName" modifier="username" isSignupPage={true} />
+                    <FormErrorMessage name="email" modifier="email" isSignupPage={true} />
+                    <FormErrorMessage name="password" modifier="password" isSignupPage={true} />
+                    <FormErrorMessage name="skype" modifier="skype" isSignupPage={true} />
                     <FormField name="firstName" type="text" label="Firstname" isSignupPage={true} />
                     <FormField name="surName" type="text" label="Surname" isSignupPage={true} />
                     <FormField name="userName" type="text" label="Username" isSignupPage={true} />
