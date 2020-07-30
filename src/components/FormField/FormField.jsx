@@ -20,6 +20,7 @@ const FormField = ({name, type, label, onFocus: handleFocus, isSignupPage, isMyP
                 name={name} id={name} onFocus={handleFocus ? handleFocus : () => {}}
             />
             {isMyProfile && <FormErrorMessage name={name} modifier="my-profile" />}
+            {isSignupPage && <FormErrorMessage name={name} modifier="tablet" />}
         </div>
     );
 }
