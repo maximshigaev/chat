@@ -44,5 +44,29 @@
         width: 100%;
         font-weight: 700;
         text-align: right;
+        margin-bottom: 0;
+    }
+
+    &--tablet {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-error-message {
+        &--signup {
+            display: none;
+        }
+
+        &--tablet {
+            bottom: -23px;
+            right: 0;
+            font-size: 13px;
+            width: 100%;
+            font-weight: 700;
+            text-align: right;
+            margin-bottom: 0;
+            display: block;
+        }
     }
 }
