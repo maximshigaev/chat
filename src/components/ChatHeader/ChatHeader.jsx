@@ -23,7 +23,6 @@ const ChatHeader = observer(() => {
                     {participantsCount}
                 </span>
                 <SearchBar />
-                <button className="chat-notification-btn" title="See notifications" />
             </div>
         </div>
     );
