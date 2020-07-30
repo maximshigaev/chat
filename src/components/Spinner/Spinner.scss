@@ -1,15 +1,15 @@
 @keyframes spinnerContent {
   0% {
-      opacity: 1
+      opacity: 1;
   }
   100% {
-      opacity: 0
+      opacity: 0;
   }
 }
 
 .spinner {
-    width: 310px;
-    height: 310px;
+    width: 250px;
+    height: 250px;
     display: block;
     overflow: hidden;
     background: transparent;
@@ -23,15 +23,15 @@
 }
 
 .spinner div {
-    left: 139px;
-    top: 9px;
+    left: 107px;
+    top: 8px;
     position: absolute;
     animation: spinnerContent linear 1s infinite;
     background: grey;
-    width: 34px;
+    width: 28px;
     height: 68px;
     border-radius: 17px / 34px;
-    transform-origin: 17px 148px;
+    transform-origin: 17px 117px;
     box-sizing: content-box;
 
     &:nth-child(1) {
