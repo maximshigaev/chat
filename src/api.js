@@ -14,17 +14,10 @@ class Api {
     });
 
     getUsers = () => this.request.get(`/users`);
-
-    getProfiles = () => this.request.get(`/profiles`);
-    updateProfile = (profile, id) => this.request.put(`/profiles/${id}`, profile);
-    createProfile = (profile) => this.request.post(`/profiles`, profile);
-
-    updateFriend = (friend, id) => this.request.put(`/users/${id}`, friend);
+    updateUser = (user, id) => this.request.put(`/users/${id}`, user);
+    createUser = (user) => this.request.post(`/users`, user);
 
     getChannels = () => this.request.get(`/channels`);
-    createChannel = (channel) => this.request.post(`/channels`, channel);
-    updateChannel = (channel) => this.request.put(`/channels/${channel.id}`, channel);
-    deleteChannel = (id) => this.request.delete(`/channels/${id}`);
 
     getCurrentMessages = (id) => this.request.get(`/channels/${id}/messages`);
     createMessage = (message, id) => this.request.post(`/channels/${id}/messages`, message);

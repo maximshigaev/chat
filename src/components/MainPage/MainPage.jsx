@@ -11,13 +11,13 @@ import {StoreContext} from '../../context';
 import './MainPage.scss';
 
 const MainPage = observer(() => {
-    const {currentProfile, isLoggingOut} = useContext(StoreContext);
+    const {onlineUser, isLoggingOut} = useContext(StoreContext);
 
     if (isLoggingOut) {
         return <Spinner />;
     }
 
-    if (!currentProfile) {
+    if (!onlineUser) {
         return <Redirect to="/login" />;
     }
 

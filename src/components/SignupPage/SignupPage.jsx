@@ -9,13 +9,13 @@ import {SignupForm} from '../';
 import './SignupPage.scss';
 
 const SignupPage = observer(() => {
-    const {currentProfile, isProfileCreating} = useContext(StoreContext);
+    const {onlineUser, isUserCreating} = useContext(StoreContext);
 
-    if (isProfileCreating) {
+    if (isUserCreating) {
         return <Spinner />;
     }
 
-    if (currentProfile) {
+    if (onlineUser) {
         return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
     }
 

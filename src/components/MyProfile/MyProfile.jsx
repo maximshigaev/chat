@@ -10,25 +10,27 @@ import {myProfileShape} from '../../formShapes';
 import './MyProfile.scss';
 
 const MyProfile = observer(() => {
-    const {currentProfile, updateProfile, isProfileUpdating} = useContext(StoreContext);
+    const {onlineUser, updateUser, isUserUpdating} = useContext(StoreContext);
     const {firstName, surName, email, password, userName, skype, avatar, jobTitle,
-        timeZone, fb, tw, inst, lkdn} = currentProfile;
+        timeZone, fb, tw, inst, lkdn} = onlineUser;
     const [avatarSrc, setAvatarSrc] = useState(avatar);
 
     const handleFileInputChange = useCallback((evt) => {
-        const reader = new FileReader();
+        if (evt.target.files.length) {
+            const reader = new FileReader();
 
-        reader.readAsDataURL(evt.target.files[0]);
-        reader.addEventListener(`load`, (evt) => setAvatarSrc(evt.target.result));
+            reader.readAsDataURL(evt.target.files[0]);
+            reader.addEventListener(`load`, (evt) => setAvatarSrc(evt.target.result));
+        }
     }, []);
 
     const handleMyProfileFormSubmit = useCallback((formData) => {
-        updateProfile({
+        updateUser({
             ...formData,
             avatar: avatarSrc,
-            isOnline: true
-        }, currentProfile.id);
-    }, [updateProfile, currentProfile.id, avatarSrc]);
+            isProfileOnline: true,
+        }, onlineUser.id);
+    }, [updateUser, onlineUser.id, avatarSrc]);
 
     const initialValues = {firstName, surName, email, password, userName, skype, jobTitle: jobTitle || ``,
         timeZone: timeZone || ``,
@@ -45,8 +47,8 @@ const MyProfile = observer(() => {
         >
             {({isValid}) => (
                 <Form className="my-profile custom-scrollbar custom-scrollbar--light">
-                    {isProfileUpdating && <Spinner size="middle" />}
-                    {!isProfileUpdating &&
+                    {isUserUpdating && <Spinner size="middle" />}
+                    {!isUserUpdating &&
                         <>
                             <div className="my-profile-avatar">
                                 <input className="my-profile-upload" type="file" name="avatar"
@@ -59,14 +61,14 @@ const MyProfile = observer(() => {
                             <FormField name="userName" type="text" label="Username" isMyProfile={true} />
                             <div className="my-profile-email">
                                 <span>Email</span>
-                                {currentProfile.email}
+                                {onlineUser.email}
                             </div>
                             <FormField name="password" type="password" label="Password" isMyProfile={true} />
                             <FormField name="skype" type="text" label="Skype" isMyProfile={true} />
                             <FormField name="jobTitle" type="text" label="Profession" isMyProfile={true} />
                             <FormField name="timeZone" type="text" label="Timezone" isMyProfile={true} />
                             <FormField name="fb" type="text" label="Facebook" isMyProfile={true} />
-                            <FormField name="tw" type="email" label="Twitter" isMyProfile={true} />
+                            <FormField name="tw" type="text" label="Twitter" isMyProfile={true} />
                             <FormField name="inst" type="text" label="Instagram" isMyProfile={true} />
                             <FormField name="lkdn" type="text" label="Linkedin" isMyProfile={true} />
                             <button className="my-profile-save-btn" type="submit" disabled={!isValid}>

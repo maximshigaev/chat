@@ -12,10 +12,10 @@ import './SignupForm.scss';
 import avatarImg from "../../img/no-avatar.png";
 
 const SignupForm = observer(() => {
-    const {createProfile} = useContext(StoreContext);
+    const {createUser} = useContext(StoreContext);
 
     const handleSignupFormSubmit = (formData) => {
-        createProfile({
+        createUser({
             ...formData,
             avatar: avatarImg,
             jobTitle: null,
@@ -24,7 +24,7 @@ const SignupForm = observer(() => {
             tw: null,
             inst: null,
             lkdn: null,
-            isOnline: true,
+            isProfileOnline: true,
         });
     };
 

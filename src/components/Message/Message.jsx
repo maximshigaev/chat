@@ -1,19 +1,20 @@
 import React, {useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
+import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
 
 import './Message.scss';
 
-const Message = ({message}) => {
-    const {setCurrentUser, users, currentProfile} = useContext(StoreContext);
+const Message = observer(({message}) => {
+    const {setCurrentUser, users, onlineUser} = useContext(StoreContext);
     const {date, text, author} = message;
     const messageDate = new Date(Date.parse(date));
-    const isCurrentProfileMessage = author && author.email === currentProfile.email;
+    const isOnlineUserMessage = author && author.email === onlineUser.email;
 
     const user = message.userId
         ? users.find((user) => user.id === message.userId)
-        : author;
+        : users.find((user) => user.email === message.author.email);
     const authorName = `${user.firstName} ${user.surName}`;
 
     const handleClick = useCallback(() => setCurrentUser(user), [setCurrentUser, user]);
@@ -25,7 +26,8 @@ const Message = ({message}) => {
             </a>
             <div className="message-wrapper">
                 <a className="message-link" onClick={handleClick}
-                    title={isCurrentProfileMessage ? `Open my profile` : `Open ${authorName}'s profile`}>
+                    title={isOnlineUserMessage ? `Open my profile` : `Open ${authorName}'s profile`}
+                >
                     {authorName}
                 </a>
                 <time className="message-date">
@@ -50,22 +52,34 @@ const Message = ({message}) => {
             </div>          
         </li>
     );
-}
+});
 
 Message.propTypes = {
     message: PropTypes.exact({
         id: PropTypes.number.isRequired,
         channelId: PropTypes.number.isRequired,
-        userId: PropTypes.number.isRequired,
-        author: PropTypes.shape({
+        userId: PropTypes.number,
+        author: PropTypes.exact({
             firstName: PropTypes.string.isRequired,
             surName: PropTypes.string.isRequired,
+            userName: PropTypes.string.isRequired,
             avatar: PropTypes.string.isRequired,
             email: PropTypes.string.isRequired,
+            password: PropTypes.string.isRequired,
+            skype: PropTypes.string.isRequired,
+            jobTitle: PropTypes.string,
+            timeZone: PropTypes.string,
+            fb: PropTypes.string,
+            tw: PropTypes.string,
+            inst: PropTypes.string,
+            lkdn: PropTypes.string,
+            isProfileOnline: PropTypes.bool,
+            isOnline: PropTypes.bool,
+            id: PropTypes.number,
         }),
         date: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        images: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
 }
 

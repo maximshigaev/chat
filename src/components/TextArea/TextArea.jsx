@@ -9,7 +9,7 @@ let isEdited = false;
 let isTouched = false;
 
 const TextArea = observer(() => {
-    const {currentChannel, createMessage, currentProfile, uploadedFiles, setUploadedFiles,
+    const {currentChannel, createMessage, onlineUser, uploadedFiles, setUploadedFiles,
         isMessagesLoading
     } = useContext(StoreContext);
     const [textAreaValue, setTextAreaValue] = useState(``);
@@ -23,7 +23,7 @@ const TextArea = observer(() => {
                 channelId: currentChannel.id,
                 date: new Date().toISOString(),
                 text: isTouched ? textAreaRef.current.value : ``,
-                author: currentProfile,
+                author: onlineUser,
                 images: uploadedFiles,
             }
                 
@@ -31,7 +31,7 @@ const TextArea = observer(() => {
             setTextAreaValue(``);
             setUploadedFiles([]);
         }
-    }, [currentChannel.id, createMessage, currentProfile, setUploadedFiles, uploadedFiles]);
+    }, [currentChannel.id, createMessage, onlineUser, setUploadedFiles, uploadedFiles]);
 
     const handleKeyDown = useCallback((evt) => {
         if (evt.keyCode === 13) {

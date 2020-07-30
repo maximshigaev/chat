@@ -12,24 +12,22 @@ class Store {
 
         extendObservable(this, {
             users: [],
+            onlineUser: null,
             isUsersLoading: true,
+            isUserUpdating: false,
+            isUserCreating: false,
+            currentUser: null,
             channels: [],
             channelsFilterTerm: ``,
+            currentChannel: null,
             isChannelsLoading: true,
             currentMessages: [],
             isMessagesLoading: false,
-            currentChannel: null,
-            currentUser: null,
             filterTerm: ``,
             get friends() {
                 return this.users.filter((user) => user.isFriend);
             },
             friendsFilterTerm: ``,
-            currentProfile: null,
-            isProfileUpdating: false,
-            isProfileCreating: false,
-            profiles: [],
-            isProfilesLoading: true,
             isMyProfileOpen: false,
             isLoggingOut: false,
             uploadedFiles: [],
@@ -56,76 +54,59 @@ class Store {
     }
 
     setUploadedFiles = action((files) => this.uploadedFiles = files); 
-
     setIsMyProfileOpen = action((isOpen) => this.isMyProfileOpen = isOpen);
-    setCurrentProfile = action((profile) => this.currentProfile = profile);
-    getProfiles = action(() => api.getProfiles().then((profiles) => {
-        this.profiles = profiles;
-        const onlineProfile = this.profiles.find((profile) => profile.isOnline);
-       
-        if (onlineProfile) {
-            this.setCurrentProfile(onlineProfile);
-        } else {
-            this.setCurrentProfile(null);
-        }
-
-        this.isProfilesLoading = false;
-        this.isProfileUpdating = false;
-        this.isProfileCreating = false;
-        this.isLoggingOut = false;
-    }));
-    createProfile = action((profile) => {
-        this.isProfileCreating = true;
-        api.createProfile(profile)
-            .then(() => this.getProfiles())
-    });
-
-    logOut = action((profile, id) => {
+    logOut = action((user, id) => {
         this.isLoggingOut = true;
-        api.updateProfile(profile, id)
-            .then(() => this.getProfiles())
+        api.updateUser(user, id)
+            .then(() => this.getAllUsers())
     });
-    updateProfile = action((profile, id) => {
-        this.isProfileUpdating = true;
-        api.updateProfile(profile, id)
-            .then(() => this.getProfiles())
-    });
-    getProfile = action(() => api.getProfile().then((profile) => this.profile = profile));
-    deleteProfile = action(() => api.deleteProfile());
 
     setFilterTerm = action((term) => this.filterTerm = term);
-
-    getAllUsers = action(() => api.getUsers().then((users) => {
-        this.isUsersLoading = false;
-        this.users = users;
-    }));
-
-    getAllChannels = action(() => api.getChannels().then((channels) => {
-        this.channels = channels;
-        this.isChannelsLoading = false;
-    }));
-    setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
-
-    setCurrentUser = action((user) => this.currentUser = user);
-    updateFriend = action((friend, id) => api.updateFriend(friend, id).then((friend) => {
-        this.setCurrentUser(friend);
-        this.getAllUsers();
-    }));
-
     setFriendsFilterTerm = action((term) => this.friendsFilterTerm = term);
 
-    createChannel = action((channel) => {
-        api.createChannel(channel);
-        this.getAllChannels();
+    getAllUsers = action(() => {
+        api.getUsers()
+            .then((users) => {
+                this.users = users;
+
+                const onlineUser = this.users.find((user) => user.isProfileOnline);
+            
+                if (onlineUser) {
+                    this.setOnlineUser(onlineUser);
+                } else {
+                    this.setOnlineUser(null);
+                }
+
+                this.isLoggingOut = false;
+                this.isUserUpdating = false;
+                this.isUserCreating = false;
+                this.isUsersLoading = false;
+            })
     });
-    updateChannel = action((channel) => {
-        api.updateChannel(channel);
-        this.getAllChannels();
+    setCurrentUser = action((user) => this.currentUser = user);
+    updateUser = action((user, id) => {
+        this.isUserUpdating = true;
+        api.updateUser(user, id)
+            .then((user) => {
+                this.setCurrentUser(user);
+                this.getAllUsers();
+            })
     });
-    deleteChannel = action((id) => {
-        api.deleteChannel(id);
-        this.getAllChannels();
+    setOnlineUser = action((user) => this.onlineUser = user);
+    createUser = action((user) => {
+        this.isUserCreating = true;
+        api.createUser(user)
+            .then(() => this.getAllUsers())
     });
+
+    getAllChannels = action(() => {
+        api.getChannels()
+            .then((channels) => {
+                this.channels = channels;
+                this.isChannelsLoading = false;
+            })
+    });
+    setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
 
     getCurrentMessages = action((id) => {
         this.isMessagesLoading = true;
@@ -135,7 +116,7 @@ class Store {
                 this.currentMessages = messages;
                 this.currentChannel = this.channels.find((channel) => channel.id === +id);
             })
-    })
+    });
     createMessage = action((message, id) => {
         api.createMessage(message, id)
             .then(() => this.getCurrentMessages(this.currentChannel.id))

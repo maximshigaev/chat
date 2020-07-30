@@ -9,13 +9,13 @@ import {LoginForm} from '../';
 import './LoginPage.scss';
 
 const LoginPage = observer(() => {
-    const {currentProfile, isProfileUpdating} = useContext(StoreContext);
+    const {onlineUser, isUserUpdating} = useContext(StoreContext);
 
-    if (isProfileUpdating) {
+    if (isUserUpdating) {
         return <Spinner />;
     }
 
-    if (currentProfile) {
+    if (onlineUser) {
         return <Redirect to={`${process.env.PUBLIC_URL}/`} />;
     }
 

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {observer} from 'mobx-react';
 
@@ -9,13 +9,9 @@ import {StoreContext} from '../../context';
 import {Spinner} from '../';
 
 const App = observer(() => {
-    const {getProfiles, isProfilesLoading} = useContext(StoreContext);
+    const {isUsersLoading} = useContext(StoreContext);
 
-    useEffect(() => {
-        getProfiles();
-    }, [getProfiles]);
-
-    if (isProfilesLoading) {
+    if (isUsersLoading) {
         return < Spinner />;
     }
 

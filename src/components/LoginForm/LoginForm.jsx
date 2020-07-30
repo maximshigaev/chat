@@ -11,18 +11,17 @@ import {FormField} from '../';
 import './LoginForm.scss';
 
 const LoginForm = observer(() => {
-    const {profiles, updateProfile} = useContext(StoreContext);
+    const {users, updateUser} = useContext(StoreContext);
     const [isNotFoundError, setIsNotFoundError] = useState(false);
 
     const handleLoginFormSubmit = (formData) => {
-        const registeredProfile =
-            profiles.find((profile) => profile.email === formData.email && profile.password === formData.password);
+        const registeredUser = users.find((user) => user.email === formData.email && user.password === formData.password);
 
-        if (registeredProfile) {
-            updateProfile({
-                ...registeredProfile,
-                isOnline: true,
-            }, registeredProfile.id);
+        if (registeredUser) {
+            updateUser({
+                ...registeredUser,
+                isProfileOnline: true,
+            }, registeredUser.id);
         } else {
             setIsNotFoundError(true);
         }
