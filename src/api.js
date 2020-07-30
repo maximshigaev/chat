@@ -19,8 +19,7 @@ class Api {
     updateProfile = (profile, id) => this.request.put(`/profiles/${id}`, profile);
     createProfile = (profile) => this.request.post(`/profiles`, profile);
 
-    createFriend = (friend) => this.request.post(`/users`, friend);
-    deleteFriend = (id) => this.request.delete(`/users/${id}`);
+    updateFriend = (friend, id) => this.request.put(`/users/${id}`, friend);
 
     getChannels = () => this.request.get(`/channels`);
     createChannel = (channel) => this.request.post(`/channels`, channel);

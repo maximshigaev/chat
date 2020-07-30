@@ -21,7 +21,7 @@ module.exports = () => {
     const fillUsers = (id) => ({
         id: id + 1,
         firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        surName: faker.name.lastName(),
         avatar: faker.internet.avatar(),
         jobTitle: faker.name.jobTitle(),
         email: faker.internet.email(),

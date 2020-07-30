@@ -23,11 +23,7 @@ const TextArea = observer(() => {
                 channelId: currentChannel.id,
                 date: new Date().toISOString(),
                 text: isTouched ? textAreaRef.current.value : ``,
-                author: {
-                    firstName: `Maxim`,
-                    lastName: `Shigaev`,
-                    avatar: currentProfile.avatar,
-                },
+                author: currentProfile,
                 images: uploadedFiles,
             }
                 
@@ -35,7 +31,7 @@ const TextArea = observer(() => {
             setTextAreaValue(``);
             setUploadedFiles([]);
         }
-    }, [currentChannel.id, createMessage, currentProfile.avatar, setUploadedFiles, uploadedFiles]);
+    }, [currentChannel.id, createMessage, currentProfile, setUploadedFiles, uploadedFiles]);
 
     const handleKeyDown = useCallback((evt) => {
         if (evt.keyCode === 13) {

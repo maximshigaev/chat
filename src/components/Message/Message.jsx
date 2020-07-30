@@ -6,14 +6,15 @@ import {StoreContext} from '../../context';
 import './Message.scss';
 
 const Message = ({message}) => {
-    const {setCurrentUser, users} = useContext(StoreContext);
-    const {date, text} = message;
+    const {setCurrentUser, users, currentProfile} = useContext(StoreContext);
+    const {date, text, author} = message;
     const messageDate = new Date(Date.parse(date));
+    const isCurrentProfileMessage = author && author.email === currentProfile.email;
 
     const user = message.userId
         ? users.find((user) => user.id === message.userId)
-        : message.author;
-    const authorName = `${user.firstName} ${user.lastName}`;
+        : author;
+    const authorName = `${user.firstName} ${user.surName}`;
 
     const handleClick = useCallback(() => setCurrentUser(user), [setCurrentUser, user]);
 
@@ -23,7 +24,8 @@ const Message = ({message}) => {
                 <img className="message-avatar" src={user.avatar} alt={authorName} width="25" height="32" />
             </a>
             <div className="message-wrapper">
-                <a className="message-link" title={`Open ${authorName}'s profile`} onClick={handleClick}>
+                <a className="message-link" onClick={handleClick}
+                    title={isCurrentProfileMessage ? `Open my profile` : `Open ${authorName}'s profile`}>
                     {authorName}
                 </a>
                 <time className="message-date">
@@ -55,11 +57,12 @@ Message.propTypes = {
         id: PropTypes.number.isRequired,
         channelId: PropTypes.number.isRequired,
         userId: PropTypes.number.isRequired,
-        author: {
+        author: PropTypes.shape({
             firstName: PropTypes.string.isRequired,
-            lastName: PropTypes.string.isRequired,
+            surName: PropTypes.string.isRequired,
             avatar: PropTypes.string.isRequired,
-        },
+            email: PropTypes.string.isRequired,
+        }),
         date: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         images: PropTypes.arrayOf(PropTypes.string).isRequired,

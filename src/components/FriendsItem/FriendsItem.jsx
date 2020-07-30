@@ -7,9 +7,9 @@ import {StoreContext} from '../../context';
 import './FriendsItem.scss';
 
 const FriendsItem = ({friend}) => {
-    const {firstName, lastName, isOnline, avatar} = friend;
+    const {firstName, surName, isOnline, avatar} = friend;
     const itemClass = cn(`friends-item`, {'friends-item--online': isOnline});
-    const friendName = `${firstName} ${lastName}`;
+    const friendName = `${firstName} ${surName}`;
     const {setCurrentUser} = useContext(StoreContext);
 
     const handleClick = () => setCurrentUser(friend);
@@ -32,7 +32,7 @@ FriendsItem.propTypes = {
     friend: PropTypes.exact({
         id: PropTypes.number.isRequired,
         firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
+        surName: PropTypes.string.isRequired,
         avatar: PropTypes.string.isRequired,
         jobTitle: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,

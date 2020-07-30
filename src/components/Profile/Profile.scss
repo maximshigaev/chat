@@ -91,6 +91,7 @@
 
 .profile-buttons {
     margin-bottom: 14px;
+    position: relative;
 }
 
 .profile-btn {
@@ -108,12 +109,22 @@
         opacity: 0.5;
     }
 
-    &--message {
+    &--message,
+    &--friend {
         color: white;
         font-size: 13px;
         font-weight: 700;
         margin-right: 4px;
         padding: 4px 40px;
+    }
+
+    &--dropdown {
+        width: 100%;
+        padding: 4px 15px;
+        margin-right: 0;
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
     }
     
     &--options {
@@ -124,4 +135,15 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
+    &--reversed {
+        transform: rotate(180deg);
+    }
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    top: 27px;
+    width: 100%;
 }

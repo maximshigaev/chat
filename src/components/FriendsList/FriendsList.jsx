@@ -22,9 +22,9 @@ const FriendsList = observer(() => {
                     <input className="friends-search" value={inputValue} placeholder="Search.." onChange={handleChange} />
                     <ul className="friends-list custom-scrollbar custom-scrollbar--light">
                         {friends
-                            .filter(({firstName, lastName}) => {
+                            .filter(({firstName, surName}) => {
                                 return firstName.toLowerCase().includes(friendsFilterTerm.toLowerCase().trim())
-                                    || lastName.toLowerCase().includes(friendsFilterTerm.toLowerCase().trim());
+                                    || surName.toLowerCase().includes(friendsFilterTerm.toLowerCase().trim());
                             })
                             .map((friend) => <FriendsItem key={friend.id} friend={friend} />)}
                     </ul>

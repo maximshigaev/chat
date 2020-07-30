@@ -9,7 +9,7 @@ const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const {logOut, currentProfile, setIsMyProfileOpen, isMyProfileOpen} = useContext(StoreContext);
 
-    const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), [setIsSettingsOpen]);
+    const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), []);
     const handleProfileTogglerClick = useCallback(() => {
         setIsSettingsOpen(false);
         setIsMyProfileOpen(!isMyProfileOpen);

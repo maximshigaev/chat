@@ -45,7 +45,7 @@ class Store {
                     text: faker.lorem.text(),
                     author: {
                         firstName: faker.name.firstName(),
-                        lastName: faker.name.lastName(),
+                        surName: faker.name.lastName(),
                         avatar: faker.internet.avatar(),
                     },
                 }, this.currentChannel.id);
@@ -107,14 +107,11 @@ class Store {
     setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
 
     setCurrentUser = action((user) => this.currentUser = user);
-    createFriend = action((friend) => {
-        api.createFriend(friend);
+    updateFriend = action((friend, id) => api.updateFriend(friend, id).then((friend) => {
+        this.setCurrentUser(friend);
         this.getAllUsers();
-    });
-    deleteFriend = action((id) => {
-        api.deleteFriend(id);
-        this.getAllUsers();
-    });
+    }));
+
     setFriendsFilterTerm = action((term) => this.friendsFilterTerm = term);
 
     createChannel = action((channel) => {
