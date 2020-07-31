@@ -8,14 +8,15 @@ import {StoreContext} from '../../context';
 import './ChannelsItem.scss';
 
 const ChannelsItem = observer(({channel}) => {
-    const {setUploadedFiles} = useContext(StoreContext);
+    const {setUploadedFiles, setIsMenuOpened} = useContext(StoreContext);
     const currentChannelId = useLocation().pathname.slice(1);
 
     const handleClick = useCallback(() => {
         if (+currentChannelId !== channel.id) {
             setUploadedFiles([]);
+            setIsMenuOpened(false);
         }
-    }, [setUploadedFiles, channel.id, currentChannelId]);
+    }, [setUploadedFiles, channel.id, currentChannelId, setIsMenuOpened]);
 
     return (
         <li className="channels-item">

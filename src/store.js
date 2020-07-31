@@ -28,9 +28,11 @@ class Store {
                 return this.users.filter((user) => user.isFriend);
             },
             friendsFilterTerm: ``,
-            isMyProfileOpen: false,
+            isMyProfileOpened: false,
             isLoggingOut: false,
             uploadedFiles: [],
+            isMenuOpened: false,
+            isProfileOpened: false,
         });
     }
 
@@ -54,7 +56,7 @@ class Store {
     }
 
     setUploadedFiles = action((files) => this.uploadedFiles = files); 
-    setIsMyProfileOpen = action((isOpen) => this.isMyProfileOpen = isOpen);
+    setIsMyProfileOpened = action((isOpened) => this.isMyProfileOpened = isOpened);
     logOut = action((user, id) => {
         this.isLoggingOut = true;
         api.updateUser(user, id)
@@ -121,6 +123,9 @@ class Store {
         api.createMessage(message, id)
             .then(() => this.getCurrentMessages(this.currentChannel.id))
     });
+
+    setIsMenuOpened = action((isOpened) => this.isMenuOpened = isOpened);
+    setIsProfileOpened = action((isOpened) => this.isProfileOpened = isOpened);
 }
 
 const store = new Store();
