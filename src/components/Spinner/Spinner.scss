@@ -8,8 +8,8 @@
 }
 
 .spinner {
-    width: 250px;
-    height: 250px;
+    width: 310px;
+    height: 310px;
     display: block;
     overflow: hidden;
     background: transparent;
@@ -20,18 +20,23 @@
     transform: translate(-50%, -50%);
     backface-visibility: hidden;
     transform-origin: 0 0;
+
+    &--middle {
+        width: 170px;
+        height: 170px;
+    }
 }
 
-.spinner div {
-    left: 107px;
-    top: 8px;
+.spinner-petal {
+    left: 139px;
+    top: 9px;
     position: absolute;
     animation: spinnerContent linear 1s infinite;
     background: grey;
-    width: 28px;
+    width: 34px;
     height: 68px;
     border-radius: 17px / 34px;
-    transform-origin: 17px 117px;
+    transform-origin: 17px 148px;
     box-sizing: content-box;
 
     &:nth-child(1) {
@@ -95,19 +100,29 @@
     }
 }
 
-.spinner--middle {
-    width: 170px;
-    height: 170px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.spinner--middle .spinner-petal {
+    left: 71px;
+    top: 6px;
+    width: 17px;
+    height: 43px;
+    transform-origin: 10px 80px;
+}
 
-    & div {
-        left: 71px;
-        top: 6px;
-        width: 17px;
-        height: 43px;
-        transform-origin: 10px 80px;
+@media (max-width: 768px) {
+    .spinner {
+        width: 250px;
+        height: 250px;
+
+        &--middle {
+            width: 170px;
+            height: 170px;
+        }
+    }
+
+    .spinner-petal {
+        left: 107px;
+        top: 3px;
+        width: 26px;
+        transform-origin: 17px 122px;
     }
 }

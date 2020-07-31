@@ -7,7 +7,7 @@ import {FormErrorMessage} from '../';
 
 import './FormField.scss';
 
-const FormField = ({name, type, label, onFocus: handleFocus, isSignupPage, isMyProfile}) => {
+const FormField = ({name, type, label, onFocus: handleFocus = () => {}, isSignupPage, isMyProfile}) => {
     const divClass = cn(`form-field`, {'form-field--signup': isSignupPage, 'form-field--my-profile': isMyProfile});
     const labelClass = cn(`form-label`, {'visually-hidden': !isMyProfile});
 
@@ -17,7 +17,7 @@ const FormField = ({name, type, label, onFocus: handleFocus, isSignupPage, isMyP
                 {label}
             </label>
             <Field className="form-input" type={type} placeholder={(label === `Timezone`) ? `+04:00` : label}
-                name={name} id={name} onFocus={handleFocus ? handleFocus : () => {}}
+                name={name} id={name} onFocus={handleFocus}
             />
             {isMyProfile && <FormErrorMessage name={name} modifier="my-profile" />}
             {isSignupPage && <FormErrorMessage name={name} modifier="tablet" />}
@@ -31,6 +31,7 @@ FormField.propTypes = {
     label: PropTypes.string.isRequired,
     isSignupPage: PropTypes.bool,
     isMyProfile: PropTypes.bool,
+    onFocus: PropTypes.func,
 }
 
 export {FormField};

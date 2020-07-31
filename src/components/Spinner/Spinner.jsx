@@ -10,7 +10,7 @@ const Spinner = ({size}) => {
 
     return (
         <div className={divClass}>
-            {times(12, () => <div key={Math.random()} />)}
+            {times(12, () => <div key={Math.random()} className="spinner-petal" />)}
         </div>
     );
 }

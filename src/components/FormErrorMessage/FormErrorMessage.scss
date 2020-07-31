@@ -38,13 +38,12 @@
     }
 
     &--my-profile {
-        bottom: 4px;
-        right: 0;
         font-size: 13px;
-        width: 100%;
         font-weight: 700;
-        text-align: right;
         margin-bottom: 0;
+        top: -19px;
+        left: -3px;
+        width: 105%;
     }
 
     &--tablet {
