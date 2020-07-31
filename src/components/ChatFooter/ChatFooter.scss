@@ -100,3 +100,15 @@
         transform: rotate(-45deg);
     }
 }
+
+@media (max-width: 768px) {
+    .chat-footer {
+        padding: 16px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .chat-footer-upload {
+        margin-right: 16px;
+    }
+}
