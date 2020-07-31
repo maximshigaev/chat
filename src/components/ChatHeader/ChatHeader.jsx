@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import {observer} from 'mobx-react';
 import cn from 'classnames';
 
@@ -11,6 +11,7 @@ const ChatHeader = observer(() => {
     const {currentChannel} = useContext(StoreContext);
     const {isFavourite, participantsCount, title} = currentChannel;
     const favouriteBtnClass = cn(`chat-favourite-btn`, {'chat-favourite-btn--in-list': isFavourite});
+
 
     return (
         <div className="chat-header">
