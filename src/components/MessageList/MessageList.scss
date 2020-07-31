@@ -23,16 +23,17 @@
         height: 1px;
         background-color: #c2c2c2;
         content: '';
-        position: absolute;
         top: 10px;
-        width: 36%;
+        flex-grow: 1;
     }
 
     &::before {
         left: 25px;
+        margin-right: 20px;
     }
 
     &::after {
         right: 25px;
+        margin-left: 20px;
     }
 }
