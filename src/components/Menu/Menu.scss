@@ -1,5 +1,6 @@
 .menu {
     width: 19.9%;
+    min-width: 280px;
     background-color: #25272a;
     opacity: 0.75;
     color: #b5b5b5;
@@ -12,4 +13,20 @@
     color: white;
     font-size: 20px;
     font-weight: 700;
+}
+
+@media (max-width: 1176px) {
+    .menu {
+        display: none;
+
+        &--opened {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 270px;
+            opacity: 1;
+            z-index: 2;
+        }
+    }
 }

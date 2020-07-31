@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {ChannelsList} from '../';
 import {FriendsList} from '../';
@@ -10,15 +11,14 @@ import {MyProfile} from '../';
 import './Menu.scss';
 
 const Menu =  observer(() =>{
-    const {isMyProfileOpen} = useContext(StoreContext);
+    const {isMyProfileOpened, isMenuOpened} = useContext(StoreContext);
+    const sectionClass = cn(`menu`, {'menu--opened': isMenuOpened});
 
     return (
-        <section className="menu">
+        <section className={sectionClass}>
             <MenuHeader />
-            {isMyProfileOpen &&
-                <MyProfile />
-            }
-            {!isMyProfileOpen &&
+            {isMyProfileOpened && <MyProfile />}
+            {!isMyProfileOpened &&
                 <>
                     <ChannelsList />
                     <FriendsList />
