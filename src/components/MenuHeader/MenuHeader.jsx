@@ -8,11 +8,14 @@ import './MenuHeader.scss';
 const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const {logOut, onlineUser, setIsMyProfileOpened, isMyProfileOpened, setCurrentUser,
-        isMenuOpened, setIsMenuOpened
+        isMenuOpened, setIsMenuOpened, setIsMobileMenuOpened
     } = useContext(StoreContext);
 
     const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), []);
-    const handleCloseMenuBtnClick =  useCallback(() => setIsMenuOpened(false), [setIsMenuOpened]);
+    const handleCloseMenuBtnClick =  useCallback(() => {
+        setIsMenuOpened(false);
+        setIsMobileMenuOpened(false);
+    }, [setIsMenuOpened, setIsMobileMenuOpened]);
 
     const handleProfileTogglerClick = useCallback(() => {
         setIsSettingsOpen(false);
