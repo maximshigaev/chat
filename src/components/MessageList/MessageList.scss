@@ -1,5 +1,5 @@
 .message-list {
-    height: calc(100vh - 192px);
+    height: calc(100vh - 198px);
     overflow-y: auto;
     border-bottom: 1px solid #c2c2c2;
     border-top: 1px solid #c2c2c2;
@@ -35,5 +35,12 @@
     &::after {
         right: 25px;
         margin-left: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .message-list {
+        border-top: none;
+        height: calc(100vh -198px);
     }
 }

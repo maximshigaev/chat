@@ -34,7 +34,7 @@ const MessageList = observer(() => {
                         if (dayOfMonth !== prevDay) {
                             prevDay = dayOfMonth;
                             const formattedDate = `${WEEK_DAYS[date.getDay()]}, ${MONTHS[date.getMonth()]}
-                                ${dayOfMonth},${date.getFullYear()}`;
+                                ${dayOfMonth}, ${date.getFullYear()}`;
 
                             return (
                                 <React.Fragment key={message.id}>
