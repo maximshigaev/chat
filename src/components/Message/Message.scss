@@ -69,3 +69,27 @@
     margin: 10px;
     margin-bottom: 0;
 }
+
+@media (max-width: 768px) {
+    .message {
+        padding-left: 0;
+        padding-right: 0;
+        display: block;
+    }
+
+    .message-wrapper {
+        display: inline;
+    }
+
+    .message-avatar {
+        vertical-align: middle;
+    }
+
+    .message-images {
+        width: 100%;
+    }
+
+    .message-text {
+        margin-top: 5px;
+    }
+}

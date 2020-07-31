@@ -49,7 +49,7 @@ const Message = observer(({message}) => {
                         }
                     </p>
                 }
-            </div>          
+            </div>
         </li>
     );
 });
