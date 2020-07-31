@@ -1,5 +1,6 @@
 .profile {
     width: 14.4%;
+    min-width: 210px;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -12,8 +13,16 @@
 }
 
 .profile-avatar {
-    width: 228px;
-    height: 228px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+}
+
+.profile-image-wrapper {
+    position: relative;
+    padding-top: 100%;
 }
 
 .profile-info {
@@ -147,4 +156,66 @@
     right: 0;
     top: 27px;
     width: 100%;
+}
+
+.profile-close-btn {
+    display: none;
+}
+
+@media (max-width: 1176px) {
+    .profile {
+        display: none;
+
+        &--opened {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            z-index: 2;
+        }
+    }
+
+    .profile-close-btn {
+        display: block;
+        position: fixed;
+        width: 16px;
+        height: 16px;
+        z-index: 2;
+        top: 6px;
+        right: 13px;
+
+        &::before,
+        &::after {
+            position: absolute;
+            content: '';
+            width: 2px;
+            background-color: black;
+            height: 16px;
+            top: 0;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+
+        &:hover,
+        &:focus {
+            &::before,
+            &::after {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        &:active {
+            &::before,
+            &::after {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
 }

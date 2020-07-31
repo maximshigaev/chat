@@ -8,8 +8,11 @@ import {ProfileInfoItem} from '../';
 import './Profile.scss';
 
 const Profile = observer(() => {
-    const {currentUser, updateUser, onlineUser} = useContext(StoreContext);
+    const {currentUser, updateUser, onlineUser, isProfileOpened, setIsProfileOpened} = useContext(StoreContext);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const sectionClass = cn(`profile`, `custom-scrollbar`, `custom-scrollbar--light`,
+        {'profile--opened': isProfileOpened});
+
     const handleOptionsBtnClick = useCallback(() => setIsDropdownOpen((prevState) => !prevState) , []);
     let profileHolder = currentUser;
 
@@ -27,6 +30,7 @@ const Profile = observer(() => {
     }
 
     const isOnlineUserProfile = onlineUser === profileHolder;
+    const handlCloseProfileBtnClick =  useCallback(() => setIsProfileOpened(false), [setIsProfileOpened]);
 
     const {firstName, surName, avatar, jobTitle, userName, skype, email, timeZone, isOnline = true, fb, tw, inst,
         lkdn
@@ -42,14 +46,19 @@ const Profile = observer(() => {
     const socialLinks  = {fb, tw, inst, lkdn};
 
     return (
-        <section className="profile custom-scrollbar custom-scrollbar--light">
+        <section className={sectionClass}>
             <h2 className="visually-hidden">User Profile</h2>
-            <img className="profile-avatar" src={avatar} alt={profileUserName} width="228" height="228" />
+            {isProfileOpened &&
+                <button className="profile-close-btn" title="Close profile" onClick={handlCloseProfileBtnClick} />
+            }
+            <div className="profile-image-wrapper">
+                <img className="profile-avatar" src={avatar} alt={profileUserName} width="228" height="228" />
+            </div>
             <div className="profile-info">
                 <h3 className={headingClass}>
                     {profileUserName}
                 </h3>
-                {profileHolder.jobTitle &&  <span className="profile-job">{jobTitle}</span>}
+                {profileHolder.jobTitle && <span className="profile-job">{jobTitle}</span>}
                 <div className="profile-social-links">
                     {Object.entries(socialLinks)
                         .map(([key, value]) => {
