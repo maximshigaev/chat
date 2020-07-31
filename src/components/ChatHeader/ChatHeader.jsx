@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react';
+import React, {useContext} from 'react';
 import {observer} from 'mobx-react';
 import cn from 'classnames';
 
@@ -10,17 +10,15 @@ import './ChatHeader.scss';
 const ChatHeader = observer(() => {
     const {currentChannel} = useContext(StoreContext);
     const {isFavourite, participantsCount, title} = currentChannel;
-    const favouriteBtnClass = cn(`chat-favourite-btn`, {'chat-favourite-btn--in-list': isFavourite});
-
+    const headingClass = cn(`chat-title`, {'chat-title--in-list': isFavourite});
 
     return (
         <div className="chat-header">
-            <h2 className="chat-title">
+            <h2 className={headingClass} title={isFavourite ? `Favourite channel` : `Not favourite channel`}>
                 {`# ${title.toLowerCase()}`}
             </h2>
-            <button className={favouriteBtnClass} title={isFavourite ? `Remove favourite` : `Make favourite`} />
             <div className="chat-header-wrapper">
-                <span className="chat-participants">
+                <span className="chat-participants" title={`${participantsCount} participants`}>
                     {participantsCount}
                 </span>
                 <SearchBar />
