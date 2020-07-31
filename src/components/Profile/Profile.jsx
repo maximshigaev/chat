@@ -8,10 +8,12 @@ import {ProfileInfoItem} from '../';
 import './Profile.scss';
 
 const Profile = observer(() => {
-    const {currentUser, updateUser, onlineUser, isProfileOpened, setIsProfileOpened} = useContext(StoreContext);
+    const {currentUser, updateUser, onlineUser, isProfileOpened, setIsProfileOpened,
+        isMobileMenuOpened, setIsMobileProfileOpened
+    } = useContext(StoreContext);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const sectionClass = cn(`profile`, `custom-scrollbar`, `custom-scrollbar--light`,
-        {'profile--opened': isProfileOpened});
+        {'profile--opened': isProfileOpened, 'profile--opened-mobile-menu': isMobileMenuOpened});
 
     const handleOptionsBtnClick = useCallback(() => setIsDropdownOpen((prevState) => !prevState) , []);
     let profileHolder = currentUser;
@@ -30,7 +32,10 @@ const Profile = observer(() => {
     }
 
     const isOnlineUserProfile = onlineUser === profileHolder;
-    const handlCloseProfileBtnClick =  useCallback(() => setIsProfileOpened(false), [setIsProfileOpened]);
+    const handleCloseProfileBtnClick = useCallback(() => {
+        setIsMobileProfileOpened(false);
+        setIsProfileOpened(false);
+    }, [setIsProfileOpened, setIsMobileProfileOpened]);
 
     const {firstName, surName, avatar, jobTitle, userName, skype, email, timeZone, isOnline = true, fb, tw, inst,
         lkdn
@@ -49,7 +54,7 @@ const Profile = observer(() => {
         <section className={sectionClass}>
             <h2 className="visually-hidden">User Profile</h2>
             {isProfileOpened &&
-                <button className="profile-close-btn" title="Close profile" onClick={handlCloseProfileBtnClick} />
+                <button className="profile-close-btn" title="Close profile" onClick={handleCloseProfileBtnClick} />
             }
             <div className="profile-image-wrapper">
                 <img className="profile-avatar" src={avatar} alt={profileUserName} width="228" height="228" />
