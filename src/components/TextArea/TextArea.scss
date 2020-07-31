@@ -34,3 +34,9 @@
         background-image: url('../../img/icons/chat-send-active.svg');
     }
 }
+
+@media (max-width: 768px) {
+    .textarea-btn {
+        margin-left: 16px;
+    }
+}
