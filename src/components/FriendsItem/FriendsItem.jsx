@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -7,12 +7,15 @@ import {StoreContext} from '../../context';
 import './FriendsItem.scss';
 
 const FriendsItem = ({friend}) => {
+    const {setCurrentUser, setIsProfileOpened} = useContext(StoreContext);
     const {firstName, surName, isOnline, avatar} = friend;
     const itemClass = cn(`friends-item`, {'friends-item--online': isOnline});
     const friendName = `${firstName} ${surName}`;
-    const {setCurrentUser} = useContext(StoreContext);
 
-    const handleClick = () => setCurrentUser(friend);
+    const handleClick = useCallback(() => {
+        setIsProfileOpened(true);
+        setCurrentUser(friend);
+    }, [setCurrentUser, friend, setIsProfileOpened]);
 
     return (
         <li className={itemClass}>
