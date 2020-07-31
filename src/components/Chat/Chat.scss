@@ -4,6 +4,7 @@
     &--empty {
         font-size: 40px;
         display: flex;
+        text-align: center;
         justify-content: center;
         align-items: center;
     }
@@ -43,8 +44,34 @@
             left: 10px;
         }
 
+        &--menu.chat-open-btn--opened-menu {
+            display: none;
+        }
+
         &--profile {
             right: 10px;
+        }
+
+        &--profile.chat-open-btn--opened-profile {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .chat {
+        &--empty {
+            font-size: 26px;
+        }
+    }
+
+    .chat-open-btn {
+        &--menu.chat-open-btn--opened-menu {
+            display: none;
+        }
+
+        &--profile.chat-open-btn--opened-profile {
+            display: none;
         }
     }
 }

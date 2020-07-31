@@ -33,6 +33,8 @@ class Store {
             uploadedFiles: [],
             isMenuOpened: false,
             isProfileOpened: false,
+            isMobileMenuOpened: false,
+            isMobileProfileOpened: false,
         });
     }
 
@@ -126,6 +128,8 @@ class Store {
 
     setIsMenuOpened = action((isOpened) => this.isMenuOpened = isOpened);
     setIsProfileOpened = action((isOpened) => this.isProfileOpened = isOpened);
+    setIsMobileMenuOpened = action((isOpened) => this.isMobileMenuOpened = isOpened);
+    setIsMobileProfileOpened = action((isOpened) => this.isMobileProfileOpened = isOpened);
 }
 
 const store = new Store();
