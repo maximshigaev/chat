@@ -7,18 +7,21 @@ import './MenuHeader.scss';
 
 const MenuHeader = observer(() => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const {logOut, onlineUser, setIsMyProfileOpen, isMyProfileOpen, setCurrentUser} = useContext(StoreContext);
+    const {logOut, onlineUser, setIsMyProfileOpened, isMyProfileOpened, setCurrentUser,
+        isMenuOpened, setIsMenuOpened
+    } = useContext(StoreContext);
 
     const handleSettingsBtnClick = useCallback(() => setIsSettingsOpen((prevState) => !prevState), []);
+    const handleCloseMenuBtnClick =  useCallback(() => setIsMenuOpened(false), [setIsMenuOpened]);
+
     const handleProfileTogglerClick = useCallback(() => {
         setIsSettingsOpen(false);
-        setIsMyProfileOpen(!isMyProfileOpen);
+        setIsMyProfileOpened(!isMyProfileOpened);
         setCurrentUser(onlineUser);
-    }, [setIsMyProfileOpen, isMyProfileOpen, onlineUser, setCurrentUser]);
+    }, [setIsMyProfileOpened, isMyProfileOpened, onlineUser, setCurrentUser]);
 
     const handleLogoutBtnClick = useCallback(() =>{
-        logOut({
-            ...onlineUser,
+        logOut({...onlineUser,
             isProfileOnline: false,
         }, onlineUser.id);
     }, [logOut, onlineUser]);
@@ -31,12 +34,15 @@ const MenuHeader = observer(() => {
             <button className="menu-btn menu-btn--settings" title={isSettingsOpen ? `Close settings` : `Open settings`}
                 onClick={handleSettingsBtnClick}
             />
+            {isMenuOpened &&
+                <button className="menu-btn menu-btn--close" title="Close menu" onClick={handleCloseMenuBtnClick} />
+            }
             {isSettingsOpen &&
                 <div className="menu-settings">
                     <button className="menu-settings-btn" onClick={handleProfileTogglerClick}
-                        title={isMyProfileOpen ? `Channels & friends` : `My profile`}
+                        title={isMyProfileOpened ? `Channels & friends` : `My profile`}
                     >
-                        {isMyProfileOpen ? `Channels & friends` : `My profile`}
+                        {isMyProfileOpened ? `Channels & friends` : `My profile`}
                     </button>
                     <button className="menu-settings-btn" title="Log out" onClick={handleLogoutBtnClick}>
                         Log out  
