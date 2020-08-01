@@ -35,6 +35,16 @@
     }
 }
 
+.signup-message {
+    color: red;
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: absolute;
+    top: 30px;
+}
+
 @media (max-width: 768px) {
     .signup-form {
         width: 280px;
@@ -43,5 +53,11 @@
 
     .signup-btn {
         width: 70%;
+    }
+
+    .signup-message {
+        top: 0;
+        font-size: 13px;
+        font-weight: 700;
     }
 }
