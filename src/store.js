@@ -111,6 +111,11 @@ class Store {
             })
     });
     setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
+    createChannel = action((channel) => {
+        this.isChannelsLoading = true;
+        api.createChannel(channel)
+            .then(() => this.getAllChannels())
+    });
 
     getCurrentMessages = action((id) => {
         this.isMessagesLoading = true;

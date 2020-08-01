@@ -176,6 +176,10 @@
         }
     }
 
+    .profile-info {
+        min-height: calc(100vh - 210px);
+    }
+
     .profile-close-btn {
         display: block;
         position: fixed;

@@ -7,7 +7,7 @@ import {StoreContext} from '../../context';
 import './Message.scss';
 
 const Message = observer(({message}) => {
-    const {setCurrentUser, users, onlineUser} = useContext(StoreContext);
+    const {setCurrentUser, users, onlineUser, setIsMobileProfileOpened, setIsProfileOpened} = useContext(StoreContext);
     const {date, text, author} = message;
     const messageDate = new Date(Date.parse(date));
     const isOnlineUserMessage = author && author.email === onlineUser.email;
@@ -17,7 +17,11 @@ const Message = observer(({message}) => {
         : users.find((user) => user.email === message.author.email);
     const authorName = `${user.firstName} ${user.surName}`;
 
-    const handleClick = useCallback(() => setCurrentUser(user), [setCurrentUser, user]);
+    const handleClick = useCallback(() => {
+        setIsProfileOpened(true);
+        setIsMobileProfileOpened(true);
+        setCurrentUser(user);
+    }, [setCurrentUser, user, setIsProfileOpened, setIsMobileProfileOpened]);
 
     return (
         <li className="message">
