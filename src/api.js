@@ -19,6 +19,7 @@ class Api {
 
     getChannels = () => this.request.get(`/channels`);
     createChannel = (channel) => this.request.post(`/channels`, channel);
+    deleteChannel = (id) => this.request.delete(`/channels/${id}`);
 
     getCurrentMessages = (id) => this.request.get(`/channels/${id}/messages`);
     createMessage = (message, id) => this.request.post(`/channels/${id}/messages`, message);

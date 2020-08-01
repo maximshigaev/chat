@@ -116,6 +116,12 @@ class Store {
         api.createChannel(channel)
             .then(() => this.getAllChannels())
     });
+    deleteChannel = action((id) => {
+        this.isChannelsLoading = true;
+        api.deleteChannel(id)
+            .then(() => this.getAllChannels())
+    });
+    setCurrentChannel = action((channel) => this.currentChannel = channel);
 
     getCurrentMessages = action((id) => {
         this.isMessagesLoading = true;

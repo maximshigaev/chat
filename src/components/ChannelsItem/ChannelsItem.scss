@@ -1,5 +1,6 @@
 .channels-item {
     margin-right: 5px;
+    position: relative;
 }
 
 .channels-link {
@@ -23,5 +24,32 @@
         background-color: rgba(255, 255, 255, 0.2);
         color: white;
         border-radius: 5px;
+    }
+}
+
+.channels-item-btn {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    top: 0;
+
+    &--remove {
+        right: 5px;
+        top: 6px;
+        background-image: url('../../img/icons/menu-remove.svg');
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/menu-remove-hover.svg');
+        }
+
+        &:active {
+            background-image: url('../../img/icons/menu-remove-active.svg');
+        }
+    }
+
+    &--rename {
+        right: 40px;
+        background-image: url('../../img/icons/menu-rename.svg');
     }
 }
