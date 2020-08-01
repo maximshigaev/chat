@@ -2,6 +2,7 @@ import React, {useContext, useState, useCallback, useRef, useEffect} from 'react
 import {observer} from 'mobx-react';
 
 import {StoreContext} from '../../context';
+import {handleKeyDown as onKeyDown} from '../../helpers';
 
 import './TextArea.scss';
 
@@ -33,12 +34,7 @@ const TextArea = observer(() => {
         }
     }, [currentChannel.id, createMessage, onlineUser, setUploadedFiles, uploadedFiles]);
 
-    const handleKeyDown = useCallback((evt) => {
-        if (evt.keyCode === 13) {
-            handleSubmit();
-        }
-    }, [handleSubmit]);
-
+    const handleKeyDown = useCallback(onKeyDown(handleSubmit), [handleSubmit]);
     const handleClick = useCallback(() => handleSubmit(), [handleSubmit]);
 
     useEffect(() => {

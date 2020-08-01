@@ -108,6 +108,11 @@ class Store {
             .then((channels) => {
                 this.channels = channels;
                 this.isChannelsLoading = false;
+
+                if (this.currentChannel) {
+                    const currentChannel = channels.find((channel) => channel.id === this.currentChannel.id);
+                    this.setCurrentChannel(currentChannel);
+                }
             })
     });
     setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
@@ -121,6 +126,11 @@ class Store {
         api.deleteChannel(id)
             .then(() => this.getAllChannels())
     });
+    updateChannel = action((channel, id) => {
+        this.isChannelsLoading = true;
+        api.updateChannel(channel, id)
+            .then(() => this.getAllChannels())
+    });
     setCurrentChannel = action((channel) => this.currentChannel = channel);
 
     getCurrentMessages = action((id) => {
@@ -129,7 +139,8 @@ class Store {
             .then((messages) => {
                 this.isMessagesLoading = false;
                 this.currentMessages = messages;
-                this.currentChannel = this.channels.find((channel) => channel.id === +id);
+                const currentChannel = this.channels.find((channel) => channel.id === +id);
+                this.setCurrentChannel(currentChannel);
             })
     });
     createMessage = action((message, id) => {

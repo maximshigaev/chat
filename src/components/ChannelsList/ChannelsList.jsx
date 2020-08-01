@@ -6,7 +6,8 @@ import {StoreContext} from '../../context';
 import {ChannelsItem} from '../';
 import {MenuTitle} from '../';
 import {Spinner} from '../';
-import {useControlledInput} from '../../hooks';
+import {useControlledInput, useChannelError} from '../../hooks';
+import {handleKeyDown as onKeyDown} from '../../helpers';
 
 import './ChannelsList.scss';
 
@@ -17,18 +18,24 @@ const ChannelsList = observer(() => {
     const {inputValue: searchInputValue, handleChange: handleSearchChange} = useControlledInput(setChannelsFilterTerm);
     const {inputValue: addInputValue, handleChange: handleAddChange} = useControlledInput();
     const [isChannelAdding, setIsChannelAdding] = useState(false);
-    const [isChannelError, setIsChannelError] = useState(false);
-
+    const {isChannelError: isEmptyError, setIsChannelError: setIsEmptyError, errorMessage: emptyMessage}
+        = useChannelError(`empty`);
+    const {isChannelError: isLongError, setIsChannelError: setIsLongError, errorMessage: longMessage}
+        = useChannelError(`long`);
     const handleNewBtnClick = useCallback(() => {
-        setIsChannelError(false);
+        setIsEmptyError(false);
+        setIsLongError(false);
         setIsChannelAdding((isAdding) => !isAdding);
-    }, []);
+    }, [setIsEmptyError, setIsLongError]);
     const buttonClass = cn(`channels-btn`, `channels-btn--new`, {'channels-btn--opened': isChannelAdding});
     const addInputRef = useRef();
 
     const handleAddBtnClick = useCallback(() => {
         if (!addInputValue.trim()) {
-            setIsChannelError(true);
+            setIsEmptyError(true);
+            addInputRef.current.blur();
+        } else if (addInputValue.trim().length > 20) {
+            setIsLongError(true);
             addInputRef.current.blur();
         } else {
             createChannel({
@@ -37,41 +44,40 @@ const ChannelsList = observer(() => {
                 isFavourite: false,
             });
             handleAddChange({target: {value: ``}});
-            setIsChannelError(false);
+            setIsEmptyError(false);
+            setIsLongError(false);
             setIsChannelAdding(false);
         }
-    }, [createChannel, addInputValue, handleAddChange]);
+    }, [createChannel, addInputValue, handleAddChange, setIsEmptyError, setIsLongError]);
 
-    const handleKeyDown = useCallback((evt) => {
-        if (evt.keyCode === 13) {
-            handleAddBtnClick();
-        }
-    }, [handleAddBtnClick]);
-    const handleFocus = useCallback(() => setIsChannelError(false), []);
+    const handleKeyDown = useCallback(onKeyDown(handleAddBtnClick), [handleAddBtnClick]);
+    const handleFocus = useCallback(() => {
+        setIsEmptyError(false);
+        setIsLongError(false);
+    }, [setIsEmptyError, setIsLongError]);
 
     return (
         <nav className="channels">
-            {isChannelError &&
-                <div className="channels-error">
-                    Name of the channel is empty
-                </div>
-            }
+            {isEmptyError && emptyMessage}
+            {isLongError && longMessage}
             {isChannelsLoading && <Spinner size="middle" />}
             {!isChannelsLoading &&
                 <>
                     <MenuTitle title="Channels" quantity={channels.length} />
                     {isChannelAdding &&
-                        <button className="channels-btn channels-btn--add" title="Add channel" onClick={handleAddBtnClick} />
+                        <>
+                            <button className="channels-btn channels-btn--add" title="Add channel"
+                                onClick={handleAddBtnClick}
+                            />
+                            <input className="channels-input channels-input--add" type="text" value={addInputValue}
+                                onChange={handleAddChange} placeholder="Name of the channel" onKeyDown={handleKeyDown}
+                                ref={addInputRef} onFocus={handleFocus}
+                            />
+                        </>
                     }
                     <button className={buttonClass} title={isChannelAdding ? `Back` : `New channel`}
                         onClick={handleNewBtnClick}
                     />
-                    {isChannelAdding &&
-                        <input className="channels-input channels-input--add" type="text" value={addInputValue}
-                            onChange={handleAddChange} placeholder="Name of the channel" onKeyDown={handleKeyDown}
-                            ref={addInputRef} onFocus={handleFocus}
-                        />
-                    }
                     <input className="channels-input channels-input--search" value={searchInputValue}
                         placeholder="Search.." onChange={handleSearchChange} type="text"
                     />
