@@ -21,7 +21,7 @@ const Profile = observer(() => {
     const handleFriendsBtnClick = useCallback(() => updateUser({
         ...currentUser,
         isFriend: !currentUser.isFriend,
-    }, currentUser.id), [currentUser, updateUser]);
+    }, currentUser.id, `friend`), [currentUser, updateUser]);
 
     useEffect(() => {
         setIsDropdownOpen(false);

@@ -55,7 +55,7 @@ const ChannelsItem = observer(({channel}) => {
             updateChannel({
                 ...channel,
                 title: inputValue.trim(),
-            }, channel.id);
+            }, channel.id, `rename`);
             setIsEmptyError(false);
             setIsLongError(false);
         }

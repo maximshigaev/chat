@@ -21,7 +21,7 @@ const LoginForm = observer(() => {
             updateUser({
                 ...registeredUser,
                 isProfileOnline: true,
-            }, registeredUser.id);
+            }, registeredUser.id, `login`);
         } else {
             setIsNotFoundError(true);
         }

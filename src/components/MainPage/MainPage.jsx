@@ -7,14 +7,24 @@ import {Chat} from '../';
 import {Profile} from '../';
 import {Spinner} from '../';
 import {StoreContext} from '../../context';
+import {getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './MainPage.scss';
 
 const MainPage = observer(() => {
-    const {onlineUser, isLoggingOut} = useContext(StoreContext);
+    const {onlineUser, isLoggingOut, usersError} = useContext(StoreContext);
 
     if (isLoggingOut) {
         return <Spinner />;
+    }
+
+    if (usersError && usersError.type === `logout`) {
+        return (
+            <ErrorMessage>
+                {getErrorMessage(usersError.type)}
+            </ErrorMessage>
+        );
     }
 
     if (!onlineUser) {

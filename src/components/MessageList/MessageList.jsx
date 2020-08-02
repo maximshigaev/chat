@@ -5,6 +5,8 @@ import cn from 'classnames';
 import {Message} from '../';
 import {StoreContext} from '../../context';
 import {Spinner} from '../';
+import {getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './MessageList.scss';
 
@@ -13,7 +15,7 @@ const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, 
     `November`, `December`];
 
 const MessageList = observer(() => {
-    const {currentMessages, filterTerm, uploadedFiles, isMessagesLoading} = useContext(StoreContext);
+    const {currentMessages, filterTerm, uploadedFiles, isMessagesLoading, messagesError} = useContext(StoreContext);
     const listRef = useRef();
     const ulClass = cn(`message-list`, `custom-scrollbar`, {'message-list--uploaded': uploadedFiles.length});
     let prevDay = null;
@@ -23,9 +25,13 @@ const MessageList = observer(() => {
     return (
         <ul className={ulClass} ref={listRef}>
             {isMessagesLoading && <Spinner />}
-            {!isMessagesLoading && 
-                currentMessages
-                    .filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
+            {messagesError &&
+                <ErrorMessage mode="chat">
+                    {getErrorMessage(messagesError.type, `Messages`)}
+                </ErrorMessage>
+            }
+            {!isMessagesLoading && !messagesError &&
+                currentMessages.filter((message) => message.text.toLowerCase().includes(filterTerm.toLowerCase().trim()))
                     .sort((msgA, msgB) => Date.parse(msgA.date) - Date.parse(msgB.date))
                     .map((message) => {
                         const date = new Date(Date.parse(message.date))

@@ -6,17 +6,26 @@ import {MenuTitle} from '../';
 import {Spinner} from '../';
 import {FriendsItem} from '../';
 import {useControlledInput} from '../../hooks';
+import {getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './FriendsList.scss';
 
 const FriendsList = observer(() => {
-    const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm, isUserUpdating} = useContext(StoreContext);
+    const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm, isUserUpdating,
+        usersError
+    } = useContext(StoreContext);
     const {inputValue, handleChange} = useControlledInput(setFriendsFilterTerm);
 
     return (
         <div className="friends">
             {(isUsersLoading || isUserUpdating) && <Spinner size="middle" />}
-            {!isUsersLoading && !isUserUpdating &&
+            {usersError &&
+                <ErrorMessage mode="menu">
+                    {getErrorMessage(usersError.type)}
+                </ErrorMessage>
+            }
+            {!isUsersLoading && !isUserUpdating && !usersError &&
                 <>
                     <MenuTitle title="Friends" quantity={friends.length} />
                     <input className="friends-search" value={inputValue} placeholder="Search.." onChange={handleChange} />

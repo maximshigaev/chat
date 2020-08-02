@@ -6,11 +6,13 @@ import {StoreContext} from '../../context';
 import {FormField} from '../';
 import {Spinner} from '../';
 import {myProfileShape} from '../../formShapes';
+import {getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './MyProfile.scss';
 
 const MyProfile = observer(() => {
-    const {onlineUser, updateUser, isUserUpdating} = useContext(StoreContext);
+    const {onlineUser, updateUser, isUserUpdating, usersError} = useContext(StoreContext);
     const {firstName, surName, email, password, userName, skype, avatar, jobTitle,
         timeZone, fb, tw, inst, lkdn} = onlineUser;
     const [avatarSrc, setAvatarSrc] = useState(avatar);
@@ -29,7 +31,7 @@ const MyProfile = observer(() => {
             ...formData,
             avatar: avatarSrc,
             isProfileOnline: true,
-        }, onlineUser.id);
+        }, onlineUser.id, `myProfile`);
     }, [updateUser, onlineUser.id, avatarSrc]);
 
     const initialValues = {firstName, surName, email, password, userName, skype, jobTitle: jobTitle || ``,
@@ -48,7 +50,12 @@ const MyProfile = observer(() => {
             {({isValid}) => (
                 <Form className="my-profile custom-scrollbar custom-scrollbar--light">
                     {isUserUpdating && <Spinner size="middle" />}
-                    {!isUserUpdating &&
+                    {usersError &&
+                        <ErrorMessage mode="menu">
+                            {getErrorMessage(usersError.type)}
+                        </ErrorMessage>
+                    }
+                    {!isUserUpdating && !usersError &&
                         <>
                             <div className="my-profile-avatar">
                                 <input className="my-profile-upload" type="file" name="avatar"

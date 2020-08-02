@@ -42,7 +42,9 @@ class Store {
             isMobileMenuOpened: false,
             isMobileProfileOpened: false,
             currentSorting: null,
-            error: null,
+            channelsError: null,
+            usersError: null,
+            messagesError: null,
         });
     }
 
@@ -69,8 +71,14 @@ class Store {
     setIsMyProfileOpened = action((isOpened) => this.isMyProfileOpened = isOpened);
     logOut = action((user, id) => {
         this.isLoggingOut = true;
+        this.usersError = null;
+
         api.updateUser(user, id)
             .then(() => this.getUsers())
+            .catch((err) => {
+                this.isLoggingOut = false;
+                this.usersError = {type: `logout`, error: err,};
+            })
     });
 
     setFilterTerm = action((term) => this.filterTerm = term);
@@ -80,7 +88,7 @@ class Store {
         api.getUsers()
             .then((users) => {
                 this.users = users;
-                this.error = null;
+                this.usersError = null;
 
                 const onlineUser = this.users.find((user) => user.isProfileOnline);
             
@@ -90,7 +98,7 @@ class Store {
                     this.setOnlineUser(null);
                 }
             })
-            .catch((err) => this.error = err)
+            .catch((err) => this.usersError = {type: `list`, error: err,})
             .finally(() => {
                 this.isLoggingOut = false;
                 this.isUserUpdating = false;
@@ -99,65 +107,111 @@ class Store {
             })
     });
     setCurrentUser = action((user) => this.currentUser = user);
-    updateUser = action((user, id) => {
+    updateUser = action((user, id, action) => {
         this.isUserUpdating = true;
+        this.usersError = null;
+
         api.updateUser(user, id)
             .then((user) => {
                 this.setCurrentUser(user);
                 this.getUsers();
             })
+            .catch((err) => {
+                this.isUserUpdating = false;
+                this.usersError = {type: action, error: err,};
+            })
     });
     setOnlineUser = action((user) => this.onlineUser = user);
     createUser = action((user) => {
         this.isUserCreating = true;
+        this.usersError = null;
+
         api.createUser(user)
             .then(() => this.getUsers())
+            .catch((err) => {
+                this.isUserCreating = false;
+                this.usersError = {type: `signup`, error: err,};
+            })
     });
 
     getChannels = action(() => {
         api.getChannels()
             .then((channels) => {
                 this.channels = channels;
+                this.channelsError = null;
 
                 if (this.currentChannel) {
                     const currentChannel = channels.find((channel) => channel.id === this.currentChannel.id);
                     this.setCurrentChannel(currentChannel);
                 }
             })
-            .catch((err) => this.error = err)
+            .catch((err) => this.channelsError = {type: `list`, error: err,})
             .finally(() => this.isChannelsLoading = false)
     });
     setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
     createChannel = action((channel) => {
         this.isChannelsLoading = true;
+
         api.createChannel(channel)
-            .then(() => this.getChannels())
+            .then(() => {
+                this.channelsError = null;
+                this.getChannels();
+            })
+            .catch((err) => {
+                this.isChannelsLoading = false;
+                this.channelsError = {type: `create`, error: err,};
+            })
     });
     deleteChannel = action((id) => {
         this.isChannelsLoading = true;
+
         api.deleteChannel(id)
-            .then(() => this.getChannels())
+            .then(() => {
+                this.channelsError = null;
+                this.getChannels();
+            })
+            .catch((err) => {
+                this.isChannelsLoading = false;
+                this.channelsError = {type: `delete`, error: err,};
+            })
     });
-    updateChannel = action((channel, id) => {
+    updateChannel = action((channel, id, action) => {
         this.isChannelsLoading = true;
+
         api.updateChannel(channel, id)
-            .then(() => this.getChannels())
+            .then(() => {
+                this.channelsError = null;
+                this.getChannels();
+            })
+            .catch((err) => {
+                this.isChannelsLoading = false;
+                this.channelsError = {type: action, error: err,};
+            })
     });
     setCurrentChannel = action((channel) => this.currentChannel = channel);
 
     getCurrentMessages = action((id) => {
         this.isMessagesLoading = true;
+        this.messagesError = null;
+
         api.getCurrentMessages(id)
-            .then((messages) => {
-                this.currentMessages = messages;
+            .then((messages) => this.currentMessages = messages)
+            .catch((err) => this.messagesError = {type: `list`, error: err,})
+            .finally(() => {
                 const currentChannel = this.channels.find((channel) => channel.id === +id);
                 this.setCurrentChannel(currentChannel);
+                this.isMessagesLoading = false;
             })
-            .finally(() => this.isMessagesLoading = false)
     });
     createMessage = action((message, id) => {
+        this.isMessagesLoading = true;
+
         api.createMessage(message, id)
             .then(() => this.getCurrentMessages(this.currentChannel.id))
+            .catch((err) => {
+                this.isMessagesLoading = false;
+                this.messagesError = {type: `create`, error: err,};
+            })
     });
 
     setIsMenuOpened = action((isOpened) => this.isMenuOpened = isOpened);

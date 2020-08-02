@@ -16,7 +16,7 @@ const ChatHeader = observer(() => {
         updateChannel({
             ...currentChannel,
             isFavourite: !isFavourite,
-        }, currentChannel.id);
+        }, currentChannel.id, `setFavourite`);
     }, [updateChannel, currentChannel, isFavourite]);
 
     return (

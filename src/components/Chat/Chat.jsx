@@ -13,7 +13,7 @@ import './Chat.scss';
 const Chat = observer(() => {
     const currentChannelId = useLocation().pathname.slice(1);
     const {getCurrentMessages, currentChannel, setIsMenuOpened, setIsProfileOpened, isMobileMenuOpened,
-        isMobileProfileOpened, setIsMobileProfileOpened, setIsMobileMenuOpened
+        isMobileProfileOpened, setIsMobileProfileOpened, setIsMobileMenuOpened, messagesError
     } = useContext(StoreContext);
 
     const mainClass = cn(`chat`, {'chat--empty' : !currentChannel});
@@ -43,14 +43,10 @@ const Chat = observer(() => {
         <main className={mainClass}>
             <button className={menuBtnClass} title="Open menu" onClick={handleOpenMenuBtnClick} />
             <button className={profileBtnClass} title="Open profile" onClick={handleOpenProfileBtnClick} />
-            {!currentChannel && `Please, select a channel`}
-            {currentChannel &&
-                <>
-                    <ChatHeader />
-                    <MessageList />
-                    <ChatFooter />
-                </>
-            }
+            {!currentChannel && !messagesError && `Please, select a channel`}
+            {currentChannel && <ChatHeader />}
+            {(currentChannel || messagesError) && <MessageList />}
+            {currentChannel && <ChatFooter />}
         </main>
     );
 });

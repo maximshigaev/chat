@@ -7,13 +7,14 @@ import {ChannelsItem} from '../';
 import {MenuTitle} from '../';
 import {Spinner} from '../';
 import {useControlledInput, useChannelError} from '../../hooks';
-import {handleKeyDown as onKeyDown} from '../../helpers';
+import {handleKeyDown as onKeyDown, getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './ChannelsList.scss';
 
 const ChannelsList = observer(() => {
     const {channels, isChannelsLoading, setChannelsFilterTerm, channelsFilterTerm, createChannel, currentSorting,
-        setCurrentSorting, favouriteChannels, ordinaryChannels
+        setCurrentSorting, favouriteChannels, ordinaryChannels, channelsError
     } = useContext(StoreContext);
     const {inputValue: searchInputValue, handleChange: handleSearchChange} = useControlledInput(setChannelsFilterTerm);
     const {inputValue: addInputValue, handleChange: handleAddChange} = useControlledInput();
@@ -99,8 +100,13 @@ const ChannelsList = observer(() => {
         <nav className="channels">
             {isEmptyError && emptyMessage}
             {isLongError && longMessage}
-            {isChannelsLoading && <Spinner size="middle" />}
-            {!isChannelsLoading &&
+            {isChannelsLoading && <Spinner size="middle" /> }
+            {channelsError &&
+                <ErrorMessage mode="menu">
+                    {getErrorMessage(channelsError.type, `Channels`)}
+                </ErrorMessage>
+            }
+            {!isChannelsLoading && !channelsError &&
                 <>
                     <MenuTitle title="Channels" quantity={quantity} />
                     {isChannelAdding &&

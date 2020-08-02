@@ -25,3 +25,4 @@ export {FormErrorMessage} from './FormErrorMessage/FormErrorMessage';
 export {FormField} from './FormField/FormField';
 export {MyProfile} from './MyProfile/MyProfile';
 export {ErrorBoundary} from './ErrorBoundary/ErrorBoundary';
+export {ErrorMessage} from './ErrorMessage/ErrorMessage';

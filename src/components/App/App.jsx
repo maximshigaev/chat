@@ -9,10 +9,10 @@ import {StoreContext} from '../../context';
 import {Spinner} from '../';
 
 const App = observer(() => {
-    const {isUsersLoading, error} = useContext(StoreContext);
+    const {isUsersLoading, usersError} = useContext(StoreContext);
 
-    if (error) {
-        throw error;
+    if (usersError && usersError.type === `list`) {
+        throw usersError.error;
     }
 
     if (isUsersLoading) {

@@ -5,14 +5,24 @@ import {observer} from 'mobx-react';
 import {StoreContext} from '../../context';
 import {Spinner} from '../';
 import {LoginForm} from '../';
+import {getErrorMessage} from '../../helpers';
+import {ErrorMessage} from '../';
 
 import './LoginPage.scss';
 
 const LoginPage = observer(() => {
-    const {onlineUser, isUserUpdating} = useContext(StoreContext);
+    const {onlineUser, isUserUpdating, usersError} = useContext(StoreContext);
 
     if (isUserUpdating) {
         return <Spinner />;
+    }
+
+    if (usersError && usersError.type === `login`) {
+        return (
+            <ErrorMessage>
+                {getErrorMessage(usersError.type)}
+            </ErrorMessage>
+        );
     }
 
     if (onlineUser) {
