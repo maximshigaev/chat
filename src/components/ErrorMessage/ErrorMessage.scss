@@ -1,0 +1,53 @@
+.error-message {
+    font-size: 32px;
+    line-height: 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+
+    &--menu {
+        font-size: 16px;
+        line-height: 24px;
+        position: absolute;
+        width: 72%;
+        transform: translate(calc(-50% - 12px), -50%);
+    }
+
+    &--chat {
+        position: absolute;
+        width: 70%;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 1176px) {
+    .error-message {
+        font-size: 28px;
+
+        &--menu {
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        &--chat {
+            font-size: 26px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .error-message {
+        font-size: 24px;
+
+        &--menu {
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        &--chat {
+            font-size: 22px;
+        }
+    }
+}
