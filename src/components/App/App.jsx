@@ -9,7 +9,11 @@ import {StoreContext} from '../../context';
 import {Spinner} from '../';
 
 const App = observer(() => {
-    const {isUsersLoading} = useContext(StoreContext);
+    const {isUsersLoading, error} = useContext(StoreContext);
+
+    if (error) {
+        throw error;
+    }
 
     if (isUsersLoading) {
         return < Spinner />;

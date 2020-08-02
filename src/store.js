@@ -5,8 +5,8 @@ import {api} from './api';
 
 class Store {
     constructor() {
-        this.getAllUsers();
-        this.getAllChannels();
+        this.getUsers();
+        this.getChannels();
 
         // this.startChat();
 
@@ -42,6 +42,7 @@ class Store {
             isMobileMenuOpened: false,
             isMobileProfileOpened: false,
             currentSorting: null,
+            error: null,
         });
     }
 
@@ -69,16 +70,17 @@ class Store {
     logOut = action((user, id) => {
         this.isLoggingOut = true;
         api.updateUser(user, id)
-            .then(() => this.getAllUsers())
+            .then(() => this.getUsers())
     });
 
     setFilterTerm = action((term) => this.filterTerm = term);
     setFriendsFilterTerm = action((term) => this.friendsFilterTerm = term);
 
-    getAllUsers = action(() => {
+    getUsers = action(() => {
         api.getUsers()
             .then((users) => {
                 this.users = users;
+                this.error = null;
 
                 const onlineUser = this.users.find((user) => user.isProfileOnline);
             
@@ -87,7 +89,9 @@ class Store {
                 } else {
                     this.setOnlineUser(null);
                 }
-
+            })
+            .catch((err) => this.error = err)
+            .finally(() => {
                 this.isLoggingOut = false;
                 this.isUserUpdating = false;
                 this.isUserCreating = false;
@@ -100,43 +104,44 @@ class Store {
         api.updateUser(user, id)
             .then((user) => {
                 this.setCurrentUser(user);
-                this.getAllUsers();
+                this.getUsers();
             })
     });
     setOnlineUser = action((user) => this.onlineUser = user);
     createUser = action((user) => {
         this.isUserCreating = true;
         api.createUser(user)
-            .then(() => this.getAllUsers())
+            .then(() => this.getUsers())
     });
 
-    getAllChannels = action(() => {
+    getChannels = action(() => {
         api.getChannels()
             .then((channels) => {
                 this.channels = channels;
-                this.isChannelsLoading = false;
 
                 if (this.currentChannel) {
                     const currentChannel = channels.find((channel) => channel.id === this.currentChannel.id);
                     this.setCurrentChannel(currentChannel);
                 }
             })
+            .catch((err) => this.error = err)
+            .finally(() => this.isChannelsLoading = false)
     });
     setChannelsFilterTerm = action((term) => this.channelsFilterTerm = term);
     createChannel = action((channel) => {
         this.isChannelsLoading = true;
         api.createChannel(channel)
-            .then(() => this.getAllChannels())
+            .then(() => this.getChannels())
     });
     deleteChannel = action((id) => {
         this.isChannelsLoading = true;
         api.deleteChannel(id)
-            .then(() => this.getAllChannels())
+            .then(() => this.getChannels())
     });
     updateChannel = action((channel, id) => {
         this.isChannelsLoading = true;
         api.updateChannel(channel, id)
-            .then(() => this.getAllChannels())
+            .then(() => this.getChannels())
     });
     setCurrentChannel = action((channel) => this.currentChannel = channel);
 
@@ -144,11 +149,11 @@ class Store {
         this.isMessagesLoading = true;
         api.getCurrentMessages(id)
             .then((messages) => {
-                this.isMessagesLoading = false;
                 this.currentMessages = messages;
                 const currentChannel = this.channels.find((channel) => channel.id === +id);
                 this.setCurrentChannel(currentChannel);
             })
+            .finally(() => this.isMessagesLoading = false)
     });
     createMessage = action((message, id) => {
         api.createMessage(message, id)
