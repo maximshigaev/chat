@@ -53,9 +53,8 @@ const ChannelsItem = observer(({channel}) => {
             renameInputRef.current.blur();
         } else {
             updateChannel({
+                ...channel,
                 title: inputValue.trim(),
-                participantsCount: channel.participantsCount,
-                isFavourite: channel.isFavourite,
             }, channel.id);
             setIsEmptyError(false);
             setIsLongError(false);

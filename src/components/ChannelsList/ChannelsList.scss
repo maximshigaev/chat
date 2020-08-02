@@ -30,6 +30,7 @@
         position: absolute;
         left: 0;
         top: 25px;
+        width: 93%;
     }
 }
 
@@ -73,7 +74,9 @@
     }
 
     &--add {
-        right: 70px;
+        right: 19px;
+        top: 27px;
+        z-index: 1;
 
         &::before {
             left: 4px;
@@ -89,6 +92,71 @@
     &--opened {
         &::before {
             display: none;
+        }
+    }
+
+    &--favourite {
+        background-image: url('../../img/icons/menu-favourite.svg');
+        right: 100px;
+        top: 1px;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/menu-favourite-hover.svg');
+        }
+
+        &:active {
+            opacity: 0.3;
+        }
+
+        &.channels-btn--current {
+            background-image: url('../../img/icons/menu-favourite-current.svg');
+
+            &:hover,
+            &:focus {
+                background-image: url('../../img/icons/menu-favourite-current-hover.svg');
+            }
+
+            &:active {
+                opacity: 0.3;
+            } 
+        }
+    }
+
+    &--ordinary {
+        background-image: url('../../img/icons/menu-ordinary.svg');
+        right: 75px;
+        
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/menu-ordinary-hover.svg');
+        }
+
+        &:active {
+            opacity: 0.3;
+        }
+
+        &.channels-btn--current {
+            background-image: url('../../img/icons/menu-ordinary-current.svg');
+
+            &:hover,
+            &:focus {
+                background-image: url('../../img/icons/menu-ordinary-current-hover.svg');
+            }
+
+            &:active {
+                opacity: 0.3;
+            }
         }
     }
 }

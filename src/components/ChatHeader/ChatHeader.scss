@@ -12,22 +12,6 @@
     font-weight: 700;
     margin-right: 6px;
     position: relative;
-
-    &::before {
-        right: -25px;
-        top: 4px;
-        width: 15px;
-        height: 14px;
-        content: '';
-        position: absolute;
-        background-image: url('../../img/icons/chat-notfavourite.svg');
-    }
-
-    &--in-list {
-        &::before {
-            background-image: url('../../img/icons/chat-favourite.svg');
-        }
-    }
 }
 
 .chat-participants {
@@ -62,6 +46,38 @@
         background-image: url('../../img/icons/chat-search.svg');
     }
 }
+
+.chat-header-btn {
+    right: -25px;
+    top: 4px;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background-image: url('../../img/icons/chat-ordinary.svg');
+
+    &:hover,
+    &:focus {
+        background-image: url('../../img/icons/chat-favourite.svg');
+    }
+
+    &:active {
+        opacity: 0.3;
+    }
+
+    &--in-list {
+        background-image: url('../../img/icons/chat-favourite.svg');
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/chat-ordinary.svg');
+        }
+
+        &:active {
+            opacity: 0.5;
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .chat-header {
         flex-direction: column;

@@ -27,6 +27,12 @@ class Store {
             get friends() {
                 return this.users.filter((user) => user.isFriend);
             },
+            get favouriteChannels() {
+                return this.channels.filter((channel) => channel.isFavourite);
+            },
+            get ordinaryChannels() {
+                return this.channels.filter((channel) => !channel.isFavourite);
+            },
             friendsFilterTerm: ``,
             isMyProfileOpened: false,
             isLoggingOut: false,
@@ -35,6 +41,7 @@ class Store {
             isProfileOpened: false,
             isMobileMenuOpened: false,
             isMobileProfileOpened: false,
+            currentSorting: null,
         });
     }
 
@@ -152,6 +159,8 @@ class Store {
     setIsProfileOpened = action((isOpened) => this.isProfileOpened = isOpened);
     setIsMobileMenuOpened = action((isOpened) => this.isMobileMenuOpened = isOpened);
     setIsMobileProfileOpened = action((isOpened) => this.isMobileProfileOpened = isOpened);
+
+    setCurrentSorting = action((sorting) => this.currentSorting = sorting);
 }
 
 const store = new Store();

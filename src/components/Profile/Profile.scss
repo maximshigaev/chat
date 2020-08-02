@@ -97,6 +97,15 @@
     &--lkdn {
         background-image: url('../../img/icons/profile-lkdn.svg');
     }
+
+    &:hover,
+    &:focus {
+        opacity: 0.5;
+    }
+
+    &:active {
+        opacity: 0.2;
+    }
 }
 
 .profile-buttons {

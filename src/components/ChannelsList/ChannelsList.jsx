@@ -12,16 +12,18 @@ import {handleKeyDown as onKeyDown} from '../../helpers';
 import './ChannelsList.scss';
 
 const ChannelsList = observer(() => {
-    const {channels, isChannelsLoading, setChannelsFilterTerm, channelsFilterTerm,
-        createChannel
+    const {channels, isChannelsLoading, setChannelsFilterTerm, channelsFilterTerm, createChannel, currentSorting,
+        setCurrentSorting, favouriteChannels, ordinaryChannels
     } = useContext(StoreContext);
     const {inputValue: searchInputValue, handleChange: handleSearchChange} = useControlledInput(setChannelsFilterTerm);
     const {inputValue: addInputValue, handleChange: handleAddChange} = useControlledInput();
+
     const [isChannelAdding, setIsChannelAdding] = useState(false);
     const {isChannelError: isEmptyError, setIsChannelError: setIsEmptyError, errorMessage: emptyMessage}
         = useChannelError(`empty`);
     const {isChannelError: isLongError, setIsChannelError: setIsLongError, errorMessage: longMessage}
         = useChannelError(`long`);
+
     const handleNewBtnClick = useCallback(() => {
         setIsEmptyError(false);
         setIsLongError(false);
@@ -56,6 +58,43 @@ const ChannelsList = observer(() => {
         setIsLongError(false);
     }, [setIsEmptyError, setIsLongError]);
 
+    const handleFavouriteBtnClick = useCallback(() => {
+        if (currentSorting !== `favourite`) {
+            setCurrentSorting(`favourite`);
+        } else {
+            setCurrentSorting(null);
+        }
+    }, [setCurrentSorting, currentSorting]);
+    const favouriteBtnClass = cn(`channels-btn`, `channels-btn--favourite`,
+        {'channels-btn--current': currentSorting === `favourite`});
+
+    const handleOrdinaryBtnClick = useCallback(() => {
+        if (currentSorting !== `ordinary`) {
+            setCurrentSorting(`ordinary`);
+        } else {
+            setCurrentSorting(null);
+        }
+    }, [setCurrentSorting, currentSorting]);
+    const ordinaryBtnClass = cn(`channels-btn`, `channels-btn--ordinary`,
+        {'channels-btn--current': currentSorting === `ordinary`});
+
+    let renderedChannels;
+    let quantity;
+
+    switch (currentSorting) {
+        case `favourite`:
+            renderedChannels = favouriteChannels;
+            quantity = favouriteChannels.length;
+            break;
+        case `ordinary`:
+            renderedChannels = ordinaryChannels;
+            quantity = ordinaryChannels.length;
+            break;
+        default:
+            renderedChannels = channels;
+            quantity = channels.length;
+    }
+
     return (
         <nav className="channels">
             {isEmptyError && emptyMessage}
@@ -63,7 +102,7 @@ const ChannelsList = observer(() => {
             {isChannelsLoading && <Spinner size="middle" />}
             {!isChannelsLoading &&
                 <>
-                    <MenuTitle title="Channels" quantity={channels.length} />
+                    <MenuTitle title="Channels" quantity={quantity} />
                     {isChannelAdding &&
                         <>
                             <button className="channels-btn channels-btn--add" title="Add channel"
@@ -75,6 +114,13 @@ const ChannelsList = observer(() => {
                             />
                         </>
                     }
+                    <button className={favouriteBtnClass} onClick={handleFavouriteBtnClick}
+                        title={`Show ${(currentSorting !== `favourite` ? `favourite` : `all`)} channels`}
+                        
+                    />
+                    <button className={ordinaryBtnClass} onClick={handleOrdinaryBtnClick}
+                        title={`Show ${(currentSorting !== `ordinary` ? `ordinary` : `all`)} channels`}
+                    />
                     <button className={buttonClass} title={isChannelAdding ? `Back` : `New channel`}
                         onClick={handleNewBtnClick}
                     />
@@ -82,7 +128,7 @@ const ChannelsList = observer(() => {
                         placeholder="Search.." onChange={handleSearchChange} type="text"
                     />
                     <ul className="channels-list custom-scrollbar custom-scrollbar--light">
-                        {channels
+                        {renderedChannels
                             .filter((channel) => {
                                 return channel.title.toLowerCase().includes(channelsFilterTerm.toLowerCase().trim());
                             })

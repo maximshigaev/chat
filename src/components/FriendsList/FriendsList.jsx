@@ -10,13 +10,13 @@ import {useControlledInput} from '../../hooks';
 import './FriendsList.scss';
 
 const FriendsList = observer(() => {
-    const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm} = useContext(StoreContext);
+    const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm, isUserUpdating} = useContext(StoreContext);
     const {inputValue, handleChange} = useControlledInput(setFriendsFilterTerm);
 
     return (
         <div className="friends">
-            {isUsersLoading && <Spinner size="middle" />}
-            {!isUsersLoading &&
+            {(isUsersLoading || isUserUpdating) && <Spinner size="middle" />}
+            {!isUsersLoading && !isUserUpdating &&
                 <>
                     <MenuTitle title="Friends" quantity={friends.length} />
                     <input className="friends-search" value={inputValue} placeholder="Search.." onChange={handleChange} />
