@@ -1,5 +1,6 @@
 import React, {useContext, useState, useCallback, useRef, useEffect} from 'react';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {StoreContext} from '../../context';
 import {handleKeyDown as onKeyDown} from '../../helpers';
@@ -11,10 +12,12 @@ let isTouched = false;
 
 const TextArea = observer(() => {
     const {currentChannel, createMessage, onlineUser, uploadedFiles, setUploadedFiles,
-        isMessagesLoading
+        isMessagesLoading, currentTheme
     } = useContext(StoreContext);
     const [textAreaValue, setTextAreaValue] = useState(``);
     const textAreaRef = useRef();
+    const textAreaClass = cn(`textarea`, `custom-scrollbar`,
+        {'textarea--light': currentTheme === `light`, 'custom-scrollbar--themed': currentTheme === `light`});
 
     useEffect(() => setTextAreaValue(`Message in #${currentChannel.title}`), [currentChannel.title]);
 
@@ -36,6 +39,7 @@ const TextArea = observer(() => {
 
     const handleKeyDown = useCallback(onKeyDown(handleSubmit), [handleSubmit]);
     const handleClick = useCallback(() => handleSubmit(), [handleSubmit]);
+    const buttonCLass = cn(`textarea-btn`, {'textarea-btn--light': currentTheme === `light`});
 
     useEffect(() => {
         window.addEventListener(`keydown`, handleKeyDown);
@@ -64,10 +68,10 @@ const TextArea = observer(() => {
 
     return (
         <>
-            <textarea className="textarea custom-scrollbar" value={textAreaValue} onChange={handleChange}
+            <textarea className={textAreaClass} value={textAreaValue} onChange={handleChange}
                 ref={textAreaRef} onBlur={handleBlur} onFocus={handleFocus} disabled={isMessagesLoading}
             />
-            <button className="textarea-btn" title="Send message" onClick={handleClick} />
+            <button className={buttonCLass} title="Send message" onClick={handleClick} />
         </>
     );
 });

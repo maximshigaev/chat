@@ -11,11 +11,25 @@
     &:hover,
     &:focus {
         border: 1px solid black;
-        outline: none;
     }
 
     &:active {
         border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &--light {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+
+        &:hover,
+        &:focus {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        &:active {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
     }
 }
 
@@ -32,6 +46,21 @@
 
     &:active {
         opacity: 0.2;
+    }
+
+    &--light {
+        background-image: url('../../img/icons/chat-send-light.svg');
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/chat-send-light.svg');
+            opacity: 0.7;
+        }
+
+        &:active {
+            background-image: url('../../img/icons/chat-send-light.svg');
+            opacity: 0.5;
+        }
     }
 }
 

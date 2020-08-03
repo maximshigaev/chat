@@ -13,10 +13,10 @@ import './Chat.scss';
 const Chat = observer(() => {
     const currentChannelId = useLocation().pathname.slice(1);
     const {getCurrentMessages, currentChannel, setIsMenuOpened, setIsProfileOpened, isMobileMenuOpened,
-        isMobileProfileOpened, setIsMobileProfileOpened, setIsMobileMenuOpened, messagesError
+        isMobileProfileOpened, setIsMobileProfileOpened, setIsMobileMenuOpened, messagesError, currentTheme
     } = useContext(StoreContext);
 
-    const mainClass = cn(`chat`, {'chat--empty' : !currentChannel});
+    const mainClass = cn(`chat`, {'chat--empty' : !currentChannel, 'chat--light': currentTheme === `light`});
     const menuBtnClass = cn(`chat-open-btn`, `chat-open-btn--menu`,
         {'chat-open-btn--opened-menu': isMobileMenuOpened});
     const profileBtnClass = cn(`chat-open-btn`, `chat-open-btn--profile`,

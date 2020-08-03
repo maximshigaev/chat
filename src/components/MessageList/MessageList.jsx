@@ -15,9 +15,12 @@ const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, 
     `November`, `December`];
 
 const MessageList = observer(() => {
-    const {currentMessages, filterTerm, uploadedFiles, isMessagesLoading, messagesError} = useContext(StoreContext);
+    const {currentMessages, filterTerm, uploadedFiles, isMessagesLoading,
+        messagesError, currentTheme
+    } = useContext(StoreContext);
     const listRef = useRef();
-    const ulClass = cn(`message-list`, `custom-scrollbar`, {'message-list--uploaded': uploadedFiles.length});
+    const ulClass = cn(`message-list`, `custom-scrollbar`,
+        {'message-list--uploaded': uploadedFiles.length, 'custom-scrollbar--themed': currentTheme === `light`});
     let prevDay = null;
 
     useEffect(() => listRef.current.scrollBy(0, listRef.current.scrollHeight), [currentMessages.length]);

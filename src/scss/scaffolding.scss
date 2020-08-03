@@ -53,6 +53,13 @@ button {
 	}
 }
 
+input,
+textarea {
+	&:focus {
+		outline: none;
+	}
+}
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -84,38 +91,56 @@ img {
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.5);
 		}
+
+		&:active {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
 	}
 
 	&::-webkit-scrollbar {
 		width: 7px;
 	}
 
-	&--light::-webkit-scrollbar-thumb {
-		background-color: grey;
+	&--light {
+		&::-webkit-scrollbar-thumb {
+			background-color: grey;
+
+			&:hover {
+				background-color: #b5b5b5fb;
+			}
+
+			&:active {
+				background-color: white;
+			}
+		}
+
+		&.custom-scrollbar--themed::-webkit-scrollbar-thumb {
+			background-color: black;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+
+			&:active {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+		}
+	}
+
+	&--themed::-webkit-scrollbar-thumb {
+		background-color: white;
 
 		&:hover {
-			background-color: #b5b5b5fb;
-		}
+			background-color: rgba(255, 255, 255, 0.5);
+        }
 
-		&:active {
-			background-color: white;
-		}
+        &:active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
 	}
 
 	&--hz::-webkit-scrollbar {
 		height: 7px;
 		width: auto;
-	}
-
-	&--themed::-webkit-scrollbar-thumb {
-		background-color: black;
-
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.5);
-		}
-
-		&:active {
-			background-color: rgba(0, 0, 0, 0.2);
-		}
 	}
 }

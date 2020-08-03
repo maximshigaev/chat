@@ -22,6 +22,21 @@
     &::placeholder {
         color: #8d8d8d;
     }
+
+    &--light {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+
+        &:hover,
+        &:focus {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        &:active {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    }
 }
 
 @media (max-width: 768px) {

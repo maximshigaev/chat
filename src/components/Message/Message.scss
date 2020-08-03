@@ -7,7 +7,7 @@
 }
 
 .message-link {
-    color: #000000;
+    color: black;
     font-size: 12px;
     font-weight: 700;
     margin-right: 7px;
@@ -20,6 +20,10 @@
 
     &:active {
         opacity: 0.5;
+    }
+
+    &--light {
+        color: white;
     }
 }
 

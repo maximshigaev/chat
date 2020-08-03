@@ -1,5 +1,6 @@
 import React, {useCallback, useContext, useRef} from 'react';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {TextArea} from '../';
 import {StoreContext} from '../../context';
@@ -9,8 +10,11 @@ import './ChatFooter.scss';
 let currentFileId = 1;
 
 const ChatFooter = observer(() => {
-    const {uploadedFiles, setUploadedFiles} = useContext(StoreContext);
+    const {uploadedFiles, setUploadedFiles, currentTheme} = useContext(StoreContext);
     const inputRef = useRef();
+    const divClass = cn(`chat-footer-files`, `custom-scrollbar`, `custom-scrollbar--hz`,
+        {'custom-scrollbar--themed': currentTheme === `light`});
+    const uploadDivClass = cn(`chat-footer-upload`, {'chat-footer-upload--light': currentTheme === `light`});
 
     const handleFileInputChange = useCallback((evt) => {
         const promises = [];
@@ -37,7 +41,7 @@ const ChatFooter = observer(() => {
     return (
         <div className="chat-footer">
             {(uploadedFiles.length !== 0) &&
-                <div className="chat-footer-files custom-scrollbar custom-scrollbar--hz">
+                <div className={divClass}>
                     {uploadedFiles.map((file) => {
                         const handleClick = () => {
                             const indexToDelete = uploadedFiles.findIndex((uploadedFile) => uploadedFile.id === file.id);
@@ -55,7 +59,7 @@ const ChatFooter = observer(() => {
                     })}
                 </div>
             }
-            <div className="chat-footer-upload">
+            <div className={uploadDivClass}>
                 <input className="chat-footer-fileinput" type="file" name="file" ref={inputRef}
                     onChange={handleFileInputChange} multiple
                 />

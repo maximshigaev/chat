@@ -23,6 +23,21 @@
     &:active {
         opacity: 0.1;
     }
+
+    &--light {
+        background-image: url('../../img/icons/chat-upload-light.svg');
+
+        &:hover,
+        &:focus {
+            background-image: url('../../img/icons/chat-upload-light.svg');
+            opacity: 0.7;
+        }
+
+        &:active {
+            background-image: url('../../img/icons/chat-upload-light.svg');
+            opacity: 0.5;
+        }
+    }
 }
 
 .chat-footer-fileinput {
@@ -43,6 +58,7 @@
     width: 100%;
     margin-bottom: 25px;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .chat-footer-pic {

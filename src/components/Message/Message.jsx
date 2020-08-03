@@ -1,13 +1,14 @@
 import React, {useContext, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {StoreContext} from '../../context';
 
 import './Message.scss';
 
 const Message = observer(({message}) => {
-    const {setCurrentUser, users, onlineUser, setIsMobileProfileOpened, setIsProfileOpened} = useContext(StoreContext);
+    const {setCurrentUser, users, onlineUser, setIsMobileProfileOpened, setIsProfileOpened, currentTheme} = useContext(StoreContext);
     const {date, text, author} = message;
     const messageDate = new Date(Date.parse(date));
     const isOnlineUserMessage = author && author.email === onlineUser.email;
@@ -16,6 +17,7 @@ const Message = observer(({message}) => {
         ? users.find((user) => user.id === message.userId)
         : users.find((user) => user.email === message.author.email);
     const authorName = `${user.firstName} ${user.surName}`;
+    const linkClass = cn(`message-link`, {'message-link--light': currentTheme === `light`});
 
     const handleClick = useCallback(() => {
         setIsProfileOpened(true);
@@ -29,7 +31,7 @@ const Message = observer(({message}) => {
                 <img className="message-avatar" src={user.avatar} alt={authorName} width="25" height="32" />
             </a>
             <div className="message-wrapper">
-                <a className="message-link" onClick={handleClick}
+                <a className={linkClass} onClick={handleClick}
                     title={isOnlineUserMessage ? `Open my profile` : `Open ${authorName}'s profile`}
                 >
                     {authorName}

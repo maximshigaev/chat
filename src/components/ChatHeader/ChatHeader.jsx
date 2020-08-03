@@ -8,9 +8,12 @@ import {SearchBar} from '../';
 import './ChatHeader.scss';
 
 const ChatHeader = observer(() => {
-    const {currentChannel, updateChannel} = useContext(StoreContext);
+    const {currentChannel, updateChannel, currentTheme} = useContext(StoreContext);
     const {isFavourite, participantsCount, title} = currentChannel;
-    const buttonClass = cn(`chat-header-btn`, {'chat-header-btn--in-list': isFavourite});
+    const buttonClass = cn(`chat-header-btn`,
+        {'chat-header-btn--in-list': isFavourite, 'chat-header-btn--light': currentTheme === `light`});
+    const spanClass = cn(`chat-participants`, {'chat-participants--light': currentTheme === `light`});
+    const divClass = cn(`chat-header-wrapper`, {'chat-header-wrapper--light': currentTheme === `light`});
 
     const handleClick = useCallback(() => {
         updateChannel({
@@ -27,8 +30,8 @@ const ChatHeader = observer(() => {
                     onClick={handleClick}
                 />
             </h2>
-            <div className="chat-header-wrapper">
-                <span className="chat-participants" title={`${participantsCount} participants`}>
+            <div className={divClass}>
+                <span className={spanClass} title={`${participantsCount} participants`}>
                     {participantsCount}
                 </span>
                 <SearchBar />

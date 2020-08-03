@@ -1,24 +1,26 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect} from 'react';
+import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {StoreContext} from '../../context';
 import {useControlledInput} from '../../hooks';
 
 import './SearchBar.scss';
 
-const SearchBar = () => {
-    const {setFilterTerm, isMessagesLoading, currentChannel} = useContext(StoreContext);
+const SearchBar = observer(() => {
+    const {setFilterTerm, isMessagesLoading, currentChannel, currentTheme} = useContext(StoreContext);
     const {inputValue, handleChange} = useControlledInput(setFilterTerm);
-    const inputRef = useRef();
+    const inputClass = cn(`chat-input`, {'chat-input--light': currentTheme === `light`});
 
     useEffect(() => {
-        inputRef.current.value = ``;
+        handleChange({target: {value: ``}});
         setFilterTerm(``);
     }, [handleChange, currentChannel.title, setFilterTerm]);
 
     return (
-        <input className="chat-input" value={inputValue} type="text" placeholder="Search ..."
-            onChange={handleChange} disabled={isMessagesLoading} ref={inputRef} />
+        <input className={inputClass} value={inputValue} type="text" placeholder="Search..."
+            onChange={handleChange} disabled={isMessagesLoading} />
     );
-}
+});
 
 export {SearchBar};

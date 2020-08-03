@@ -29,6 +29,14 @@
         left: -17px;
         top: 0;
     }
+
+    &--light {
+        color: white;
+
+        &::before {
+            background-image: url('../../img/icons/chat-people-light.svg');
+        }
+    }
 }
 
 .chat-header-wrapper {
@@ -44,6 +52,12 @@
         right: 10px;
         z-index: 1;
         background-image: url('../../img/icons/chat-search.svg');
+    }
+
+    &--light {
+        &::before {
+            background-image: url('../../img/icons/chat-search-light.svg');
+        }
     }
 }
 
@@ -75,6 +89,23 @@
         &:active {
             opacity: 0.5;
         }
+
+        &.chat-header-btn--light {
+            background-image: url('../../img/icons/chat-favourite.svg');
+
+            &:hover,
+            &:focus {
+                background-image: url('../../img/icons/chat-ordinary-light.svg');
+            }
+
+            &:active {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    &--light {
+        background-image: url('../../img/icons/chat-ordinary-light.svg');
     }
 }
 

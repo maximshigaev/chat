@@ -8,6 +8,11 @@
         justify-content: center;
         align-items: center;
     }
+
+    &--light {
+        color: white;
+        background-color: black;
+    }
 }
 
 .chat-open-btn {
