@@ -25,5 +25,6 @@ export const getErrorMessage = (type, entities) => {
         case 'myProfile':
             return `We are sorry. It is impossible to edit the profile now. Please, reload the page.`;
         default:
+            return `We are sorry. It is impossible to perform the operation now. Please, reload the page.`;
     }
 } 

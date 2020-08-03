@@ -14,7 +14,7 @@ import './ChannelsList.scss';
 
 const ChannelsList = observer(() => {
     const {channels, isChannelsLoading, setChannelsFilterTerm, channelsFilterTerm, createChannel, currentSorting,
-        setCurrentSorting, favouriteChannels, ordinaryChannels, channelsError
+        setCurrentSorting, favouriteChannels, ordinaryChannels, channelsError, currentTheme
     } = useContext(StoreContext);
     const {inputValue: searchInputValue, handleChange: handleSearchChange} = useControlledInput(setChannelsFilterTerm);
     const {inputValue: addInputValue, handleChange: handleAddChange} = useControlledInput();
@@ -30,7 +30,8 @@ const ChannelsList = observer(() => {
         setIsLongError(false);
         setIsChannelAdding((isAdding) => !isAdding);
     }, [setIsEmptyError, setIsLongError]);
-    const buttonClass = cn(`channels-btn`, `channels-btn--new`, {'channels-btn--opened': isChannelAdding});
+    const newBtnClass = cn(`channels-btn`, `channels-btn--new`,
+        {'channels-btn--opened': isChannelAdding, 'channels-btn--light': currentTheme === `light`});
     const addInputRef = useRef();
 
     const handleAddBtnClick = useCallback(() => {
@@ -67,7 +68,7 @@ const ChannelsList = observer(() => {
         }
     }, [setCurrentSorting, currentSorting]);
     const favouriteBtnClass = cn(`channels-btn`, `channels-btn--favourite`,
-        {'channels-btn--current': currentSorting === `favourite`});
+        {'channels-btn--current': currentSorting === `favourite`, 'channels-btn--light': currentTheme === `light`});
 
     const handleOrdinaryBtnClick = useCallback(() => {
         if (currentSorting !== `ordinary`) {
@@ -77,8 +78,15 @@ const ChannelsList = observer(() => {
         }
     }, [setCurrentSorting, currentSorting]);
     const ordinaryBtnClass = cn(`channels-btn`, `channels-btn--ordinary`,
-        {'channels-btn--current': currentSorting === `ordinary`});
+        {'channels-btn--current': currentSorting === `ordinary`, 'channels-btn--light': currentTheme === `light`});
+    const addBtnClass = cn(`channels-btn`, `channels-btn--add`, {'channels-btn--light': currentTheme === `light`});
 
+    const addInputClass = cn(`channels-input`, `channels-input--add`,
+        {'channels-input--light': currentTheme === `light`});
+    const searchInputClass = cn(`channels-input`, `channels-input--search`,
+        {'channels-input--light': currentTheme === `light`});
+    const ulClass = cn(`channels-list`, `custom-scrollbar`, `custom-scrollbar--light`,
+        {'custom-scrollbar--themed': currentTheme === `light`});
     let renderedChannels;
     let quantity;
 
@@ -111,10 +119,8 @@ const ChannelsList = observer(() => {
                     <MenuTitle title="Channels" quantity={quantity} />
                     {isChannelAdding &&
                         <>
-                            <button className="channels-btn channels-btn--add" title="Add channel"
-                                onClick={handleAddBtnClick}
-                            />
-                            <input className="channels-input channels-input--add" type="text" value={addInputValue}
+                            <button className={addBtnClass} title="Add channel" onClick={handleAddBtnClick} />
+                            <input className={addInputClass} type="text" value={addInputValue}
                                 onChange={handleAddChange} placeholder="Name of the channel" onKeyDown={handleKeyDown}
                                 ref={addInputRef} onFocus={handleFocus}
                             />
@@ -127,13 +133,13 @@ const ChannelsList = observer(() => {
                     <button className={ordinaryBtnClass} onClick={handleOrdinaryBtnClick}
                         title={`Show ${(currentSorting !== `ordinary` ? `ordinary` : `all`)} channels`}
                     />
-                    <button className={buttonClass} title={isChannelAdding ? `Back` : `New channel`}
+                    <button className={newBtnClass} title={isChannelAdding ? `Back` : `New channel`}
                         onClick={handleNewBtnClick}
                     />
-                    <input className="channels-input channels-input--search" value={searchInputValue}
+                    <input className={searchInputClass} value={searchInputValue}
                         placeholder="Search.." onChange={handleSearchChange} type="text"
                     />
-                    <ul className="channels-list custom-scrollbar custom-scrollbar--light">
+                    <ul className={ulClass}>
                         {renderedChannels
                             .filter((channel) => {
                                 return channel.title.toLowerCase().includes(channelsFilterTerm.toLowerCase().trim());

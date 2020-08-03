@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {observer} from 'mobx-react';
+import cn from 'classnames';
 
 import {StoreContext} from '../../context';
 import {MenuTitle} from '../';
@@ -13,9 +14,12 @@ import './FriendsList.scss';
 
 const FriendsList = observer(() => {
     const {friends, isUsersLoading, setFriendsFilterTerm, friendsFilterTerm, isUserUpdating,
-        usersError
+        usersError, currentTheme
     } = useContext(StoreContext);
     const {inputValue, handleChange} = useControlledInput(setFriendsFilterTerm);
+    const inputClass = cn(`friends-search`, {'friends-search--light': currentTheme === `light`});
+    const ulClass = cn(`friends-list`, `custom-scrollbar`, `custom-scrollbar--light`,
+        {'custom-scrollbar--themed': currentTheme === `light`});
 
     return (
         <div className="friends">
@@ -28,8 +32,8 @@ const FriendsList = observer(() => {
             {!isUsersLoading && !isUserUpdating && !usersError &&
                 <>
                     <MenuTitle title="Friends" quantity={friends.length} />
-                    <input className="friends-search" value={inputValue} placeholder="Search.." onChange={handleChange} />
-                    <ul className="friends-list custom-scrollbar custom-scrollbar--light">
+                    <input className={inputClass} value={inputValue} placeholder="Search.." onChange={handleChange} />
+                    <ul className={ulClass}>
                         {friends
                             .filter(({firstName, surName}) => {
                                 return firstName.toLowerCase().includes(friendsFilterTerm.toLowerCase().trim())

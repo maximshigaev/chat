@@ -12,15 +12,17 @@ import './ChannelsItem.scss';
 
 const ChannelsItem = observer(({channel}) => {
     const {setUploadedFiles, setIsMenuOpened, setIsMobileMenuOpened, deleteChannel,
-        setCurrentChannel, updateChannel
+        setCurrentChannel, updateChannel, currentTheme
     } = useContext(StoreContext);
     const currentChannelId = useLocation().pathname.slice(1);
     const history = useHistory();
+    const linkClass = cn(`channels-link`, {'channels-link--light': currentTheme === `light`});
+    const inputClass = cn(`channels-item-input`, {'channels-item-input--light': currentTheme === `light`});
 
     const [isChannelEditing, setIsChannelEditing] = useState(false);
     const {inputValue, handleChange} = useControlledInput();
-    const buttonClass = cn(`channels-item-btn`, `channels-item-btn--rename`,
-        {'channels-item-btn--opened': isChannelEditing});
+    const editBtnClass = cn(`channels-item-btn`, `channels-item-btn--rename`,
+        {'channels-item-btn--opened': isChannelEditing, 'channels-item-btn--light': currentTheme === `light`});
     const {isChannelError: isEmptyError, setIsChannelError: setIsEmptyError, errorMessage: emptyMessage}
         = useChannelError(`empty`, `rename`);
     const {isChannelError: isLongError, setIsChannelError: setIsLongError, errorMessage: longMessage}
@@ -69,6 +71,10 @@ const ChannelsItem = observer(({channel}) => {
         }
         deleteChannel(channel.id);
     }, [deleteChannel, channel.id, setCurrentChannel, currentChannelId, history]);
+    const okBtnClass = cn(`channels-item-btn`, `channels-item-btn--ok`,
+        {'channels-item-btn--light': currentTheme === `light`});
+    const removeBtnClass = cn(`channels-item-btn`, `channels-item-btn--remove`,
+        {'channels-item-btn--light': currentTheme === `light`});
 
     return (
         <li className="channels-item">
@@ -76,24 +82,22 @@ const ChannelsItem = observer(({channel}) => {
             {isLongError && longMessage}
             {isChannelEditing &&
                 <>
-                    <input className="channels-item-input" value={inputValue} onChange={handleChange} type="text"
+                    <input className={inputClass} value={inputValue} onChange={handleChange} type="text"
                         placeholder="Name of the channel" onKeyDown={handleKeyDown} ref={renameInputRef}
                         onFocus={handleFocus}
                     />
-                    <button className="channels-item-btn channels-item-btn--ok" title="Rename channel"
-                        onClick={handleOkBtnClick}
-                    />
+                    <button className={okBtnClass} title="Rename channel" onClick={handleOkBtnClick} />
                 </>
             }
-            <NavLink className="channels-link" activeClassName="channels-link--active"
+            <NavLink className={linkClass} activeClassName="channels-link--active"
                 title={channel.title} to={`${process.env.PUBLIC_URL}/${channel.id}`} onClick={handleLinkClick}
             >
                 {`# ${channel.title.toLowerCase()}`}
             </NavLink>
-            <button className={buttonClass} title={isChannelEditing ? `Back` : `Edit channel`}
+            <button className={editBtnClass} title={isChannelEditing ? `Back` : `Edit channel`}
                 onClick={handleRenameBtnClick}
             />
-            <button className="channels-item-btn channels-item-btn--remove" title="Remove channel"
+            <button className={removeBtnClass} title="Remove channel"
                 onClick={handleRemoveBtnClick}
             />
         </li>

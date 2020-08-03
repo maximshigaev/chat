@@ -24,4 +24,18 @@
     &:focus {
         border: 1px solid white;
     }
+
+    &--light {
+        background-color: white;
+        border: 1px solid black;
+
+        &:hover,
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        &:active {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    }
 }

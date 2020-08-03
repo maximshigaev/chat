@@ -11,8 +11,9 @@ import {MyProfile} from '../';
 import './Menu.scss';
 
 const Menu =  observer(() =>{
-    const {isMyProfileOpened, isMenuOpened, isMobileProfileOpened} = useContext(StoreContext);
-    const sectionClass = cn(`menu`, {'menu--opened': isMenuOpened, 'menu--opened-mobile-profile': isMobileProfileOpened});
+    const {isMyProfileOpened, isMenuOpened, isMobileProfileOpened, currentTheme} = useContext(StoreContext);
+    const sectionClass = cn(`menu`, {'menu--opened': isMenuOpened, 'menu--opened-mobile-profile': isMobileProfileOpened,
+        'menu--light': currentTheme === 'light'});
 
     return (
         <section className={sectionClass}>

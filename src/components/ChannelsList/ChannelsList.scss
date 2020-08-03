@@ -25,12 +25,31 @@
     &:focus {
         border: 1px solid white;
     }
+
+    &:active {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
     
     &--add {
         position: absolute;
         left: 0;
         top: 25px;
         width: 93%;
+    }
+
+    &--light {
+        background-color: white;
+        border: 1px solid black;
+        color: black;
+
+        &:hover,
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        &:active {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
     }
 }
 
@@ -71,6 +90,28 @@
         &::after {
             transform: rotate(-90deg);
         }
+
+        &.channels-btn--light {
+            &::before,
+            &::after {
+                background-color: black;
+            }
+
+            &:hover,
+            &:focus {
+                &::before,
+                &::after {
+                    opacity: 0.5;
+                }
+            }
+
+            &:active {
+                &::before,
+                &::after {
+                    opacity: 0.3;
+                }
+            }
+        }
     }
 
     &--add {
@@ -86,6 +127,28 @@
         &::after {
             left: 9px;
             transform: rotate(25deg);
+        }
+
+        &.channels-btn--light {
+            &::before,
+            &::after {
+                background-color: black;
+            }
+
+            &:hover,
+            &:focus {
+                &::before,
+                &::after {
+                    opacity: 0.5;
+                }
+            }
+
+            &:active {
+                &::before,
+                &::after {
+                    opacity: 0.3;
+                }
+            }
         }
     }
 
@@ -124,6 +187,32 @@
 
             &:active {
                 opacity: 0.3;
+            }
+
+            &.channels-btn--light {
+                background-image: url('../../img/icons/menu-favourite-current.svg');
+
+                &:hover,
+                &:focus {
+                    opacity: 0.8;
+                }
+
+                &:active {
+                    opacity: 0.6;
+                }
+            }
+        }
+
+        &.channels-btn--light {
+            background-image: url('../../img/icons/menu-favourite-light.svg');
+
+            &:hover,
+            &:focus {
+                opacity: 0.5;
+            }
+
+            &:active {
+                opacity: 0.2;
             } 
         }
     }
@@ -157,6 +246,32 @@
             &:active {
                 opacity: 0.3;
             }
+
+            &.channels-btn--light {
+                background-image: url('../../img/icons/menu-ordinary-current.svg');
+
+                &:hover,
+                &:focus {
+                    opacity: 0.8;
+                }
+
+                &:active {
+                    opacity: 0.6;
+                }
+            }
+        }
+
+        &.channels-btn--light {
+            background-image: url('../../img/icons/menu-ordinary-light.svg');
+
+            &:hover,
+            &:focus {
+                opacity: 0.5;
+            }
+
+            &:active {
+                opacity: 0.2;
+            } 
         }
     }
 }

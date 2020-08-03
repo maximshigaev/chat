@@ -1,6 +1,7 @@
 import React, {useCallback, useContext, useState} from 'react';
 import {observer} from 'mobx-react';
 import {Formik, Form} from 'formik';
+import cn from 'classnames';
 
 import {StoreContext} from '../../context';
 import {FormField} from '../';
@@ -12,10 +13,12 @@ import {ErrorMessage} from '../';
 import './MyProfile.scss';
 
 const MyProfile = observer(() => {
-    const {onlineUser, updateUser, isUserUpdating, usersError} = useContext(StoreContext);
+    const {onlineUser, updateUser, isUserUpdating, usersError, currentTheme} = useContext(StoreContext);
     const {firstName, surName, email, password, userName, skype, avatar, jobTitle,
         timeZone, fb, tw, inst, lkdn} = onlineUser;
     const [avatarSrc, setAvatarSrc] = useState(avatar);
+    const formClass = cn(`my-profile`, `custom-scrollbar`, `custom-scrollbar--light`,
+        {'custom-scrollbar--themed': currentTheme === `light`});
 
     const handleFileInputChange = useCallback((evt) => {
         if (evt.target.files.length) {
@@ -43,12 +46,11 @@ const MyProfile = observer(() => {
     }
 
     return (
-        <Formik initialValues={initialValues} 
-        onSubmit={handleMyProfileFormSubmit}
+        <Formik initialValues={initialValues} onSubmit={handleMyProfileFormSubmit}
             validationSchema={myProfileShape.schema}
         >
             {({isValid}) => (
-                <Form className="my-profile custom-scrollbar custom-scrollbar--light">
+                <Form className={formClass}>
                     {isUserUpdating && <Spinner size="middle" />}
                     {usersError &&
                         <ErrorMessage mode="menu">

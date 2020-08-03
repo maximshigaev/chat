@@ -14,16 +14,39 @@
     width: 100%;
     word-break: break-all;
 
-    &:hover {
+    &:hover,
+    &:focus {
         background-color: rgba(255, 255, 255, 0.5);
         color: white;
         border-radius: 5px;
+    }
+
+    &:active {
+        background-color: rgba(255, 255, 255, 0.2);
     }
 
     &--active {
         background-color: rgba(255, 255, 255, 0.2);
         color: white;
         border-radius: 5px;
+
+        &.channels-link--light {
+            color: black;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    &--light {
+        color: black;
+
+        &:hover,
+        &:focus {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        &:active {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
     }
 }
 
@@ -76,6 +99,19 @@
         &::after {
             display: none;
         }
+
+        &.channels-item-btn--light {
+            background-image: url('../../img/icons/menu-remove-light.svg');
+
+            &:hover,
+            &:focus {
+                opacity: 0.5;
+            }
+
+            &:active {
+                opacity: 0.2;
+            }
+        }
     }
 
     &--rename {
@@ -95,6 +131,19 @@
         &::before,
         &::after {
             display: none;
+        }
+
+        &.channels-item-btn--light {
+            background-image: url('../../img/icons/menu-rename-light.svg');
+
+            &:hover,
+            &:focus {
+                opacity: 0.5;
+            }
+
+            &:active {
+                opacity: 0.2;
+            }
         }
     }
 
@@ -123,6 +172,14 @@
                 background-color: rgba(255, 255, 255, 0.3);
             }
         }
+
+        &.channels-item-btn--light {
+            background-image: none;
+            
+            &::before {
+                background-color: black;
+            }
+        }
     }
 
     &--ok {
@@ -149,6 +206,28 @@
             left: 9px;
             transform: rotate(25deg);
         }
+
+        &.channels-item-btn--light {
+            &::before,
+            &::after {
+                background-color: black;
+            }
+
+            &:hover,
+            &:focus {
+                &::before,
+                &::after {
+                    opacity: 0.5;
+                }
+            }
+
+            &:active {
+                &::before,
+                &::after {
+                    opacity: 0.3;
+                }
+            }
+        }
     }
 }
 
@@ -171,6 +250,21 @@
     &:focus {
         border: 1px solid white;
     }
+
+    &--light {
+        background-color: white;
+        border: 1px solid black;
+        color: black;
+
+        &:hover,
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        &:active {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    }
 }
 
 .channels-error--rename {
@@ -178,4 +272,8 @@
     width: 100%;
     z-index: 1;
     background-color: #25272a;
+
+    &.channels-error--light {
+        background-color: white;
+    }
 }

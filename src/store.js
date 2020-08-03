@@ -45,6 +45,7 @@ class Store {
             channelsError: null,
             usersError: null,
             messagesError: null,
+            currentTheme: `dark`,
         });
     }
 
@@ -220,6 +221,7 @@ class Store {
     setIsMobileProfileOpened = action((isOpened) => this.isMobileProfileOpened = isOpened);
 
     setCurrentSorting = action((sorting) => this.currentSorting = sorting);
+    setCurrentTheme = action((theme) => this.currentTheme = theme);
 }
 
 const store = new Store();

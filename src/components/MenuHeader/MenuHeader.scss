@@ -4,6 +4,20 @@
     margin-right: 25px;
 }
 
+.menu-header-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    color: #919191;
+    margin-bottom: 5px;
+    margin-right: 25px;
+
+    &--light {
+        color: black;
+    }
+}
+
 .menu-btn {
     background-repeat: no-repeat;
     position: absolute;
@@ -23,6 +37,19 @@
 
         &:active {
             opacity: 0.2;
+        }
+        
+        &.menu-btn--light {
+            background-image: url('../../img/icons/menu-settings-light.svg');
+
+            &:hover,
+            &:focus {
+                opacity: 0.5;
+            }
+
+            &:active {
+                opacity: 0.2;
+            }
         }
     }
 
@@ -54,7 +81,13 @@
     }
 
     &:active {
-        opacity: 0.5;
+        background-color: #25272a;
+    }
+
+    &--light {
+        background-color: black;
+        color: white;
+        border-bottom: 1px solid white;
     }
 }
 
@@ -99,6 +132,28 @@
                 &::before,
                 &::after {
                     background-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            &.menu-btn--light {
+                &::before,
+                &::after {
+                    background-color: black;
+                }
+
+                &:hover,
+                &:focus {
+                    &::before,
+                    &::after {
+                        opacity: 0.5;
+                    }
+                }
+
+                &:active {
+                    &::before,
+                    &::after {
+                        opacity: 0.3;
+                    }
                 }
             }
         }
