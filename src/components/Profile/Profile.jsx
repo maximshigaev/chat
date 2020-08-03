@@ -9,11 +9,11 @@ import './Profile.scss';
 
 const Profile = observer(() => {
     const {currentUser, updateUser, onlineUser, isProfileOpened, setIsProfileOpened,
-        isMobileMenuOpened, setIsMobileProfileOpened
+        isMobileMenuOpened, setIsMobileProfileOpened, currentTheme
     } = useContext(StoreContext);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const sectionClass = cn(`profile`, `custom-scrollbar`, `custom-scrollbar--light`,
-        {'profile--opened': isProfileOpened, 'profile--opened-mobile-menu': isMobileMenuOpened});
+        {'profile--opened': isProfileOpened,  'profile--opened-mobile-menu': isMobileMenuOpened});
 
     const handleOptionsBtnClick = useCallback(() => setIsDropdownOpen((prevState) => !prevState) , []);
     let profileHolder = currentUser;
@@ -31,24 +31,35 @@ const Profile = observer(() => {
         profileHolder = onlineUser;
     }
 
-    const isOnlineUserProfile = onlineUser === profileHolder;
+    const isOnlineUserProfile = onlineUser.email === profileHolder.email;
     const handleCloseProfileBtnClick = useCallback(() => {
         setIsMobileProfileOpened(false);
         setIsProfileOpened(false);
     }, [setIsProfileOpened, setIsMobileProfileOpened]);
+    const spanClass = cn(`profile-job`, {'profile-job--light': currentTheme === `light`});
 
     const {firstName, surName, avatar, jobTitle, userName, skype, email, timeZone, isOnline = true, fb, tw, inst,
         lkdn
     } = profileHolder;
-    const timeZoneDate =  new Date(Date.parse(timeZone));
+
+    let timeZoneDate = new Date();
+
+    if (!currentUser || onlineUser.email === currentUser.email) {
+        const dateHours = +new Date().toISOString().slice(11, 13) + +timeZone.slice(0, 3);
+        timeZoneDate.setHours(dateHours);
+    } else {
+        timeZoneDate = new Date(Date.parse(timeZone));
+    }
+
     const formattedTimeZone = `${timeZoneDate.getHours()}:${(timeZoneDate.getMinutes() + '').padStart(2, 0)}
         ${timeZoneDate.getHours() > 11 ? 'PM' : 'AM'} Local time`;
 
     const profileUserName = `${firstName} ${surName}`;
-    const headingClass = cn(`profile-name`, {'profile-name--online': isOnline});
-    const optionsBtnClass = cn(`profile-btn`, `profile-btn--options`,
-        {'profile-btn--reversed': isDropdownOpen});
+    const headingClass = cn(`profile-name`,
+        {'profile-name--online': isOnline, 'profile-name--light': currentTheme === `light`});
+    const optionsBtnClass = cn(`profile-btn`, `profile-btn--options`, {'profile-btn--reversed': isDropdownOpen});
     const socialLinks  = {fb, tw, inst, lkdn};
+    const divClass = cn(`profile-info`, {'profile-info--light': currentTheme === `light`});
 
     return (
         <section className={sectionClass}>
@@ -59,11 +70,11 @@ const Profile = observer(() => {
             <div className="profile-image-wrapper">
                 <img className="profile-avatar" src={avatar} alt={profileUserName} width="228" height="228" />
             </div>
-            <div className="profile-info">
+            <div className={divClass}>
                 <h3 className={headingClass}>
                     {profileUserName}
                 </h3>
-                {profileHolder.jobTitle && <span className="profile-job">{jobTitle}</span>}
+                {profileHolder.jobTitle && <span className={spanClass}>{jobTitle}</span>}
                 <div className="profile-social-links">
                     {Object.entries(socialLinks)
                         .map(([key, value]) => {

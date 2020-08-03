@@ -18,9 +18,9 @@ const Chat = observer(() => {
 
     const mainClass = cn(`chat`, {'chat--empty' : !currentChannel, 'chat--light': currentTheme === `light`});
     const menuBtnClass = cn(`chat-open-btn`, `chat-open-btn--menu`,
-        {'chat-open-btn--opened-menu': isMobileMenuOpened});
+        {'chat-open-btn--opened-menu': isMobileMenuOpened, 'chat-open-btn--light': currentTheme === `light`});
     const profileBtnClass = cn(`chat-open-btn`, `chat-open-btn--profile`,
-        {'chat-open-btn--opened-profile': isMobileProfileOpened});
+        {'chat-open-btn--opened-profile': isMobileProfileOpened, 'chat-open-btn--light': currentTheme === `light`});
 
     useEffect(() => {
         if (currentChannelId) {

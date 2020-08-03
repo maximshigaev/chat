@@ -17,7 +17,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .profile-image-wrapper {
@@ -33,6 +33,10 @@
     align-items: flex-start;
     padding: 20px;
     padding-top: 15px;
+
+    &--light {
+       background-color: #25272a; 
+    }
 }
 
 .profile-name {
@@ -56,12 +60,20 @@
             right: -12px;
         }
     }
+
+    &--light {
+        color: white;
+    }
 }
 
 .profile-job {
     color: #5f6164;
     font-size: 12px;
     margin-bottom: 20px;
+
+    &--light {
+        color: #b5b5b5;
+    } 
 }
 
 .profile-social-links {

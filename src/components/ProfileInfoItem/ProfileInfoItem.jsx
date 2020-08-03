@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import {observer} from 'mobx-react';
+
+import {StoreContext} from '../../context';
 
 import './ProfileInfoItem.scss';
 
-const ProfileInfoItem = ({title, content}) => (
-    <div className="info-item">
-        <span className="info-item-title">
-            {title}
-        </span>
-        <span className="info-item-content">
-            {content}
-        </span>
-    </div>
-);
+const ProfileInfoItem = observer(({title, content}) => {
+    const {currentTheme} = useContext(StoreContext);
+    const titleSpanClass = cn(`info-item-title`, {'info-item-title--light': currentTheme ===`light`});
+    const contentSpanClass = cn(`info-item-content`, {'info-item-content--light': currentTheme ===`light`});
+
+    return (
+        <div className="info-item">
+            <span className={titleSpanClass}>
+                {title}
+            </span>
+            <span className={contentSpanClass}>
+                {content}
+            </span>
+        </div>
+    );
+});
 
 ProfileInfoItem.propTypes = {
     title: PropTypes.string.isRequired,

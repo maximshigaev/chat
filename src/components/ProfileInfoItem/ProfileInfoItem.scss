@@ -8,6 +8,10 @@
     font-size: 12px;
     display: inline-block;
     vertical-align: middle;
+
+    &--light {
+        color: #b5b5b5;
+    }
 }
 
 .info-item-content {
@@ -16,4 +20,8 @@
     display: inline-block;
     vertical-align: middle;
     word-break: break-word;
+
+    &--light {
+        color: white;
+    }
 }
