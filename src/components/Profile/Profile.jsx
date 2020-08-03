@@ -45,7 +45,7 @@ const Profile = observer(() => {
     let timeZoneDate = new Date();
 
     if (!currentUser || onlineUser.email === currentUser.email) {
-        const dateHours = +new Date().toISOString().slice(11, 13) + +timeZone.slice(0, 3);
+        const dateHours = +new Date().toISOString().slice(11, 13) + (timeZone && +timeZone.slice(0, 3));
         timeZoneDate.setHours(dateHours);
     } else {
         timeZoneDate = new Date(Date.parse(timeZone));

@@ -8,8 +8,6 @@ class Store {
         this.getUsers();
         this.getChannels();
 
-        // this.startChat();
-
         extendObservable(this, {
             users: [],
             onlineUser: null,
@@ -54,14 +52,27 @@ class Store {
             if (this.currentChannel) {
                 this.createMessage({
                     channelId: this.currentChannel.id,
+                    userId: Math.floor(1 + Math.random() * 100),
                     date: new Date().toISOString(),
                     text: faker.lorem.text(),
                     author: {
                         firstName: faker.name.firstName(),
                         surName: faker.name.lastName(),
                         avatar: faker.internet.avatar(),
+                        jobTitle: faker.name.jobTitle(),
+                        email: faker.internet.email(),
+                        userName: faker.internet.userName(),
+                        skype: faker.random.word(),
+                        timeZone: faker.date.past(),
+                        isFriend: faker.random.boolean(),
+                        isOnline: faker.random.boolean(),
+                        fb: faker.internet.url(),
+                        tw: faker.internet.url(),
+                        inst: faker.internet.url(),
+                        lkdn: faker.internet.url(),
                     },
-                }, this.currentChannel.id);
+                    images: [],
+                }, this.currentChannel.id, true);
             }
         }
 
@@ -90,6 +101,7 @@ class Store {
             .then((users) => {
                 this.users = users;
                 this.usersError = null;
+                this.startChat();
 
                 const onlineUser = this.users.find((user) => user.isProfileOnline);
             
@@ -191,8 +203,11 @@ class Store {
     });
     setCurrentChannel = action((channel) => this.currentChannel = channel);
 
-    getCurrentMessages = action((id) => {
-        this.isMessagesLoading = true;
+    getCurrentMessages = action((id, isDummy) => {
+        if (!isDummy) {
+            this.isMessagesLoading = true;
+        }
+
         this.messagesError = null;
 
         api.getCurrentMessages(id)
@@ -204,11 +219,19 @@ class Store {
                 this.isMessagesLoading = false;
             })
     });
-    createMessage = action((message, id) => {
-        this.isMessagesLoading = true;
+    createMessage = action((message, id, isDummy) => {
+        if (!isDummy) {
+            this.isMessagesLoading = true;
+        }
 
         api.createMessage(message, id)
-            .then(() => this.getCurrentMessages(this.currentChannel.id))
+            .then(() => {
+                if (isDummy) {
+                    this.getCurrentMessages(this.currentChannel.id, true);
+                } else {
+                    this.getCurrentMessages(this.currentChannel.id);
+                }
+            })
             .catch((err) => {
                 this.isMessagesLoading = false;
                 this.messagesError = {type: `create`, error: err,};

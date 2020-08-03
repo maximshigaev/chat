@@ -8,7 +8,9 @@ import {StoreContext} from '../../context';
 import './Message.scss';
 
 const Message = observer(({message}) => {
-    const {setCurrentUser, users, onlineUser, setIsMobileProfileOpened, setIsProfileOpened, currentTheme} = useContext(StoreContext);
+    const {setCurrentUser, users, onlineUser, setIsMobileProfileOpened, setIsProfileOpened,
+        currentTheme
+    } = useContext(StoreContext);
     const {date, text, author} = message;
     const messageDate = new Date(Date.parse(date));
     const isOnlineUserMessage = author && author.email === onlineUser.email;
@@ -71,7 +73,7 @@ Message.propTypes = {
             userName: PropTypes.string.isRequired,
             avatar: PropTypes.string.isRequired,
             email: PropTypes.string.isRequired,
-            password: PropTypes.string.isRequired,
+            password: PropTypes.string,
             skype: PropTypes.string.isRequired,
             jobTitle: PropTypes.string,
             timeZone: PropTypes.string,
@@ -82,6 +84,7 @@ Message.propTypes = {
             isProfileOnline: PropTypes.bool,
             isOnline: PropTypes.bool,
             id: PropTypes.number,
+            isFriend: PropTypes.bool,
         }),
         date: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
